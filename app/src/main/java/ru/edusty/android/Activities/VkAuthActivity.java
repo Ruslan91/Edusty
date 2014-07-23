@@ -28,7 +28,7 @@ public class VkAuthActivity extends Activity {
                 if (isToken) {
                     SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", url.substring(url.indexOf("=")+1)).apply();
+                    editor.putString("token", url.substring(url.indexOf("=") + 1)).apply();
                     startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
                     finish();
                 }
