@@ -1,6 +1,8 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,7 +24,14 @@ public class VkAuthActivity extends Activity {
         vkWeb.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                String token = url.substring(url.indexOf("=") + 1);
+                boolean isToken = url.contains("tokenID=");
+                if (isToken) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token", url.substring(url.indexOf("=")+1)).apply();
+                    startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
+                    finish();
+                }
             }
         });
         vkWeb.loadUrl(
@@ -40,16 +49,12 @@ public class VkAuthActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.vk_auth, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;

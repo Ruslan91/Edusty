@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Edusty</string>
+    <string name="action_settings">Настройки</string>
+    <string name="title_activity_vk_auth">Авторизация</string>
+    <string name="vk">VK</string>
+
+</resources>
