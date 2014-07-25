@@ -29,7 +29,7 @@ public class VkAuthActivity extends Activity {
                     SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", url.substring(url.indexOf("=") + 1)).apply();
-                    startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
+                    startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
                     finish();
                 }
             }
