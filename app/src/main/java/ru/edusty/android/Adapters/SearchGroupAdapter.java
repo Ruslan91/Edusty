@@ -12,17 +12,18 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
+import ru.edusty.android.Classes.Group;
 import ru.edusty.android.Classes.University;
 import ru.edusty.android.R;
 
 /**
  * Created by Руслан on 25.07.2014.
  */
-public class SearchUniversityAdapter extends BaseAdapter {
-    private final University[] results;
+public class SearchGroupAdapter extends BaseAdapter {
+    private final Group[] results;
     private final LayoutInflater lInflater;
 
-    public SearchUniversityAdapter(Activity activity, University[] searchResult) {
+    public SearchGroupAdapter(Activity activity, Group[] searchResult) {
         this.lInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.results = searchResult;
     }

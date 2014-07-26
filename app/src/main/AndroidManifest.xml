@@ -28,6 +28,10 @@
             android:name=".Activities.SearchUniversityActivity"
             android:label="@string/title_activity_search_university" >
         </activity>
+        <activity
+            android:name=".Activities.SearchGroupActivity"
+            android:label="@string/title_activity_search_university" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

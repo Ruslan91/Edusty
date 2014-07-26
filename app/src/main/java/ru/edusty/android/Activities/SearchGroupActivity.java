@@ -1,14 +1,11 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -23,21 +20,27 @@ import org.apache.http.protocol.HTTP;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.UUID;
 
-import ru.edusty.android.Adapters.SearchUniversityAdapter;
+import ru.edusty.android.Adapters.SearchGroupAdapter;
+import ru.edusty.android.Classes.Group;
 import ru.edusty.android.Classes.Response;
-import ru.edusty.android.Classes.University;
 import ru.edusty.android.R;
 
-public class SearchUniversityActivity extends Activity {
-
+/**
+ * Created by Руслан on 26.07.2014.
+ */
+public class SearchGroupActivity extends Activity {
     private ListView listView;
+    private UUID universityID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         try {
+            UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+            universityID = UUID.fromString(getIntent().getExtras().getString("universityID"));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
             listView = (ListView) findViewById(R.id.listView);
@@ -52,40 +55,32 @@ public class SearchUniversityActivity extends Activity {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.d("QUERY", "New text is " + newText);
-                    new GetUniversities().execute(newText);
+                    new GetGroups().execute(newText);
                     return true;
                 }
             });
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setData(Response response) {
-        SearchUniversityAdapter searchUniversityAdapter = null;
+
         try {
-            final University[] responseItem = (University[]) response.getItem();
+            Group[] responseItem = (Group[]) response.getItem();
             if (responseItem != null) {
-                searchUniversityAdapter = new SearchUniversityAdapter(SearchUniversityActivity.this, responseItem);
-                listView.setAdapter(searchUniversityAdapter);
-                searchUniversityAdapter.notifyDataSetChanged();
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
-                        intent.putExtra("universityID",responseItem[position].getID().toString());
-                        startActivity(intent);
-                    }
-                });
-            } else{
+                SearchGroupAdapter searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
+                listView.setAdapter(searchGroupAdapter);
+                searchGroupAdapter.notifyDataSetChanged();
+            } else {
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public class GetUniversities extends AsyncTask<String, Void, Response> {
+    public class GetGroups extends AsyncTask<String, Void, Response> {
 
         Response response;
 
@@ -100,11 +95,11 @@ public class SearchUniversityActivity extends Activity {
             try {
                 String query = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "SearchUniversity?query=" + query);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "SearchGroup?universityID=" + universityID + "&query=" + query);
                 HttpResponse httpResponse = httpClient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
-                Type fooType = new TypeToken<Response<University[]>>() {
+                Type fooType = new TypeToken<Response<Group[]>>() {
                 }.getType();
                 response = new Gson().fromJson(reader, fooType);
             } catch (Exception e) {

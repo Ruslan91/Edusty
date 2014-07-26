@@ -7,7 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.UUID;
+
+import ru.edusty.android.Activities.MainActivity;
+import ru.edusty.android.Activities.SearchUniversityActivity;
 import ru.edusty.android.Activities.VkAuthActivity;
+import ru.edusty.android.Adapters.SearchUniversityAdapter;
 
 
 public class AuthorizationActivity extends Activity {
@@ -15,7 +20,15 @@ public class AuthorizationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.authorization);
+        UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
+        if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else if (newUser == 1){
+            startActivity(new Intent(this, SearchUniversityActivity.class));
+            finish();
+        } else setContentView(R.layout.authorization);
     }
 
 
