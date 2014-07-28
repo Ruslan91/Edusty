@@ -6,5 +6,11 @@ import java.util.UUID;
  * Created by Руслан on 22.07.2014.
  */
 public class User {
-    UUID Token;
+    UUID TokenID;
+    UUID GroupID;
+
+    public User(UUID tokenID, UUID groupID) {
+        TokenID = tokenID;
+        GroupID = groupID;
+    }
 }

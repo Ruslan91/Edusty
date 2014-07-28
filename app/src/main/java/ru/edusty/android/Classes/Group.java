@@ -6,15 +6,15 @@ import java.util.UUID;
  * Created by Руслан on 26.07.2014.
  */
 public class Group {
-    UUID Id;
+    UUID ID;
     String Title;
 
-    public UUID getId() {
-        return Id;
+    public UUID getID() {
+        return ID;
     }
 
-    public void setId(UUID id) {
-        Id = id;
+    public void setID(UUID id) {
+        ID = id;
     }
 
     public String getTitle() {

@@ -2,6 +2,7 @@ package ru.edusty.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,6 @@ import java.util.UUID;
 import ru.edusty.android.Activities.MainActivity;
 import ru.edusty.android.Activities.SearchUniversityActivity;
 import ru.edusty.android.Activities.VkAuthActivity;
-import ru.edusty.android.Adapters.SearchUniversityAdapter;
 
 
 public class AuthorizationActivity extends Activity {
@@ -20,15 +20,24 @@ public class AuthorizationActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
-        int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
-        if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        } else if (newUser == 1){
-            startActivity(new Intent(this, SearchUniversityActivity.class));
-            finish();
-        } else setContentView(R.layout.authorization);
+        try {
+
+            SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+            if (sharedPreferences.getString("token", "") != "") {
+                UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+                int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
+                if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                } else if (newUser == 1) {
+                    startActivity(new Intent(this, SearchUniversityActivity.class));
+                    finish();
+                }
+            } else
+                setContentView(R.layout.authorization);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

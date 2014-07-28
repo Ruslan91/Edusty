@@ -25,20 +25,20 @@ public class VkAuthActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 boolean isToken = url.contains("tokenID=");
-                String token = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-                int newUser = Integer.parseInt(url.substring(url.lastIndexOf("=") + 1));
                 if (isToken) {
+                    String token = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
+                    int newUser = Integer.parseInt(url.substring(url.lastIndexOf("=") + 1));
                     SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("newUser", newUser);
                     editor.putString("token", token).apply();
-                }
-                if (newUser == 1) {
-                    startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
-                    finish();
-                } else {
-                    startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
-                    finish();
+                    if (newUser == 1) {
+                        startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
+                        finish();
+                    }
                 }
             }
         });

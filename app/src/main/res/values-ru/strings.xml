@@ -6,5 +6,7 @@
     <string name="title_activity_vk_auth">Авторизация</string>
     <string name="vk">VK</string>
     <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
+    <string name="create">Создать</string>
+    <string name="ok">ОК</string>
 
 </resources>

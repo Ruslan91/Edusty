@@ -74,11 +74,11 @@ public class SearchUniversityActivity extends Activity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
-                        intent.putExtra("universityID",responseItem[position].getID().toString());
+                        intent.putExtra("universityID", responseItem[position].getID().toString());
                         startActivity(intent);
                     }
                 });
-            } else{
+            } else {
             }
         } catch (Exception e) {
             e.printStackTrace();

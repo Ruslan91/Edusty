@@ -32,6 +32,10 @@
             android:name=".Activities.SearchGroupActivity"
             android:label="@string/title_activity_search_university" >
         </activity>
+        <activity
+            android:name=".Activities.CreateGroupActivity"
+            android:label="@string/title_activity_create_group" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
