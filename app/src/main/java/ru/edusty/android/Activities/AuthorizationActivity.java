@@ -1,4 +1,4 @@
-package ru.edusty.android;
+package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import java.util.UUID;
 import ru.edusty.android.Activities.MainActivity;
 import ru.edusty.android.Activities.SearchUniversityActivity;
 import ru.edusty.android.Activities.VkAuthActivity;
+import ru.edusty.android.R;
 
 
 public class AuthorizationActivity extends Activity {

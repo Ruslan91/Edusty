@@ -2,6 +2,7 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,6 +67,9 @@ public class CreateGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
+                SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("newUser", 0).apply();
                 startActivity(new Intent(CreateGroupActivity.this, MainActivity.class));
                 finish();
             } else

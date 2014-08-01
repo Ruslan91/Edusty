@@ -2,13 +2,14 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -43,12 +44,16 @@ public class SearchGroupActivity extends Activity {
     private Group[] responseItem;
     private Response response;
     private UUID token;
+    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         try {
+            btnNext = (Button) findViewById(R.id.button);
+            btnNext.setVisibility(View.INVISIBLE);
+            btnNext.setText("Далее");
             token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
             universityID = UUID.fromString(getIntent().getExtras().getString("universityID"));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
@@ -59,13 +64,11 @@ public class SearchGroupActivity extends Activity {
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    Log.d("QUERY", "Query " + query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    Log.d("QUERY", "New text is " + newText);
                     new GetGroups().execute(newText);
                     return true;
                 }
@@ -81,20 +84,26 @@ public class SearchGroupActivity extends Activity {
             responseItem = (Group[]) response.getItem();
             SearchGroupAdapter searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
             if (responseItem != null) {
+                this.invalidateOptionsMenu();
                 listView.setAdapter(searchGroupAdapter);
-                searchGroupAdapter.notifyDataSetChanged();
             } else {
+                this.invalidateOptionsMenu();
                 listView.setAdapter(null);
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    new PostUserInfo().execute(new User(token, responseItem[position].getID()));
+                    btnNext.setVisibility(View.VISIBLE);
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void onClickBtnNext(View view) {
+        int position = listView.getCheckedItemPosition();
+        new PostUserInfo().execute(new User(token, responseItem[position].getID()));
     }
 
     public class GetGroups extends AsyncTask<String, Void, Response> {
@@ -129,8 +138,6 @@ public class SearchGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                startActivity(new Intent(SearchGroupActivity.this, MainActivity.class));
-                finish();
             } else
                 Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
         }
@@ -165,10 +172,11 @@ public class SearchGroupActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-/*        responseItem = (Group[]) response.getItem();
-        if (responseItem[0].getId() == null) {
-            menu.getItem(0).setVisible(true);
-        } else menu.getItem(0).setVisible(false);*/
+        if (responseItem != null) {
+            if (responseItem.length != 0) {
+                menu.getItem(0).setVisible(false);
+            } else menu.getItem(0).setVisible(true);
+        } else menu.getItem(0).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -177,7 +185,7 @@ public class SearchGroupActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_create) {
             Intent intent = new Intent(this, CreateGroupActivity.class);
-            intent.putExtra("universityID", universityID);
+            intent.putExtra("universityID", universityID.toString());
             startActivity(intent);
             return true;
         }

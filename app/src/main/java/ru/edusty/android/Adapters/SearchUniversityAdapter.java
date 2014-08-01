@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.UUID;
@@ -46,6 +47,7 @@ public class SearchUniversityAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+        ((ListView)parent).setItemChecked(position, true);
         final ViewHolder viewHolder;
         View v = convertView;
         if (v == null) {

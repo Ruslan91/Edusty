@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -32,12 +33,17 @@ import ru.edusty.android.R;
 public class SearchUniversityActivity extends Activity {
 
     private ListView listView;
+    private University[] responseItem;
+    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         try {
+            btnNext = (Button) findViewById(R.id.button);
+            btnNext.setVisibility(View.INVISIBLE);
+            btnNext.setText("Далее");
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
             listView = (ListView) findViewById(R.id.listView);
@@ -63,28 +69,30 @@ public class SearchUniversityActivity extends Activity {
     }
 
     public void setData(Response response) {
-        SearchUniversityAdapter searchUniversityAdapter = null;
         try {
-            final University[] responseItem = (University[]) response.getItem();
+            responseItem = (University[]) response.getItem();
+            SearchUniversityAdapter searchUniversityAdapter = new SearchUniversityAdapter(SearchUniversityActivity.this, responseItem);
             if (responseItem != null) {
-                searchUniversityAdapter = new SearchUniversityAdapter(SearchUniversityActivity.this, responseItem);
                 listView.setAdapter(searchUniversityAdapter);
                 searchUniversityAdapter.notifyDataSetChanged();
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
-                        intent.putExtra("universityID", responseItem[position].getID().toString());
-                        startActivity(intent);
+
+                        btnNext.setVisibility(View.VISIBLE);
                     }
                 });
-            } else {
-            }
+            } else listView.setAdapter(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    public void onClickBtnNext(View view) {
+        int position = listView.getCheckedItemPosition();
+        Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
+        intent.putExtra("universityID", responseItem[position].getID().toString());
+        startActivity(intent);
+    }
     public class GetUniversities extends AsyncTask<String, Void, Response> {
 
         Response response;

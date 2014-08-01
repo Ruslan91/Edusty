@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="8dp"
+        style="@android:style/TextAppearance.DeviceDefault.Medium" />
 
     <EditText
         android:layout_width="match_parent"
@@ -24,6 +25,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingTop="8dp"
-        android:paddingBottom="9dp" />
+        android:paddingBottom="8dp" />
 
 </RelativeLayout>

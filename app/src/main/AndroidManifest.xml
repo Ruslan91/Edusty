@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".AuthorizationActivity"
+            android:name=".Activities.AuthorizationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,11 +26,11 @@
         </activity>
         <activity
             android:name=".Activities.SearchUniversityActivity"
-            android:label="@string/title_activity_search_university" >
+            android:label="В каком ВУЗе Вы учитесь?" >
         </activity>
         <activity
             android:name=".Activities.SearchGroupActivity"
-            android:label="@string/title_activity_search_university" >
+            android:label="В какой группе группе Вы учитесь?" >
         </activity>
         <activity
             android:name=".Activities.CreateGroupActivity"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#ff000000</color>
+    <color name="background_default">#ffffffff</color>
+    <color name="background_pressed">#ffffaaff</color>
 </resources>

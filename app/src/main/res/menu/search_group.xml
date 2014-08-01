@@ -4,6 +4,7 @@
     <item
         android:id="@+id/action_create"
         android:title="@string/create"
-        android:icon="@android:drawable/ic_menu_add"
-        android:showAsAction="always" />
+        android:icon="@drawable/ic_action_new"
+        android:showAsAction="always"
+        android:visible="false"/>
 </menu>
