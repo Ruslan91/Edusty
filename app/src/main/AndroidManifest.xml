@@ -36,6 +36,10 @@
             android:name=".Activities.CreateGroupActivity"
             android:label="@string/title_activity_create_group" >
         </activity>
+        <activity
+            android:name=".Activities.CreateMessageActivity"
+            android:label="Новое сообщение" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

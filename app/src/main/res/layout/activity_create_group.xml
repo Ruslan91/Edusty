@@ -12,7 +12,7 @@
         android:text="Введите название группы"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/tvName"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         style="@android:style/TextAppearance.DeviceDefault.Medium" />
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etTitle"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/tvName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingTop="8dp"
