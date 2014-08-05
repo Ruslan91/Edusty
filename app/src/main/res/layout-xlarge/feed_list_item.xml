@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:id="@+id/imageView"
+        android:id="@+id/image"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -24,8 +24,8 @@
         android:text="New Text"
         android:id="@+id/tvName"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image"
         style="@android:style/TextAppearance.Holo.Medium" />
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvMessage"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         style="@android:style/TextAppearance.Holo.Large" />

@@ -87,12 +87,14 @@ public class SearchUniversityActivity extends Activity {
             e.printStackTrace();
         }
     }
+
     public void onClickBtnNext(View view) {
         int position = listView.getCheckedItemPosition();
         Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
         intent.putExtra("universityID", responseItem[position].getID().toString());
         startActivity(intent);
     }
+
     public class GetUniversities extends AsyncTask<String, Void, Response> {
 
         Response response;

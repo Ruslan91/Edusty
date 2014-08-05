@@ -1,7 +1,6 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,7 +48,7 @@ public class CreateMessageActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_send:
                 if (!etMessage.getText().toString().equals("")) {
-                    UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token",""));
+                    UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
                     new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
                 } else Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
         }

@@ -43,9 +43,9 @@ public class MainActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
 
         Fragment[] frags = new Fragment[3];
-        frags[0] = new SearchFragment();
-        frags[1] = new UserFeedFragment();
-        frags[2] = new UserEventsFragment();
+        frags[0] = new FeedFragment();
+        frags[1] = new GroupFragment();
+        frags[2] = new EventsFragment();
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, frags[position]).commit();

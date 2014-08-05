@@ -2,7 +2,6 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,7 +29,7 @@ import java.lang.reflect.Type;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.SearchGroupAdapter;
-import ru.edusty.android.Classes.Group;
+import ru.edusty.android.Classes.PostUser;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.User;
 import ru.edusty.android.R;
@@ -41,7 +40,7 @@ import ru.edusty.android.R;
 public class SearchGroupActivity extends Activity {
     private ListView listView;
     private UUID universityID;
-    private Group[] responseItem;
+    private ru.edusty.android.Classes.GetGroups[] responseItem;
     private Response response;
     private UUID token;
     private Button btnNext;
@@ -81,7 +80,7 @@ public class SearchGroupActivity extends Activity {
     public void setData(Response response) {
 
         try {
-            responseItem = (Group[]) response.getItem();
+            responseItem = (ru.edusty.android.Classes.GetGroups[]) response.getItem();
             SearchGroupAdapter searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
             if (responseItem != null) {
                 this.invalidateOptionsMenu();
@@ -103,7 +102,11 @@ public class SearchGroupActivity extends Activity {
 
     public void onClickBtnNext(View view) {
         int position = listView.getCheckedItemPosition();
-        new PostUserInfo().execute(new User(token, responseItem[position].getID()));
+        try {
+            new PostUserInfo().execute(new PostUser(token, responseItem[position].getID()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public class GetGroups extends AsyncTask<String, Void, Response> {
@@ -123,7 +126,7 @@ public class SearchGroupActivity extends Activity {
                 HttpResponse httpResponse = httpClient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
-                Type fooType = new TypeToken<Response<Group[]>>() {
+                Type fooType = new TypeToken<Response<ru.edusty.android.Classes.GetGroups[]>>() {
                 }.getType();
                 response = new Gson().fromJson(reader, fooType);
             } catch (Exception e) {
@@ -133,21 +136,20 @@ public class SearchGroupActivity extends Activity {
         }
     }
 
-    public class PostUserInfo extends AsyncTask<User, Void, Response> {
+    public class PostUserInfo extends AsyncTask<PostUser, Void, Response> {
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-            } else
-                Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
         }
 
         Response response;
 
         @Override
-        protected Response doInBackground(User... params) {
+        protected Response doInBackground(PostUser... params) {
             try {
-                User user = params[0];
+                PostUser user = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "User");
                 StringEntity stringEntity = new StringEntity(new Gson().toJson(user));

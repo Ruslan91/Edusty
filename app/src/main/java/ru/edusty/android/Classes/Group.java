@@ -1,21 +1,12 @@
 package ru.edusty.android.Classes;
 
-import java.util.UUID;
-
 /**
- * Created by Руслан on 26.07.2014.
+ * Created by Руслан on 05.08.2014.
  */
 public class Group {
-    UUID ID;
+
     String Title;
-
-    public UUID getID() {
-        return ID;
-    }
-
-    public void setID(UUID id) {
-        ID = id;
-    }
+    User[] Members;
 
     public String getTitle() {
         return Title;
@@ -23,5 +14,13 @@ public class Group {
 
     public void setTitle(String title) {
         Title = title;
+    }
+
+    public User[] getUsers() {
+        return Members;
+    }
+
+    public void setUsers(User[] users) {
+        this.Members = users;
     }
 }

@@ -10,9 +10,6 @@ import android.view.View;
 
 import java.util.UUID;
 
-import ru.edusty.android.Activities.MainActivity;
-import ru.edusty.android.Activities.SearchUniversityActivity;
-import ru.edusty.android.Activities.VkAuthActivity;
 import ru.edusty.android.R;
 
 

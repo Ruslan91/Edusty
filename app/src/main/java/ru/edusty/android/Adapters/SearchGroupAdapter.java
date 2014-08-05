@@ -11,17 +11,17 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
-import ru.edusty.android.Classes.Group;
+import ru.edusty.android.Classes.GetGroups;
 import ru.edusty.android.R;
 
 /**
  * Created by Руслан on 25.07.2014.
  */
 public class SearchGroupAdapter extends BaseAdapter {
-    private final Group[] results;
+    private final GetGroups[] results;
     private final LayoutInflater lInflater;
 
-    public SearchGroupAdapter(Activity activity, Group[] searchResult) {
+    public SearchGroupAdapter(Activity activity, GetGroups[] searchResult) {
         this.lInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.results = searchResult;
     }
@@ -47,7 +47,7 @@ public class SearchGroupAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ((ListView)parent).setItemChecked(position, true);
+        ((ListView) parent).setItemChecked(position, true);
         final ViewHolder viewHolder;
         View v = convertView;
         if (v == null) {

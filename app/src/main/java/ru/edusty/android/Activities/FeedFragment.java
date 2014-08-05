@@ -1,7 +1,6 @@
 package ru.edusty.android.Activities;
 
-import android.app.Fragment;
-import android.app.ProgressDialog;
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,39 +33,23 @@ import ru.edusty.android.R;
 /**
  * Created by Руслан on 23.07.2014.
  */
-public class UserFeedFragment extends Fragment {
+public class FeedFragment extends ListFragment {
 
     private String token;
-    private ListView lvMain;
 
-/*    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-    }*/
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_default, container, false);
-        lvMain = (ListView) view.findViewById(R.id.lvMain);
-        lvMain.setVisibility(View.VISIBLE);
-        try {
-            token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
-            new GetFeed().execute(UUID.fromString(token));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return view;
     }
 
-    public void setData(Response response) {
-        try {
-            Feed[] feed = (Feed[]) response.getItem();
-            FeedAdapter feedAdapter = new FeedAdapter(getActivity(), feed);
-            if (feed.length != 0) lvMain.setAdapter(feedAdapter);
-            else lvMain.setAdapter(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_default, container, false);
+        token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
+        new GetFeed().execute(UUID.fromString(token));
+        setRetainInstance(true);
+        return view;
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -100,12 +82,20 @@ public class UserFeedFragment extends Fragment {
         @Override
         protected void onPostExecute(Response response) {
             try {
-                setData(response);
+                //setData(response);
+                Feed[] feed = (Feed[]) response.getItem();
+                FeedAdapter feedAdapter;
+                if (feed.length == 0) setListAdapter(null);
+                else {
+                    feedAdapter = new FeedAdapter(getActivity(), feed);
+                    setListAdapter(feedAdapter);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             //progressDialog.dismiss();
         }
+
         @Override
         protected Response doInBackground(UUID... params) {
             Response response = null;

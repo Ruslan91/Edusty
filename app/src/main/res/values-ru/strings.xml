@@ -2,11 +2,15 @@
 <resources>
 
     <string name="app_name">Edusty</string>
+    <string name="title_section1">Лента</string>
+    <string name="title_section2">Моя группа</string>
+    <string name="title_section3">Профиль</string>
     <string name="action_settings">Настройки</string>
     <string name="title_activity_vk_auth">Авторизация</string>
     <string name="vk">VK</string>
     <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
     <string name="create">Создать</string>
     <string name="ok">ОК</string>
+    <string name="new_message">Новое сообщение</string>
 
 </resources>

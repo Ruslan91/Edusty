@@ -47,7 +47,7 @@ public class SearchUniversityAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ((ListView)parent).setItemChecked(position, true);
+        ((ListView) parent).setItemChecked(position, true);
         final ViewHolder viewHolder;
         View v = convertView;
         if (v == null) {
