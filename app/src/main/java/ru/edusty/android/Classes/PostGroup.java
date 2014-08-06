@@ -6,11 +6,11 @@ import java.util.UUID;
  * Created by Руслан on 05.08.2014.
  */
 public class PostGroup {
-    UUID Token;
+    UUID TokenID;
     String Title;
 
-    public PostGroup(UUID token, String title) {
-        Token = token;
+    public PostGroup(UUID tokenID, String title) {
+        TokenID = tokenID;
         Title = title;
     }
 }

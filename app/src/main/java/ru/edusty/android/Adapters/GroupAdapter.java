@@ -1,6 +1,7 @@
 package ru.edusty.android.Adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class GroupAdapter extends BaseAdapter {
         }
         try {
             viewHolder.name.setText(users[position].getFirstName() + " " + users[position].getLastName());
+            viewHolder.image.setImageURI(Uri.parse(users[position].getPictureUrl()));
 
         } catch (Exception e) {
             e.printStackTrace();

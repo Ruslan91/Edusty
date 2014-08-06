@@ -2,4 +2,6 @@
 <resources>
     <color name="background_default">#ffffffff</color>
     <color name="background_pressed">#ffffaaff</color>
+
+    <color name="actionbar_background">#ffe138f6</color>
 </resources>

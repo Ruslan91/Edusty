@@ -10,7 +10,7 @@ public class User {
     int VkontakteID;
     String FirstName;
     String LastName;
-    UUID PictureID;
+    String PictureUrl;
 
     public int getVkontakteID() {
         return VkontakteID;
@@ -36,11 +36,11 @@ public class User {
         LastName = lastName;
     }
 
-    public UUID getPictureID() {
-        return PictureID;
+    public String getPictureUrl() {
+        return PictureUrl;
     }
 
-    public void setPictureID(UUID pictureID) {
-        PictureID = pictureID;
+    public void setPictureUrl(String pictureUrl) {
+        PictureUrl = pictureUrl;
     }
 }

@@ -3,14 +3,18 @@ package ru.edusty.android.Activities;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,6 +25,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.UUID;
@@ -46,9 +51,9 @@ public class FeedFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_default, container, false);
+        setRetainInstance(true);
         token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
         new GetFeed().execute(UUID.fromString(token));
-        setRetainInstance(true);
         return view;
     }
 
@@ -84,11 +89,9 @@ public class FeedFragment extends ListFragment {
             try {
                 //setData(response);
                 Feed[] feed = (Feed[]) response.getItem();
-                FeedAdapter feedAdapter;
                 if (feed.length == 0) setListAdapter(null);
                 else {
-                    feedAdapter = new FeedAdapter(getActivity(), feed);
-                    setListAdapter(feedAdapter);
+                    setListAdapter(new FeedAdapter(getActivity(), feed));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -115,5 +118,29 @@ public class FeedFragment extends ListFragment {
             return response;
         }
 
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }
