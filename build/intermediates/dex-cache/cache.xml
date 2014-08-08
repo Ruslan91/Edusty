@@ -2,17 +2,17 @@
 <pre-dex-items>
 
     <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-3db21687bcb0b4816571f18dda062e3653fc096c.jar"
+        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\3.1.59\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
+    <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-af84de0c2815dced110282bc1197196d4d75b51b.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
-    <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
-        jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
     <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-javadoc-d1e7135bd8a9638d352541c340f348f451419ae9.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-javadoc.jar"
@@ -25,5 +25,11 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
+        jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
 
 </pre-dex-items>
