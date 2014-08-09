@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    android:background="#cccc"
-    tools:context="ru.edusty.android.Activities.NavigationDrawerFragment" />
+    android:dividerHeight="4dp"
+    android:background="#c900010c"
+    tools:context="ru.edusty.android.Activities.NavigationDrawerFragment"
+    android:listSelector="@drawable/selected_item" />

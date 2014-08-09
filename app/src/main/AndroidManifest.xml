@@ -3,6 +3,7 @@
     package="ru.edusty.android" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -10,7 +11,6 @@
         android:name="ru.edusty.android.permission.C2D_MESSAGE"
         android:protectionLevel="signature"/>
     <uses-permission android:name="ru.edusty.android.permission.C2D_MESSAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -51,7 +51,7 @@
         </activity>
         <activity
             android:name=".Activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/action_settings" >
         </activity>
         <receiver
             android:name=".GcmBroadcastReceiver" android:exported="true"

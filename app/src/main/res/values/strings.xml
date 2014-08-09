@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Edusty</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_vk_auth">Authorization</string>
     <string name="vk">VK</string>
@@ -19,5 +18,6 @@
     <string name="title_activity_create_group">Создание группы</string>
     <string name="ok">ОК</string>
     <string name="new_message">Новое сообщение</string>
+    <string name="general">Основные</string>
 
 </resources>

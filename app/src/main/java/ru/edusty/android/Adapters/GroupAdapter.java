@@ -1,6 +1,7 @@
 package ru.edusty.android.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.edusty.android.Classes.User;
+import ru.edusty.android.ImageDownloaderTask;
+import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
 /**
@@ -18,6 +21,7 @@ import ru.edusty.android.R;
 public class GroupAdapter extends BaseAdapter {
     private final User[] users;
     private final LayoutInflater lInflater;
+    private final ImageLoader imageLoader;
 
     static class ViewHolder {
         TextView name;
@@ -27,6 +31,7 @@ public class GroupAdapter extends BaseAdapter {
     public GroupAdapter(Context context, User[] users) {
         this.users = users;
         this.lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imageLoader = new ImageLoader(context);
     }
 
     @Override
@@ -59,8 +64,12 @@ public class GroupAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
         try {
-            viewHolder.name.setText(users[position].getFirstName() + " " + users[position].getLastName());
-            viewHolder.image.setImageURI(Uri.parse(users[position].getPictureUrl()));
+            User user = users[position];
+            viewHolder.name.setText(user.getFirstName() + " " + user.getLastName());
+            if (viewHolder.image != null) {
+                imageLoader.DisplayImage(user.getPictureUrl(),viewHolder.image);
+                //new ImageDownloaderTask(viewHolder.image).execute(user.getPictureUrl());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

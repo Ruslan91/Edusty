@@ -4,14 +4,5 @@
 
     <header
         android:fragment="ru.edusty.android.Activities.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" />
-
-    <header
-        android:fragment="ru.edusty.android.Activities.SettingsActivity$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications" />
-
-    <header
-        android:fragment="ru.edusty.android.Activities.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" />
-
+        android:title="@string/general" />
 </preference-headers>

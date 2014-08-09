@@ -1,9 +1,10 @@
 package ru.edusty.android.Activities;
 
-import android.app.Fragment;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,6 +30,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.UUID;
@@ -58,6 +60,7 @@ public class GroupFragment extends ListFragment {
         View view = inflater.inflate(R.layout.list_group, container, false);
         setRetainInstance(true);
         etTitle = (EditText) view.findViewById(R.id.etTitle);
+        etTitle.setVisibility(View.INVISIBLE);
         new GetGroup().execute(UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "")));
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,15 +112,35 @@ public class GroupFragment extends ListFragment {
         }
     }
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
+        private Bitmap[] bitmap;
+        private User[] users;
+
         @Override
         protected void onPostExecute(Response response) {
             try {
                 Group group = (Group) response.getItem();
                 etTitle.setText(group.getTitle());
-                User[] users = group.getUsers();
+                users = group.getUsers();
+/*                bitmap = new Bitmap[users.length];
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 0; i < users.length; i++) {
+                                if (!users[i].getPictureUrl().equals("")) {
+                                    InputStream in = new java.net.URL(users[i].getPictureUrl()).openStream();
+                                    bitmap[i] = BitmapFactory.decodeStream(in);
+                                } else bitmap[i] = null;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();*/
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
+                etTitle.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
