@@ -12,7 +12,6 @@ public class Feed {
     UUID SenderID;
     User User;
 
-
     public UUID getMessageID() {
         return MessageID;
     }

@@ -20,7 +20,7 @@ import ru.edusty.android.R;
  * Created by Руслан on 04.08.2014.
  */
 public class FeedAdapter extends BaseAdapter {
-    private ArrayList<Feed> feeds = new ArrayList<Feed>();
+    private ArrayList<Feed> feeds;
     private final LayoutInflater lInflater;
     private final ImageLoader imageLoader;
 

@@ -32,6 +32,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.FeedAdapter;
@@ -48,7 +50,10 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private String token;
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private int preLast;
+    private Feed[] feed;
+    private ArrayList<Feed> feeds;
+    private FeedAdapter feedAdapter;
+    private boolean executed = false;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -81,6 +86,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     private void refresh(int offset) {
         new GetFeed().execute(offset);
+        executed = true;
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -118,45 +124,49 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        final int lastItem = firstVisibleItem + visibleItemCount;
-        if(lastItem == totalItemCount) {
+        int lastItem = firstVisibleItem + visibleItemCount;
+        if (visibleItemCount > 0 && ++firstVisibleItem + visibleItemCount == totalItemCount && lastItem != 0 && !executed) {
             new GetFeed().execute(totalItemCount);
+            executed = true;
         }
     }
 
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
-        //ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        ArrayList<Feed> feeds;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-/*            progressDialog.setMessage("Загрузка...");
-            progressDialog.show();*/
         }
 
         @Override
         protected void onPostExecute(Response response) {
             try {
-                if (feeds.size() == 0)
-                    feeds = (ArrayList<Feed>) Arrays.asList((Feed[]) response.getItem());
-                else feeds.add((Feed) response.getItem());
-                if (feeds.size() == 0) setListAdapter(null);
-                else {
-                    setListAdapter(new FeedAdapter(getActivity(), feeds));
-                }
+                if (offset == 0 && feeds != null) feeds = null;
+                feed = (Feed[]) response.getItem();
+                if (feed.length != 0 && feeds == null) {
+                    feeds = new ArrayList<Feed>(Arrays.asList(feed));
+                    feedAdapter = new FeedAdapter(getActivity(), feeds);
+                    setListAdapter(feedAdapter);
+                } else if (feed.length != 0 && feeds.size() != 0) {
+                    for (int i = 0; i < feed.length; i++) {
+                        feeds.add(offset + i, feed[i]);
+                    }
+                } else if (feeds == null && feed.length == 0) setListAdapter(null);
+                feedAdapter.notifyDataSetChanged();
+                executed = false;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //progressDialog.dismiss();
         }
 
         @Override
         protected Response doInBackground(Integer... params) {
             Response response = null;
             try {
+                offset = params[0];
                 HttpClient httpclient = new DefaultHttpClient();
                 Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&offset" + offset);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&offset=" + offset);
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
@@ -169,29 +179,5 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             return response;
         }
 
-    }
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }
