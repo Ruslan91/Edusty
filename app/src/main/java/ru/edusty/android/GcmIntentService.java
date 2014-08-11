@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import ru.edusty.android.Activities.MainActivity;
@@ -17,7 +18,7 @@ import ru.edusty.android.Activities.MainActivity;
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
- * <p>
+ * <p/>
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
@@ -26,6 +27,7 @@ public class GcmIntentService extends IntentService {
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
     public static final String TAG = "GCM Demo";
+
     public GcmIntentService() {
         super("GcmIntentService");
     }
@@ -45,11 +47,10 @@ public class GcmIntentService extends IntentService {
              */
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString(), 0);
+                //sendNotification("Send error: " + extras.toString(), 0);
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " +
-                        extras.toString(),0);
+                //sendNotification("Deleted messages on server: " + extras.toString(),0);
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -61,7 +62,7 @@ public class GcmIntentService extends IntentService {
                 // This loop represents the service doing some work.
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
-                sendNotification(extras.getString("alert"),extras.getInt("badge"));
+                sendNotification(extras.getString("alert"), extras.getString("badge"));
                 Log.i(TAG, "Received: " + extras);
             }
         }
@@ -72,23 +73,23 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg, int badge) {
+    private void sendNotification(String msg, String badge) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_action_mail)
-                        .setContentTitle(getString(R.string.new_message))
+                        .setContentTitle(msg.substring(0, msg.indexOf(":")))
                         .setTicker(msg)
-                        .setNumber(badge)
+                        .setNumber(Integer.parseInt(badge))
+                        .setContentInfo(badge)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
-                        .setContentText(msg);
+                        .setContentText(msg.substring(msg.indexOf(":") + 1));
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
