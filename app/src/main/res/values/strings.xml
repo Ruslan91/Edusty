@@ -6,18 +6,23 @@
     <string name="title_activity_vk_auth">Authorization</string>
     <string name="vk">VK</string>
     <string name="title_activity_main">Edusty</string>
-    <string name="title_section1">Лента</string>
-    <string name="title_section2">Моя группа</string>
-    <string name="title_section3">Профиль</string>
+    <string name="title_section1">Feed</string>
+    <string name="title_section2">Group Settings</string>
+    <string name="title_section3">Test</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="title_activity_search_university">Поиск</string>
+    <string name="title_activity_search_university">Search</string>
     <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
-    <string name="create">Создать</string>
-    <string name="title_activity_create_group">Создание группы</string>
-    <string name="ok">ОК</string>
-    <string name="new_message">Новое сообщение</string>
+    <string name="create">Create</string>
+    <string name="title_activity_create_group">Creating group</string>
+    <string name="ok">OK</string>
+    <string name="new_message">New message</string>
     <string name="general">Основные</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="profile">Profile</string>
+    <string name="about_programm">About program</string>
+    <string name="write_developer">Write to developer</string>
+    <string name="quit">Quit</string>
 
 </resources>

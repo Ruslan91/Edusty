@@ -11,6 +11,24 @@ public class User {
     String FirstName;
     String LastName;
     String PictureUrl;
+    String UniversityTitle;
+    String GroupTitle;
+
+    public String getGroupTitle() {
+        return GroupTitle;
+    }
+
+    public void setGroupTitle(String groupTitle) {
+        GroupTitle = groupTitle;
+    }
+
+    public String getUniversityTitle() {
+        return UniversityTitle;
+    }
+
+    public void setUniversityTitle(String universityTitle) {
+        UniversityTitle = universityTitle;
+    }
 
     public int getVkontakteID() {
         return VkontakteID;

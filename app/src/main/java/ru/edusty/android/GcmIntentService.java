@@ -26,7 +26,7 @@ public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
-    public static final String TAG = "GCM Demo";
+    public static final String TAG = "GCM";
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -55,7 +55,7 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -74,22 +74,23 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String msg, String badge) {
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_mail)
-                        .setContentTitle(msg.substring(0, msg.indexOf(":")))
                         .setTicker(msg)
+                        .setSmallIcon(R.drawable.ic_stat_content_email)
+                        .setContentTitle(msg.substring(0, msg.indexOf(":")))
+                        .setContentText(msg.substring(msg.indexOf(":") + 1))
                         .setNumber(Integer.parseInt(badge))
                         .setContentInfo(badge)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        .setAutoCancel(true)
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg.substring(msg.indexOf(":") + 1));
+                                .bigText(msg));
+        mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

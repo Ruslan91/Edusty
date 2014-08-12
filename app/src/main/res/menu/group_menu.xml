@@ -5,9 +5,4 @@
         android:icon="@drawable/ic_action_edit"
         android:title="Изменить"
         android:showAsAction="always" />
-        <item android:id="@+id/action_accept"
-            android:icon="@drawable/ic_action_accept"
-            android:title="Изменить"
-            android:showAsAction="always"
-            android:visible="false"/>
 </menu>

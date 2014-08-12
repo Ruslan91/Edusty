@@ -36,6 +36,7 @@ public class CreateGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
         etTitle = (EditText) findViewById(R.id.etTitle);
@@ -59,9 +60,14 @@ public class CreateGroupActivity extends Activity {
             new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
             return true;
         }
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    //Создание группы
     public class PostGroup extends AsyncTask<CreateGroup, Void, Response> {
         @Override
         protected void onPostExecute(Response response) {

@@ -34,6 +34,7 @@ public class CreateMessageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_message);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         etMessage = (EditText) findViewById(R.id.etMessage);
     }
 
@@ -51,27 +52,25 @@ public class CreateMessageActivity extends Activity {
                     UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
                     new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
                 } else Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
+            case android.R.id.home:
+                    finish();
+                    return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //Отправить сообщение в ленту
+    //Отправка сообщения в ленту
     public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
-
-        //ProgressDialog progressDialog = new ProgressDialog(CreateFeedMessageActivity.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*progressDialog.setMessage(getString(R.string.please_wait));
-            progressDialog.show();*/
         }
 
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                //progressDialog.dismiss();
                 finish();
             }
         }

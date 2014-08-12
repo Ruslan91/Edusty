@@ -31,7 +31,6 @@ import java.util.UUID;
 import ru.edusty.android.Adapters.SearchGroupAdapter;
 import ru.edusty.android.Classes.PostUser;
 import ru.edusty.android.Classes.Response;
-import ru.edusty.android.Classes.User;
 import ru.edusty.android.R;
 
 /**
@@ -49,8 +48,9 @@ public class SearchGroupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
-            btnNext = (Button) findViewById(R.id.button);
+            btnNext = (Button) findViewById(R.id.btnQuit);
             btnNext.setVisibility(View.INVISIBLE);
             btnNext.setText("Далее");
             token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
@@ -189,6 +189,10 @@ public class SearchGroupActivity extends Activity {
             Intent intent = new Intent(this, CreateGroupActivity.class);
             intent.putExtra("universityID", universityID.toString());
             startActivity(intent);
+            return true;
+        }
+        if (id == android.R.id.home) {
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

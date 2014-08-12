@@ -14,6 +14,12 @@
         revision="20.0.0"
         sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
     <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
+        jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
+    <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-javadoc-d1e7135bd8a9638d352541c340f348f451419ae9.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-javadoc.jar"
         jumboMode="false"
@@ -26,10 +32,16 @@
         revision="20.0.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
-        jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\com.haarman.listviewanimations-2.6.0-f6c2b44fcb589c503d03348cd69cfa03caa6ee4e.jar"
+        jar="C:\Workspace\Edusty\app\libs\com.haarman.listviewanimations-2.6.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
+        sha1="59351ccb0a1631d30358f6a92749a072f2df7602"/>
+    <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\library-2.4.0-0c5ddb80a15c4a957b82d6dd8118ce5ee6324baa.jar"
+        jar="C:\Users\Руслан\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb"/>
 
 </pre-dex-items>

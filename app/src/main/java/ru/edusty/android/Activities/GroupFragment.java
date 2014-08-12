@@ -111,8 +111,9 @@ public class GroupFragment extends ListFragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
-        private Bitmap[] bitmap;
         private User[] users;
 
         @Override
@@ -121,22 +122,6 @@ public class GroupFragment extends ListFragment {
                 Group group = (Group) response.getItem();
                 etTitle.setText(group.getTitle());
                 users = group.getUsers();
-/*                bitmap = new Bitmap[users.length];
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            for (int i = 0; i < users.length; i++) {
-                                if (!users[i].getPictureUrl().equals("")) {
-                                    InputStream in = new java.net.URL(users[i].getPictureUrl()).openStream();
-                                    bitmap[i] = BitmapFactory.decodeStream(in);
-                                } else bitmap[i] = null;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();*/
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
@@ -164,6 +149,8 @@ public class GroupFragment extends ListFragment {
                 return response;
             }
         }
+
+    //Измененние названия группы
     public class PostGroup extends AsyncTask<ru.edusty.android.Classes.PostGroup, Void, Response> {
         @Override
         protected void onPostExecute(Response response) {

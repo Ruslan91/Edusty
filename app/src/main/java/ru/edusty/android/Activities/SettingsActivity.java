@@ -60,7 +60,18 @@ public class SettingsActivity extends PreferenceActivity {
             return;
         }
         addPreferencesFromResource(R.xml.pref_general);
+        Preference profile = findPreference("profile");
         Preference quit = findPreference("quit");
+        Preference send_email = findPreference("send_email");
+
+        profile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                return true;
+            }
+        });
+
         quit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -74,6 +85,21 @@ public class SettingsActivity extends PreferenceActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+                return true;
+            }
+        });
+
+        send_email.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent send = new Intent(Intent.ACTION_SENDTO);
+                String uriText = "mailto:" + Uri.encode("android@edusty.ru") +
+                        "?subject=" + Uri.encode("the subject") +
+                        "&body=" + Uri.encode("the body of the message");
+                Uri uri = Uri.parse(uriText);
+
+                send.setData(uri);
+                startActivity(Intent.createChooser(send, "Send mail..."));
                 return true;
             }
         });

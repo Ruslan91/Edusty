@@ -2,12 +2,9 @@ package ru.edusty.android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,11 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,14 +24,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 import ru.edusty.android.Adapters.FeedAdapter;
 import ru.edusty.android.Classes.Feed;
@@ -54,6 +47,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private ArrayList<Feed> feeds;
     private FeedAdapter feedAdapter;
     private boolean executed = false;
+    private SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -68,7 +62,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_default, container, false);
+        View view = inflater.inflate(R.layout.list_feed, container, false);
         setRetainInstance(true);
         token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
         new GetFeed().execute(offset);
@@ -131,6 +125,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         }
     }
 
+    //Получение ленты сообщений
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
 
         @Override
@@ -146,7 +141,9 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 if (feed.length != 0 && feeds == null) {
                     feeds = new ArrayList<Feed>(Arrays.asList(feed));
                     feedAdapter = new FeedAdapter(getActivity(), feeds);
-                    setListAdapter(feedAdapter);
+                    swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(feedAdapter);
+                    swingBottomInAnimationAdapter.setAbsListView(getListView());
+                    setListAdapter(swingBottomInAnimationAdapter);
                 } else if (feed.length != 0 && feeds.size() != 0) {
                     for (int i = 0; i < feed.length; i++) {
                         feeds.add(offset + i, feed[i]);

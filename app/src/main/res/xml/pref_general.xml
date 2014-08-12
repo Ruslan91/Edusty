@@ -3,8 +3,29 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <Preference
+        android:key="profile"
+        android:title="@string/profile"
+        android:inputType="textCapWords"
+        android:capitalize="words"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <Preference
         android:key="quit"
-        android:title="Выйти из аккаунта"
+        android:title="@string/quit"
+        android:inputType="textCapWords"
+        android:capitalize="words"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <Preference
+        android:key="about"
+        android:title="@string/about_programm"
+        android:inputType="textCapWords"
+        android:capitalize="words"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <Preference
+        android:key="send_email"
+        android:title="@string/write_developer"
         android:inputType="textCapWords"
         android:capitalize="words"
         android:singleLine="true"

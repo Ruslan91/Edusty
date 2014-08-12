@@ -19,5 +19,10 @@
     <string name="ok">ОК</string>
     <string name="new_message">Новое сообщение</string>
     <string name="general">Основные</string>
+    <string name="profile">Профиль</string>
+    <string name="title_activity_profile">Профиль</string>
+    <string name="about_programm">О программе</string>
+    <string name="write_developer">Написать разработчику</string>
+    <string name="quit">Выйти из аккаунта</string>
 
 </resources>
