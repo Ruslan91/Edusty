@@ -2,11 +2,17 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-3db21687bcb0b4816571f18dda062e3653fc096c.jar"
-        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\3.1.59\classes.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-a45fbb82ad47e5e3d4b75d51980d8f5949e6452f.jar"
+        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.89\classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
+        sha1="d71573c9c5ea98a8db47ad6ff993a63d492b3bfa"/>
+    <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-8059187fae16dd82199a378ba7b5d256cfdacdc0.jar"
+        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-af84de0c2815dced110282bc1197196d4d75b51b.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4.jar"
@@ -14,23 +20,29 @@
         revision="20.0.0"
         sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
     <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-d280e712616e2fd922e7fbe8c7594425b2aa8776.jar"
+        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
     <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-9492e58ecfebe8b85a3d88f148f9958daa8d6cb9.jar"
+        jar="C:\Users\Руслан\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-javadoc-d1e7135bd8a9638d352541c340f348f451419ae9.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-javadoc.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="be47c2ee6e9ab0668874e4c6c4933c0637f473d8"/>
-    <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-37cb17455bb9526c2539b693dac8832d1b14164e.jar"
-        jar="C:\Users\Руслан\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
         dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\com.haarman.listviewanimations-2.6.0-f6c2b44fcb589c503d03348cd69cfa03caa6ee4e.jar"
         jar="C:\Workspace\Edusty\app\libs\com.haarman.listviewanimations-2.6.0.jar"

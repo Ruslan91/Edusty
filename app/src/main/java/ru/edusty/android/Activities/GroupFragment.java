@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ import ru.edusty.android.R;
  */
 public class GroupFragment extends ListFragment {
     private EditText etTitle;
+    private User[] users;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -62,21 +64,6 @@ public class GroupFragment extends ListFragment {
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etTitle.setVisibility(View.INVISIBLE);
         new GetGroup().execute(UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "")));
-        etTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         return view;
     }
 
@@ -86,6 +73,14 @@ public class GroupFragment extends ListFragment {
         TextView tv = new TextView(getActivity());
         tv.setText("Участники");
         getListView().addHeaderView(tv);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra("userID", users[position-1].getUserID().toString());
+                startActivity(intent);
+            }
+        });
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -114,7 +109,6 @@ public class GroupFragment extends ListFragment {
 
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
-        private User[] users;
 
         @Override
         protected void onPostExecute(Response response) {

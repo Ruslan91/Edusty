@@ -21,7 +21,7 @@ public class AuthorizationActivity extends Activity {
         try {
 
             SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
-            if (sharedPreferences.getString("token", "") != "") {
+            if (!sharedPreferences.getString("token", "").equals("")) {
                 UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
                 int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
                 if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {

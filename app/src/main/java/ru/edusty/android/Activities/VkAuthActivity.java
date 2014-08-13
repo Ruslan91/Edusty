@@ -24,24 +24,31 @@ public class VkAuthActivity extends Activity {
         vkWeb.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                boolean isToken = url.contains("tokenID=");
-                if (isToken) {
-                    String token = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-                    int newUser = Integer.parseInt(url.substring(url.lastIndexOf("=") + 1));
-                    SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("newUser", newUser);
-                    editor.putString("token", token).apply();
-                    if (newUser == 1) {
-                        startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
-                        finish();
+                try {
+                    boolean isToken = url.contains("tokenID=");
+                    if (isToken) {
+                        String[] splits = url.split("=");
+                        String token = splits[1].substring(0, splits[1].indexOf("&"));
+                        int newUser = Integer.parseInt(splits[2].substring(0, splits[2].indexOf("&")));
+                        String userID = splits[3];
+                        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("newUser", newUser);
+                        editor.putString("userID", userID);
+                        editor.putString("token", token).apply();
+                        if (newUser == 1) {
+                            startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(VkAuthActivity.this, MainActivity.class));
+                            finish();
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-        });
+                }
+            });
         vkWeb.loadUrl(
                 "https://oauth.vk.com/authorize?client_id=4470041&display=touch&redirect_uri=http://edusty.azurewebsites.net/api/VkontakteAuth&response_type=code");
     }

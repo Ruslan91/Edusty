@@ -6,13 +6,21 @@ import java.util.UUID;
  * Created by Руслан on 22.07.2014.
  */
 public class User {
-
-    int VkontakteID;
+    UUID UserID;
+    Integer VkontakteID;
     String FirstName;
     String LastName;
     String PictureUrl;
     String UniversityTitle;
     String GroupTitle;
+
+    public UUID getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(UUID userID) {
+        UserID = userID;
+    }
 
     public String getGroupTitle() {
         return GroupTitle;
@@ -30,11 +38,11 @@ public class User {
         UniversityTitle = universityTitle;
     }
 
-    public int getVkontakteID() {
+    public Integer getVkontakteID() {
         return VkontakteID;
     }
 
-    public void setVkontakteID(int vkontakteID) {
+    public void setVkontakteID(Integer vkontakteID) {
         VkontakteID = vkontakteID;
     }
 

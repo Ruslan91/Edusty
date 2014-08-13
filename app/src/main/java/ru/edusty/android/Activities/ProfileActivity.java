@@ -2,7 +2,7 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,12 +22,8 @@ import org.apache.http.protocol.HTTP;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 
-import ru.edusty.android.Adapters.FeedAdapter;
-import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.User;
 import ru.edusty.android.ImageLoader;
@@ -38,9 +33,12 @@ public class ProfileActivity extends Activity {
 
     private ImageView image;
     private TextView tvName;
-    private TextView tvUniversity;
-    private TextView tvGroup;
+    private TextView tvUniversityGroup;
+
     private ImageLoader imageLoader;
+    private User user;
+    private UUID token;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +48,19 @@ public class ProfileActivity extends Activity {
         image = (ImageView) findViewById(R.id.image);
         imageLoader = new ImageLoader(this);
         tvName = (TextView) findViewById(R.id.tvName);
-        tvUniversity = (TextView) findViewById(R.id.tvUniversity);
-        tvGroup = (TextView) findViewById(R.id.tvGroup);
-        new GetProfile().execute(UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", "")));
+        tvUniversityGroup = (TextView) findViewById(R.id.tvUniversity_Group);
+        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        if (getIntent().getStringExtra("userID") != null)
+            userID = getIntent().getStringExtra("userID");
+        new GetProfile().execute();
     }
 
 
+    public void onClickBtnVkProfile(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://vk.com/id" + user.getVkontakteID()));
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -88,13 +93,12 @@ public class ProfileActivity extends Activity {
         protected void onPostExecute(Response response) {
             try {
                 if (response.getStatus().equals("ок")) {
-                    User user = (User) response.getItem();
+                    user = (User) response.getItem();
                     if (!user.getPictureUrl().equals("")) {
                         imageLoader.DisplayImage(user.getPictureUrl(),image);
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
-                    tvUniversity.setText(user.getUniversityTitle());
-                    tvGroup.setText(user.getGroupTitle());
+                    tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,10 +109,9 @@ public class ProfileActivity extends Activity {
         protected Response doInBackground(UUID... params) {
             Response response = null;
             try {
-                UUID token = params[0];
                 HttpClient httpclient = new DefaultHttpClient();
                 Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "User?tokenID=" + token);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "User?tokenID=" + token + "&userID=" + userID);
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
