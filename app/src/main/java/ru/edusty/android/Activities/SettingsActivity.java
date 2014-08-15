@@ -1,6 +1,7 @@
 package ru.edusty.android.Activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+
+import com.yandex.metrica.Counter;
 
 import java.util.List;
 
@@ -62,6 +65,7 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                Counter.sharedInstance().reportEvent("Просмотр профиля");
                 return true;
             }
         });
@@ -175,7 +179,7 @@ public class SettingsActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
-
+            Counter.initialize(getActivity());
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -185,7 +189,18 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    /**
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Counter.sharedInstance().onResumeActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Counter.sharedInstance().onPauseActivity(this);
+    }
+/**
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
