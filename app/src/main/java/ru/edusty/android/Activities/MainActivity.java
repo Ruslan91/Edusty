@@ -1,12 +1,6 @@
 package ru.edusty.android.Activities;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.ActionBar;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,16 +8,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
+import com.yandex.metrica.Counter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -70,6 +67,7 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
+        Counter.initialize(getApplicationContext());
         token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
@@ -89,8 +87,15 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Counter.sharedInstance().onPauseActivity(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        Counter.sharedInstance().onResumeActivity(this);
         checkPlayServices();
     }
 
@@ -135,6 +140,7 @@ public class MainActivity extends FragmentActivity
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
+
     public class GetRegistrationID extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -162,6 +168,7 @@ public class MainActivity extends FragmentActivity
         }
 
     }
+
     private void sendRegistrationIdToBackend(String registrationID) {
         new SendRegIdToServer().execute(new Push(token, registrationID, 0));
     }
@@ -172,7 +179,7 @@ public class MainActivity extends FragmentActivity
         protected Response doInBackground(Push... params) {
             Response response = null;
             try {
-                Push push= params[0];
+                Push push = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "Push");
                 StringEntity stringEntity = new StringEntity(new Gson().toJson(push));
@@ -188,6 +195,7 @@ public class MainActivity extends FragmentActivity
             return response;
         }
     }
+
     /**
      * Stores the registration ID and app versionCode in the application's
      * {@code SharedPreferences}.
@@ -222,10 +230,9 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
-        Fragment[] frags = new Fragment[3];
+        Fragment[] frags = new Fragment[2];
         frags[0] = new FeedFragment();
         frags[1] = new GroupFragment();
-        frags[2] = new EventsFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, frags[position]).commit();
@@ -239,9 +246,6 @@ public class MainActivity extends FragmentActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
                 break;
         }
     }

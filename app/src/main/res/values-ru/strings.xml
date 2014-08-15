@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
+    <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
 
     <string name="app_name">Edusty</string>
     <string name="action_settings">Настройки</string>
@@ -24,5 +24,6 @@
     <string name="about_programm">О программе</string>
     <string name="write_developer">Написать разработчику</string>
     <string name="quit">Выйти из аккаунта</string>
+    <string name="login_with">Войти через:</string>
 
 </resources>

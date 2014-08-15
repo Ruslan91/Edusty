@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -47,8 +45,8 @@ public class VkAuthActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                }
-            });
+            }
+        });
         vkWeb.loadUrl(
                 "https://oauth.vk.com/authorize?client_id=4470041&display=touch&redirect_uri=http://edusty.azurewebsites.net/api/VkontakteAuth&response_type=code");
     }
@@ -62,7 +60,7 @@ public class VkAuthActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.vk_auth, menu);
         return true;
@@ -75,5 +73,5 @@ public class VkAuthActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

@@ -24,6 +24,10 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/gson-2.2.4-javadoc.jar')
+    compile files ('libs/yandex-mobmetrica-lib-android-1.2-wlibs.jar')
+//    compile files ('libs/yandex-mobmetrica-lib-android-1.2-nolibs.jar')
+//    compile files ('libs/yandex-mobmetrica-lib-android-1.2-javadoc.jar')
+    compile files ('libs/protobuf-java-2.5.0.jar')
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.android.support:support-v4:20.0.0'

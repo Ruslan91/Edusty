@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.edusty.android" >
+    package="ru.edusty.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="ru.edusty.android.permission.C2D_MESSAGE" />
+
     <permission
         android:name="ru.edusty.android.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
-
     <application
 
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:theme="@style/CustomActionBarTheme">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
-            android:name=".Activities.AuthorizationActivity"
-            android:label="@string/app_name" >
+            android:name=".Activities.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,38 +35,40 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activities.AuthorizationActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>
+        <activity
             android:name=".Activities.VkAuthActivity"
-            android:label="@string/title_activity_vk_auth" >
-        </activity>
+            android:label="@string/title_activity_vk_auth"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
+            android:label="@string/title_activity_main"></activity>
         <activity
             android:name=".Activities.SearchUniversityActivity"
-            android:label="В каком ВУЗе Вы учитесь?" >
-        </activity>
+            android:label="В каком ВУЗе Вы учитесь?"></activity>
         <activity
             android:name=".Activities.SearchGroupActivity"
-            android:label="В какой группе группе Вы учитесь?" >
-        </activity>
+            android:label="В какой группе группе Вы учитесь?"></activity>
         <activity
             android:name=".Activities.CreateGroupActivity"
-            android:label="@string/title_activity_create_group" >
-        </activity>
+            android:label="@string/title_activity_create_group"></activity>
         <activity
             android:name=".Activities.CreateMessageActivity"
-            android:label="@string/new_message" >
-        </activity>
+            android:label="@string/new_message"></activity>
         <activity
             android:name=".Activities.SettingsActivity"
-            android:label="@string/action_settings" >
-        </activity>
+            android:label="@string/action_settings"></activity>
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:label="@string/title_activity_profile"></activity>
+
 
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -75,16 +80,56 @@
             android:name=".GcmIntentService"
             android:enabled="true" />
 
-        <activity
-            android:name=".Activities.ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
-        <activity
-            android:name=".Activities.SplashScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash_screen"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
+
+        <!-- Опциональное поле. Может быть установлено программно. -->
+        <meta-data
+            android:name="metrica:api:key"
+            android:value="27628" />
+
+        <service
+            android:name="com.yandex.metrica.MetricaService"
+            android:exported="true"
+            android:enabled="true"
+            android:process=":Metrica">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.yandex.metrica.IMetricaService" />
+                <data android:scheme="metrica" />
+            </intent-filter>
+            <meta-data
+                android:name="metrica:api:level"
+                android:value="4" />
+        </service>
+
+        <receiver
+            android:name="com.yandex.metrica.MetricaEventHandler"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.yandex.metrica.intent.action.SYNC" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.yandex.metrica.CampaignReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="ru.edusty.android.MetricaContentProvider"
+            android:authorities="ROOT_PACKAGE_PATH.MetricaContentProvider"
+            android:exported="true"
+            android:enabled="true" />
+
     </application>
 
 </manifest>

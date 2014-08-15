@@ -61,6 +61,7 @@ public class ProfileActivity extends Activity {
         intent.setData(Uri.parse("http://vk.com/id" + user.getVkontakteID()));
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -95,7 +96,7 @@ public class ProfileActivity extends Activity {
                 if (response.getStatus().equals("ок")) {
                     user = (User) response.getItem();
                     if (!user.getPictureUrl().equals("")) {
-                        imageLoader.DisplayImage(user.getPictureUrl(),image);
+                        imageLoader.DisplayImage(user.getPictureUrl(), image);
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
@@ -21,6 +22,7 @@ import java.io.InputStreamReader;
 import java.util.UUID;
 
 import ru.edusty.android.Classes.PostMessage;
+import ru.edusty.android.Classes.PutMessage;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.R;
 
@@ -28,7 +30,9 @@ import ru.edusty.android.R;
  * Created by Руслан on 04.08.2014.
  */
 public class CreateMessageActivity extends Activity {
-    private EditText etMessage;
+    EditText etMessage;
+    String message;
+    String messageID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,13 @@ public class CreateMessageActivity extends Activity {
         setContentView(R.layout.create_message);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         etMessage = (EditText) findViewById(R.id.etMessage);
+
+        if (getIntent().getStringExtra("message") != null) {
+            getActionBar().setTitle("Редактирование сообщения");
+            message = getIntent().getStringExtra("message");
+            messageID = getIntent().getStringExtra("messageID");
+            etMessage.setText(message);
+        }
     }
 
     @Override
@@ -48,13 +59,22 @@ public class CreateMessageActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send:
+                UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
                 if (!etMessage.getText().toString().equals("")) {
-                    UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
-                    new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
-                } else Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
-            case android.R.id.home:
-                    finish();
+                    if (message == null) {
+                        new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
+                        return true;
+                    } else {
+                        new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID)));
+                        return true;
+                    }
+                } else {
+                    Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
                     return true;
+                }
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,6 +103,44 @@ public class CreateMessageActivity extends Activity {
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "GroupMessage");
                 StringEntity entity = new StringEntity(new Gson().toJson(postMessage),
+                        HTTP.UTF_8);
+                entity.setContentType("application/json");
+                request.setEntity(entity);
+                HttpResponse httpResponse = httpclient.execute(request);
+                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
+                response = new Gson().fromJson(reader, Response.class);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+    }
+
+    //Редактирование сообщения ленты
+    public class PutGroupMessage extends AsyncTask<PutMessage, Void, Response> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
+            if (response.getItem().equals(true)) {
+                finish();
+            }
+        }
+
+        @Override
+        protected Response doInBackground(PutMessage... messages) {
+            PutMessage putMessage = messages[0];
+            Response response = null;
+            try {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPut request = new HttpPut(getString(R.string.serviceUrl) + "GroupMessage");
+                StringEntity entity = new StringEntity(new Gson().toJson(putMessage),
                         HTTP.UTF_8);
                 entity.setContentType("application/json");
                 request.setEntity(entity);

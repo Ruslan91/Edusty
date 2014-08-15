@@ -3,6 +3,7 @@ package ru.edusty.android;
 /**
  * Created by Руслан on 09.08.2014.
  */
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -101,7 +102,7 @@ public class SwipeRefreshListFragment extends ListFragment {
      * view returned from
      * {@link android.support.v4.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
      * which is a {@link android.view.ViewGroup}.
-     *
+     * <p/>
      * <p>To enable 'swipe-to-refresh' support via the {@link android.widget.ListView} we need to
      * override the default behavior and properly signal when a gesture is possible. This is done by
      * overriding {@link #canChildScrollUp()}.

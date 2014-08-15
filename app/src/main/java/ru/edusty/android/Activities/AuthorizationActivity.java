@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.util.UUID;
@@ -19,7 +17,6 @@ public class AuthorizationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-
             SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
             if (!sharedPreferences.getString("token", "").equals("")) {
                 UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
@@ -39,6 +36,7 @@ public class AuthorizationActivity extends Activity {
     }
 
 
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -50,6 +48,7 @@ public class AuthorizationActivity extends Activity {
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
+*/
 
     public void onClickBtnVk(View view) {
         Intent intent = new Intent(this, VkAuthActivity.class);

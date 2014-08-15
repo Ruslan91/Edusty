@@ -2,9 +2,13 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_edit"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_edit"
+        android:title="Изменить"></item>
+    <item
         android:id="@+id/action_delete"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_discard"
-        android:title="Удалить">
-    </item>
+        android:title="Удалить"></item>
 </menu>

@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
     android:dividerHeight="4dp"
-    android:background="#c900010c"
+    android:background="#dd000000"
     tools:context="ru.edusty.android.Activities.NavigationDrawerFragment"
     android:listSelector="@drawable/selected_item" />

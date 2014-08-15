@@ -1,8 +1,6 @@
 package ru.edusty.android.Adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.edusty.android.Classes.User;
-import ru.edusty.android.ImageDownloaderTask;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
@@ -67,7 +64,7 @@ public class GroupAdapter extends BaseAdapter {
             User user = users[position];
             viewHolder.name.setText(user.getFirstName() + " " + user.getLastName());
             if (viewHolder.image != null) {
-                imageLoader.DisplayImage(user.getPictureUrl(),viewHolder.image);
+                imageLoader.DisplayImage(user.getPictureUrl(), viewHolder.image);
                 //new ImageDownloaderTask(viewHolder.image).execute(user.getPictureUrl());
             }
 

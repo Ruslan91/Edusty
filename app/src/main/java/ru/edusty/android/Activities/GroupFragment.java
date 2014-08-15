@@ -1,14 +1,10 @@
 package ru.edusty.android.Activities;
 
-import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,16 +27,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.GroupAdapter;
-import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Group;
-import ru.edusty.android.Classes.PostGroup;
-import ru.edusty.android.Classes.PostUser;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.User;
 import ru.edusty.android.R;
@@ -77,7 +69,7 @@ public class GroupFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra("userID", users[position-1].getUserID().toString());
+                intent.putExtra("userID", users[position - 1].getUserID().toString());
                 startActivity(intent);
             }
         });
@@ -125,24 +117,24 @@ public class GroupFragment extends ListFragment {
             }
         }
 
-            @Override
-            protected Response doInBackground (UUID...params){
-                Response response = null;
-                try {
-                    String query = params[0].toString();
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet httpGet = new HttpGet(getString(R.string.serviceUrl) + "Group?tokenID=" + query);
-                    HttpResponse httpResponse = httpClient.execute(httpGet);
-                    InputStreamReader inputStreamReader = new InputStreamReader(httpResponse.getEntity().getContent(), HTTP.UTF_8);
-                    Type fooType = new TypeToken<Response<Group>>() {
-                    }.getType();
-                    response = new Gson().fromJson(inputStreamReader, fooType);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return response;
+        @Override
+        protected Response doInBackground(UUID... params) {
+            Response response = null;
+            try {
+                String query = params[0].toString();
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.serviceUrl) + "Group?tokenID=" + query);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                InputStreamReader inputStreamReader = new InputStreamReader(httpResponse.getEntity().getContent(), HTTP.UTF_8);
+                Type fooType = new TypeToken<Response<Group>>() {
+                }.getType();
+                response = new Gson().fromJson(inputStreamReader, fooType);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return response;
         }
+    }
 
     //Измененние названия группы
     public class PostGroup extends AsyncTask<ru.edusty.android.Classes.PostGroup, Void, Response> {

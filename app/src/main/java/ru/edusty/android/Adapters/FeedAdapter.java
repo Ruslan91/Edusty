@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import ru.edusty.android.Classes.Feed;
-import ru.edusty.android.ImageDownloaderTask;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 

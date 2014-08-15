@@ -141,7 +141,8 @@ public class SearchGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-            } else Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
         }
 
         Response response;

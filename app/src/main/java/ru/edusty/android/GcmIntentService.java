@@ -74,25 +74,27 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String msg, String badge) {
+        mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setTicker(msg)
                         .setSmallIcon(R.drawable.ic_stat_content_email)
                         .setContentTitle(msg.substring(0, msg.indexOf(":")))
                         .setContentText(msg.substring(msg.indexOf(":") + 1))
+                        .setContentIntent(PendingIntent.getActivity(this, 0,
+                                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT))
+                        .setTicker(msg)
                         .setNumber(Integer.parseInt(badge))
                         .setContentInfo(badge)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setAutoCancel(true)
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg));
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+        /*PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
         mBuilder.setContentIntent(contentIntent);
+        */
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

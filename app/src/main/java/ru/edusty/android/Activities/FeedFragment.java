@@ -54,6 +54,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
     private UUID messageID;
     private String userID;
+    private String message;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -87,6 +88,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (feed[position].getSenderID().toString().equals(userID)) {
                     messageID = feed[position].getMessageID();
+                    message = feed[position].getMessage();
                     getListView().startActionMode(FeedFragment.this);
                 }
                 return true;
@@ -154,7 +156,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mode.getMenuInflater().inflate(R.menu.action_mode_delete_item, menu);
+        mode.getMenuInflater().inflate(R.menu.action_mode_feed_list, menu);
 
         return true;
     }
@@ -169,6 +171,13 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         switch (item.getItemId()) {
             case R.id.action_delete:
                 new DeleteMessage().execute(messageID);
+                mode.finish();
+                return true;
+            case R.id.action_edit:
+                Intent intent = new Intent(getActivity(), CreateMessageActivity.class);
+                intent.putExtra("message", message);
+                intent.putExtra("messageID", messageID.toString());
+                startActivity(intent);
                 mode.finish();
         }
         return false;
@@ -231,6 +240,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         }
 
     }
+
     //Получение ленты сообщений
     public class DeleteMessage extends AsyncTask<UUID, Void, Response> {
 
