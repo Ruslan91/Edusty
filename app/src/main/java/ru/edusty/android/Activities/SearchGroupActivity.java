@@ -2,6 +2,7 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,7 +53,7 @@ public class SearchGroupActivity extends Activity {
         try {
             btnNext = (Button) findViewById(R.id.btnQuit);
             btnNext.setVisibility(View.INVISIBLE);
-            btnNext.setText("Далее");
+            btnNext.setText(getString(R.string.complete));
             token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
             universityID = UUID.fromString(getIntent().getExtras().getString("universityID"));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
@@ -141,6 +142,11 @@ public class SearchGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
+                SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("newUser", 0).apply();
+                startActivity(new Intent(SearchGroupActivity.this, MainActivity.class));
+                finish();
             } else
                 Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
         }

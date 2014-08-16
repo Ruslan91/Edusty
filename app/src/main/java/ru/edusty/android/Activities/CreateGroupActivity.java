@@ -55,12 +55,11 @@ public class CreateGroupActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_accept) {
+        switch (item.getItemId()) {
+        case R.id.action_accept:
             new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
             return true;
-        }
-        if (id == android.R.id.home) {
+        case android.R.id.home:
             finish();
             return true;
         }

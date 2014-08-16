@@ -99,6 +99,15 @@ public class MainActivity extends FragmentActivity
         checkPlayServices();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, AuthorizationActivity.class);
+        intent.putExtra("exit", true);
+        startActivity(intent);
+        finish();
+    }
+
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {

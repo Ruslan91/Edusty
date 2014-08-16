@@ -43,7 +43,7 @@ public class SearchUniversityActivity extends Activity {
         try {
             btnNext = (Button) findViewById(R.id.btnQuit);
             btnNext.setVisibility(View.INVISIBLE);
-            btnNext.setText("Далее");
+            btnNext.setText(getString(R.string.next));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
             listView = (ListView) findViewById(R.id.listView);
@@ -124,7 +124,7 @@ public class SearchUniversityActivity extends Activity {
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search_university, menu);
@@ -141,5 +141,5 @@ public class SearchUniversityActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

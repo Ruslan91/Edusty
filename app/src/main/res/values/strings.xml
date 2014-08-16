@@ -18,12 +18,18 @@
     <string name="title_activity_create_group">Creating group</string>
     <string name="ok">OK</string>
     <string name="new_message">New message</string>
-    <string name="general">Основные</string>
+    <string name="general">General</string>
     <string name="title_activity_profile">Profile</string>
     <string name="profile">Profile</string>
     <string name="about_programm">About program</string>
     <string name="write_developer">Write to developer</string>
     <string name="quit">Quit</string>
-    <string name="login_with">Войти через:</string>
+    <string name="login_with">Login with:</string>
+    <string name="complete">Complete</string>
+    <string name="next">Next</string>
+    <string name="version">Version</string>
+    <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
+    <string name="what_your_group">В какой группе группе Вы учитесь?</string>
+    <string name="about_program">О программе</string>
 
 </resources>

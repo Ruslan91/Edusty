@@ -17,6 +17,9 @@ public class AuthorizationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
+            if (getIntent().getBooleanExtra("exit", false)) {
+                finish();
+            }
             SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
             if (!sharedPreferences.getString("token", "").equals("")) {
                 UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
@@ -34,21 +37,6 @@ public class AuthorizationActivity extends Activity {
             e.printStackTrace();
         }
     }
-
-
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-*/
 
     public void onClickBtnVk(View view) {
         Intent intent = new Intent(this, VkAuthActivity.class);

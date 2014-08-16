@@ -34,5 +34,6 @@
         android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onClickBtnNext" />
+        android:onClick="onClickBtnNext"
+        android:background="@drawable/btn_background" />
 </RelativeLayout>

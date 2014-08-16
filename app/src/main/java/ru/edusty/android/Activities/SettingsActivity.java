@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.yandex.metrica.Counter;
 
@@ -43,8 +45,23 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setupSimplePreferencesScreen();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -77,7 +94,7 @@ public class SettingsActivity extends PreferenceActivity {
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.remove("token");
                 edit.remove("newUser");
-                edit.commit();
+                edit.apply();
                 Intent intent = new Intent(getApplicationContext(), AuthorizationActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -92,8 +109,8 @@ public class SettingsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 Intent send = new Intent(Intent.ACTION_SENDTO);
                 String uriText = "mailto:" + Uri.encode("android@edusty.ru") +
-                        "?subject=" + Uri.encode("the subject") +
-                        "&body=" + Uri.encode("the body of the message");
+                        "?subject=" + Uri.encode("") +
+                        "&body=" + Uri.encode("");
                 Uri uri = Uri.parse(uriText);
 
                 send.setData(uri);
