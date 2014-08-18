@@ -2,34 +2,34 @@
 <resources>
     <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
 
+    <string name="title_activity_vk_auth">Авторизация</string>
+    <string name="title_activity_main">Edusty</string>
+    <string name="title_activity_search_university">Поиск</string>
+    <string name="title_activity_create_group">Создание группы</string>
+    <string name="title_activity_profile">Профиль</string>
+
     <string name="app_name">Edusty</string>
     <string name="action_settings">Настройки</string>
-    <string name="title_activity_vk_auth">Авторизация</string>
     <string name="vk">ВК</string>
-    <string name="title_activity_main">Edusty</string>
     <string name="title_section1">Лента</string>
     <string name="title_section2">Моя группа</string>
     <string name="title_section3">Профиль</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="title_activity_search_university">Поиск</string>
     <string name="create">Создать</string>
-    <string name="title_activity_create_group">Создание группы</string>
     <string name="ok">ОК</string>
-    <string name="new_message">Новое сообщение</string>
+    <string name="new_message">Новая запись</string>
     <string name="general">Основные</string>
     <string name="profile">Профиль</string>
-    <string name="title_activity_profile">Профиль</string>
-    <string name="about_programm">О программе</string>
     <string name="write_developer">Написать разработчику</string>
-    <string name="quit">Выйти из аккаунта</string>
+    <string name="quit">Выйти</string>
     <string name="login_with">Войти через:</string>
-    <string name="complete">Завершить</string>
+    <string name="complete">Готово</string>
     <string name="next">Далее</string>
     <string name="version">Версия</string>
     <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
-    <string name="what_your_group">В какой группе группе Вы учитесь?</string>
+    <string name="what_your_group">В какой группе Вы учитесь?</string>
     <string name="about_program">О программе</string>
 
 </resources>

@@ -92,6 +92,7 @@ public class SearchUniversityActivity extends Activity {
         int position = listView.getCheckedItemPosition();
         Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
         intent.putExtra("universityID", responseItem[position].getID().toString());
+        intent.putExtra("university", responseItem[position].getTitle());
         startActivity(intent);
     }
 

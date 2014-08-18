@@ -1,17 +1,17 @@
 package ru.edusty.android.Activities;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +43,8 @@ import ru.edusty.android.R;
 public class GroupFragment extends ListFragment {
     private EditText etTitle;
     private User[] users;
+    private Button btnAccept;
+    private UUID token;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -53,9 +55,17 @@ public class GroupFragment extends ListFragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_group, container, false);
         setRetainInstance(true);
+        token = UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", ""));
         etTitle = (EditText) view.findViewById(R.id.etTitle);
+        btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
-        new GetGroup().execute(UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "")));
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+            }
+        });
+        new GetGroup().execute(token);
         return view;
     }
 
@@ -73,30 +83,6 @@ public class GroupFragment extends ListFragment {
                 startActivity(intent);
             }
         });
-    }
-
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.group_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-
-                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(
-                        UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "")),
-                        etTitle.getText().toString()));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     //Получение информации о группе
@@ -138,10 +124,20 @@ public class GroupFragment extends ListFragment {
 
     //Измененние названия группы
     public class PostGroup extends AsyncTask<ru.edusty.android.Classes.PostGroup, Void, Response> {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage("Загрузка...");
+            progressDialog.show();
+        }
+
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
+                progressDialog.dismiss();
             } else
                 Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
         }
@@ -154,7 +150,7 @@ public class GroupFragment extends ListFragment {
                 ru.edusty.android.Classes.PostGroup user = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "GroupEdit");
-                StringEntity stringEntity = new StringEntity(new Gson().toJson(user));
+                StringEntity stringEntity = new StringEntity(new Gson().toJson(user), HTTP.UTF_8);
                 stringEntity.setContentType("application/json");
                 request.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(request);

@@ -14,22 +14,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etTitle"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:inputType="text"
         android:singleLine="true"
-        android:padding="4dp" />
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/android:list"
         android:choiceMode="singleChoice"
-        android:layout_below="@+id/etTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:padding="4dp"
         android:headerDividersEnabled="true"
         android:listSelector="@drawable/selected_item"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_below="@+id/btnAccept"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        android:id="@+id/btnAccept"
+        android:layout_below="@+id/etTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/btn_background"
+        android:layout_margin="4dp"
+        android:padding="4dp"
+        android:onClick="onClickBtnAccept" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Название группы"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="4dp" />
 </RelativeLayout>

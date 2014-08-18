@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
+
+    <string name="title_activity_vk_auth">Authorization</string>
+    <string name="title_activity_search_university">Search</string>
+    <string name="title_activity_create_group">Creating group</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_main">Edusty</string>
 
     <string name="app_name">Edusty</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_vk_auth">Authorization</string>
     <string name="vk">VK</string>
-    <string name="title_activity_main">Edusty</string>
     <string name="title_section1">Feed</string>
     <string name="title_section2">Group Settings</string>
     <string name="title_section3">Test</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="title_activity_search_university">Search</string>
-    <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
     <string name="create">Create</string>
-    <string name="title_activity_create_group">Creating group</string>
     <string name="ok">OK</string>
-    <string name="new_message">New message</string>
+    <string name="new_message">New note</string>
     <string name="general">General</string>
-    <string name="title_activity_profile">Profile</string>
     <string name="profile">Profile</string>
-    <string name="about_programm">About program</string>
-    <string name="write_developer">Write to developer</string>
+    <string name="write_developer">Contact us</string>
     <string name="quit">Quit</string>
     <string name="login_with">Login with:</string>
-    <string name="complete">Complete</string>
+    <string name="complete">Done</string>
     <string name="next">Next</string>
     <string name="version">Version</string>
     <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
-    <string name="what_your_group">В какой группе группе Вы учитесь?</string>
-    <string name="about_program">О программе</string>
+    <string name="what_your_group">В какой группе Вы учитесь?</string>
+    <string name="about_program">About</string>
 
 </resources>

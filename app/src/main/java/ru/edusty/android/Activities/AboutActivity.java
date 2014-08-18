@@ -18,6 +18,7 @@ public class AboutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

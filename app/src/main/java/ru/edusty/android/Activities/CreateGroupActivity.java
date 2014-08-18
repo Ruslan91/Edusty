@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -39,6 +40,9 @@ public class CreateGroupActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
+        String university = getIntent().getStringExtra("university");
+        TextView tvTitle = (TextView) findViewById(R.id.tvName);
+        tvTitle.setText("В \"" + university + "\" нет вашей группы? Введите название группы, которую хотите добавить");
         etTitle = (EditText) findViewById(R.id.etTitle);
     }
 
@@ -75,7 +79,9 @@ public class CreateGroupActivity extends Activity {
                 SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("newUser", 0).apply();
-                startActivity(new Intent(CreateGroupActivity.this, MainActivity.class));
+                Intent intent = new Intent(CreateGroupActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 finish();
             } else
                 Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();

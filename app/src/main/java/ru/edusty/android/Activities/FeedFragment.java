@@ -76,7 +76,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         //new GetFeed().execute(offset);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorScheme(R.color.blue, R.color.green, R.color.yellow, R.color.red);
+        mSwipeRefreshLayout.setColorScheme(R.color.green, R.color.yellow, R.color.red, R.color.blue);
         return view;
     }
 
@@ -101,11 +101,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         super.onResume();
         refresh(0);
     }
-    /*    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getListView().setOnScrollListener(this);
-    }*/
 
     private void refresh(int offset) {
         new GetFeed().execute(offset);
@@ -137,7 +132,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 refresh(0);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-        }, 5000);
+        }, 3000);
     }
 
     @Override

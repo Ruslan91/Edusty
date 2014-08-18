@@ -4,8 +4,10 @@ package ru.edusty.android.Activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,8 +21,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.UUID;
+
+import ru.edusty.android.Classes.Response;
+import ru.edusty.android.Classes.User;
+import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
 /**
@@ -58,7 +78,12 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-
+    private ImageView image;
+    private ImageLoader imageLoader;
+    private TextView tvName;
+    private TextView tvUniversityGroup;
+    private UUID token;
+    private  UUID userID = null;
     public NavigationDrawerFragment() {
     }
 
@@ -90,8 +115,14 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        image = (ImageView) view.findViewById(R.id.imageView);
+        imageLoader = new ImageLoader(getActivity());
+        tvName = (TextView) view.findViewById(R.id.tvName);
+        tvUniversityGroup = (TextView) view.findViewById(R.id.tvUniversity_Group);
+        token = UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", ""));
+        mDrawerListView = (ListView) view.findViewById(R.id.listView);
+        new GetProfile().execute();
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,7 +139,60 @@ public class NavigationDrawerFragment extends Fragment {
                 }
         ));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+        return view;
+    }
+
+
+    //Получение профиля пользователя
+    public class GetProfile extends AsyncTask<UUID, Void, Response> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            try {
+                if (response.getStatus().equals("ок")) {
+                    User user = (User) response.getItem();
+                    if (!user.getPictureUrl().equals("")) {
+                        imageLoader.DisplayImage(user.getPictureUrl(), image);
+                    }
+                    tvName.setText(user.getFirstName() + " " + user.getLastName());
+                    tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Response doInBackground(UUID... params) {
+            Response response = null;
+            try {
+
+                HttpClient httpclient = new DefaultHttpClient();
+                Gson gson = new Gson();
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "User?tokenID=" + token + "&userID=" + userID);
+                HttpResponse httpResponse = httpclient.execute(request);
+                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
+                        .getContent(), HTTP.UTF_8);
+                Type fooType = new TypeToken<Response<User>>() {
+                }.getType();
+                response = gson.fromJson(reader, fooType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new GetProfile().execute(token);
     }
 
     public boolean isDrawerOpen() {

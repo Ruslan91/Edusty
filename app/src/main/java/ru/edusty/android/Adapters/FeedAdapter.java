@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.ImageLoader;
@@ -71,7 +73,9 @@ public class FeedAdapter extends BaseAdapter {
         try {
             Feed feed = feeds.get(position);
             viewHolder.name.setText(feed.getUser().getFirstName() + " " + feed.getUser().getLastName());
-            Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(feed.getMessageDate());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+04:00"));
+            Date date = dateFormat.parse(feed.getMessageDate());
             viewHolder.date.setText(new SimpleDateFormat("EEE, dd MMMM yyyy, HH:mm").format(date));
             viewHolder.message.setText(feed.getMessage());
             if (viewHolder.image != null) {

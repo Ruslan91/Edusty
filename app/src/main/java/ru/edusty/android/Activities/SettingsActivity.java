@@ -74,15 +74,24 @@ public class SettingsActivity extends PreferenceActivity {
             return;
         }
         addPreferencesFromResource(R.xml.pref_general);
-        Preference profile = findPreference("profile");
+        //Preference profile = findPreference("profile");
         Preference quit = findPreference("quit");
+        Preference about = findPreference("about");
         Preference send_email = findPreference("send_email");
 
-        profile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+/*        profile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 Counter.sharedInstance().reportEvent("Просмотр профиля");
+                return true;
+            }
+        });*/
+
+        about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             }
         });
@@ -100,6 +109,7 @@ public class SettingsActivity extends PreferenceActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+                Counter.sharedInstance().reportEvent("Выход из учетной записи");
                 return true;
             }
         });
@@ -108,8 +118,8 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent send = new Intent(Intent.ACTION_SENDTO);
-                String uriText = "mailto:" + Uri.encode("android@edusty.ru") +
-                        "?subject=" + Uri.encode("") +
+                String uriText = "mailto:" + Uri.encode("team@edusty.ru") +
+                        "?subject=" + Uri.encode("Edusty Android") +
                         "&body=" + Uri.encode("");
                 Uri uri = Uri.parse(uriText);
 

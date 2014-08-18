@@ -26,6 +26,7 @@ import java.util.UUID;
 
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.User;
+import ru.edusty.android.ImageDownloaderTask;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
@@ -92,7 +93,7 @@ public class ProfileActivity extends Activity {
                 if (response.getStatus().equals("ок")) {
                     user = (User) response.getItem();
                     if (!user.getPictureUrl().equals("")) {
-                        imageLoader.DisplayImage(user.getPictureUrl(), image);
+                        new ImageDownloaderTask(image).execute(user.getPictureUrl());
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());

@@ -15,6 +15,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -61,11 +64,13 @@ public class MainActivity extends FragmentActivity
 
     String SENDER_ID = "821944378740";
     private UUID token;
+    private EditText etTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //etTitle = (EditText) findViewById(R.id.etTitle);
         context = getApplicationContext();
         Counter.initialize(getApplicationContext());
         token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
@@ -102,9 +107,9 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, AuthorizationActivity.class);
+/*        Intent intent = new Intent(this, AuthorizationActivity.class);
         intent.putExtra("exit", true);
-        startActivity(intent);
+        startActivity(intent);*/
         finish();
     }
 
@@ -148,6 +153,10 @@ public class MainActivity extends FragmentActivity
         // how you store the regID in your app is up to you.
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
+    }
+
+    public void onClickItemSettings(View view) {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     public class GetRegistrationID extends AsyncTask<Void, Void, String> {
@@ -267,8 +276,7 @@ public class MainActivity extends FragmentActivity
         actionBar.setTitle(mTitle);
     }
 
-
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             getMenuInflater().inflate(R.menu.main, menu);
@@ -285,5 +293,5 @@ public class MainActivity extends FragmentActivity
                 startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

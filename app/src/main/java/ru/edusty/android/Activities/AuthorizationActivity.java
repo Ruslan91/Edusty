@@ -22,15 +22,17 @@ public class AuthorizationActivity extends Activity {
             }
             SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
             if (!sharedPreferences.getString("token", "").equals("")) {
-                UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
-                int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
-                if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
+                //UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+                //int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
+/*                if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 } else if (newUser == 1) {
                     startActivity(new Intent(this, SearchUniversityActivity.class));
                     finish();
-                }
+                }*/
+                startActivity(new Intent(this, VkAuthActivity.class));
+                finish();
             } else
                 setContentView(R.layout.authorization);
         } catch (Exception e) {

@@ -76,20 +76,18 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String msg, String badge) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_content_email)
                         .setContentTitle(msg.substring(0, msg.indexOf(":")))
                         .setContentText(msg.substring(msg.indexOf(":") + 1))
-                        .setContentIntent(PendingIntent.getActivity(this, 0,
-                                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT))
                         .setTicker(msg)
                         .setNumber(Integer.parseInt(badge))
                         .setContentInfo(badge)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setAutoCancel(true)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg));
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setContentIntent(PendingIntent.getActivity(this, 0,
+                                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
 
         /*PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);

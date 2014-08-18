@@ -1,6 +1,8 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -195,6 +197,7 @@ public class SearchGroupActivity extends Activity {
         if (id == R.id.action_create) {
             Intent intent = new Intent(this, CreateGroupActivity.class);
             intent.putExtra("universityID", universityID.toString());
+            intent.putExtra("university", getIntent().getStringExtra("university"));
             startActivity(intent);
             return true;
         }
