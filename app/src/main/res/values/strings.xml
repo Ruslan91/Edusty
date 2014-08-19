@@ -11,8 +11,8 @@
     <string name="app_name">Edusty</string>
     <string name="action_settings">Settings</string>
     <string name="vk">VK</string>
-    <string name="title_section1">Feed</string>
-    <string name="title_section2">Group Settings</string>
+    <string name="title_section1">News feed</string>
+    <string name="title_section2">My Group</string>
     <string name="title_section3">Test</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

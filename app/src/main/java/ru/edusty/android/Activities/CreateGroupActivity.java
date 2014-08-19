@@ -42,7 +42,7 @@ public class CreateGroupActivity extends Activity {
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
         String university = getIntent().getStringExtra("university");
         TextView tvTitle = (TextView) findViewById(R.id.tvName);
-        tvTitle.setText("В \"" + university + "\" нет вашей группы? Введите название группы, которую хотите добавить");
+        tvTitle.setText("В \"" + university + "\" нет вашей группы? Введите название группы, которую хотите добавить.");
         etTitle = (EditText) findViewById(R.id.etTitle);
     }
 
