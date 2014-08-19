@@ -11,7 +11,7 @@
     <string name="app_name">Edusty</string>
     <string name="action_settings">Настройки</string>
     <string name="vk">ВК</string>
-    <string name="title_section1">Лента</string>
+    <string name="title_section1">Лента новостей</string>
     <string name="title_section2">Моя группа</string>
     <string name="title_section3">Профиль</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -22,7 +22,7 @@
     <string name="new_message">Новая запись</string>
     <string name="general">Основные</string>
     <string name="profile">Профиль</string>
-    <string name="write_developer">Написать разработчику</string>
+    <string name="write_developer">Написать разработчикам</string>
     <string name="quit">Выйти</string>
     <string name="login_with">Войти через:</string>
     <string name="complete">Готово</string>

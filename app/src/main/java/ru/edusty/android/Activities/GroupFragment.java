@@ -1,12 +1,13 @@
 package ru.edusty.android.Activities;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class GroupFragment extends ListFragment {
     private User[] users;
     private Button btnAccept;
     private UUID token;
+    private String defaultText;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -59,12 +61,7 @@ public class GroupFragment extends ListFragment {
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
-            }
-        });
+        btnAccept.setVisibility(View.INVISIBLE);
         new GetGroup().execute(token);
         return view;
     }
@@ -73,6 +70,33 @@ public class GroupFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView tv = new TextView(getActivity());
+        etTitle.setVisibility(View.VISIBLE);
+        defaultText = etTitle.getText().toString();
+        //btnAccept.setVisibility(View.VISIBLE);
+        etTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.equals(defaultText)) {
+                    btnAccept.setVisibility(View.VISIBLE);
+                } else btnAccept.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+            }
+        });
         tv.setText("Участники");
         getListView().addHeaderView(tv);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,7 +121,6 @@ public class GroupFragment extends ListFragment {
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
-                etTitle.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -147,10 +170,10 @@ public class GroupFragment extends ListFragment {
         @Override
         protected Response doInBackground(ru.edusty.android.Classes.PostGroup... params) {
             try {
-                ru.edusty.android.Classes.PostGroup user = params[0];
+                ru.edusty.android.Classes.PostGroup group = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "GroupEdit");
-                StringEntity stringEntity = new StringEntity(new Gson().toJson(user), HTTP.UTF_8);
+                StringEntity stringEntity = new StringEntity(new Gson().toJson(group), HTTP.UTF_8);
                 stringEntity.setContentType("application/json");
                 request.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(request);

@@ -74,13 +74,31 @@ public class FeedAdapter extends BaseAdapter {
             Feed feed = feeds.get(position);
             viewHolder.name.setText(feed.getUser().getFirstName() + " " + feed.getUser().getLastName());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+04:00"));
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date date = dateFormat.parse(feed.getMessageDate());
-            viewHolder.date.setText(new SimpleDateFormat("EEE, dd MMMM yyyy, HH:mm").format(date));
+            TimeZone timeZone = TimeZone.getTimeZone("Europe/Moscow");
+            Calendar calendar = Calendar.getInstance();
+            Date time = calendar.getTime();
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            if (dateFormat.format(date).equals(dateFormat.format(time))) {
+                dateFormat = new SimpleDateFormat("cегодня, HH:mm");
+                dateFormat.setTimeZone(timeZone);
+                viewHolder.date.setText(dateFormat.format(date));
+            } else {
+                dateFormat = new SimpleDateFormat("dd");
+                if (Integer.parseInt(dateFormat.format(date)) + 1 == Integer.parseInt(dateFormat.format(time))) {
+                    dateFormat = new SimpleDateFormat("вчера, HH:mm");
+                    dateFormat.setTimeZone(timeZone);
+                    viewHolder.date.setText(dateFormat.format(date));
+                } else{
+                    dateFormat = new SimpleDateFormat("EEE, dd MMMM yyyy, HH:mm");
+                    dateFormat.setTimeZone(timeZone);
+                    viewHolder.date.setText(dateFormat.format(date));
+                }
+            }
             viewHolder.message.setText(feed.getMessage());
             if (viewHolder.image != null) {
                 imageLoader.DisplayImage(feed.getUser().getPictureUrl(), viewHolder.image);
-                //new ImageDownloaderTask(viewHolder.image).execute(feed.getUser().getPictureUrl());
             }
         } catch (Exception e) {
             e.printStackTrace();
