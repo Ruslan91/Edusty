@@ -83,7 +83,8 @@ public class NavigationDrawerFragment extends Fragment {
     private TextView tvName;
     private TextView tvUniversityGroup;
     private UUID token;
-    private  UUID userID = null;
+    private UUID userID = null;
+
     public NavigationDrawerFragment() {
     }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
+    <string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
 
     <string name="title_activity_vk_auth">Authorization</string>
     <string name="title_activity_search_university">Search</string>
-    <string name="title_activity_create_group">Creating group</string>
+    <string name="title_activity_create_group">Add group</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_main">Edusty</string>
 
@@ -31,5 +31,8 @@
     <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
     <string name="what_your_group">В какой группе Вы учитесь?</string>
     <string name="about_program">About</string>
+    <string name="send">Send</string>
+    <string name="add">Add</string>
+    <string name="error">Произошла ошибка. Попробуйте снова</string>
 
 </resources>

@@ -22,13 +22,6 @@ public class VkAuthActivity extends Activity {
         setContentView(R.layout.auth_web);
         vkWeb = (WebView) findViewById(R.id.vkWeb);
         vkWeb.getSettings().setJavaScriptEnabled(true);
-/*        CookieManager.getInstance().setAcceptCookie(false);
-        //Make sure no caching is done
-        vkWeb.getSettings();
-        vkWeb.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        vkWeb.getSettings().setAppCacheEnabled(false);
-        vkWeb.clearHistory();
-        vkWeb.clearCache(true);*/
         vkWeb.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -44,6 +37,8 @@ public class VkAuthActivity extends Activity {
                         editor.putInt("newUser", newUser);
                         editor.putString("userID", userID);
                         editor.putString("token", token).apply();
+                        WebSettings ws = vkWeb.getSettings();
+                        ws.setSaveFormData(true);
                         if (newUser == 1) {
                             startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
                             finish();
@@ -69,19 +64,4 @@ public class VkAuthActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.vk_auth, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

@@ -29,7 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/primary_text_dark"
             android:textStyle="bold"
-            android:padding="4dp"/>
+            android:padding="4dp" />
 
         <TextView
             android:id="@+id/tvUniversity_Group"
@@ -39,14 +39,14 @@
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
             android:textColor="@android:color/secondary_text_dark"
-            android:padding="4dp"/>
+            android:padding="4dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/white"
-        android:padding="4dp"/>
+        android:padding="4dp" />
 
     <ListView
         android:id="@+id/listView"
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/white"
-        android:padding="4dp"/>
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/button2"
@@ -71,6 +71,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:clickable="true"
         android:onClick="onClickItemSettings"
-        android:padding="4dp"/>
+        android:padding="4dp" />
 
 </LinearLayout>

@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.UUID;
-
 import ru.edusty.android.R;
 
 

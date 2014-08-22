@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.yandex.metrica.Counter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -38,6 +39,7 @@ public class CreateGroupActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        Counter.initialize(getApplicationContext());
         token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
         String university = getIntent().getStringExtra("university");
@@ -49,23 +51,19 @@ public class CreateGroupActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.create_group, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-        case R.id.action_accept:
-            new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
-            return true;
-        case android.R.id.home:
-            finish();
-            return true;
+            case R.id.action_accept:
+                new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
+                return true;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,12 +77,14 @@ public class CreateGroupActivity extends Activity {
                 SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("newUser", 0).apply();
-                Intent intent = new Intent(CreateGroupActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
-            } else
-                Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            }
         }
 
         Response response;

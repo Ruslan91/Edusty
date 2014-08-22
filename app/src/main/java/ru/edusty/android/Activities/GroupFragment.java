@@ -3,6 +3,8 @@ package ru.edusty.android.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -62,6 +64,7 @@ public class GroupFragment extends ListFragment {
         btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
         btnAccept.setVisibility(View.INVISIBLE);
+        btnAccept.setEnabled(false);
         new GetGroup().execute(token);
         return view;
     }
@@ -72,7 +75,7 @@ public class GroupFragment extends ListFragment {
         TextView tv = new TextView(getActivity());
         etTitle.setVisibility(View.VISIBLE);
         defaultText = etTitle.getText().toString();
-        //btnAccept.setVisibility(View.VISIBLE);
+        btnAccept.setVisibility(View.VISIBLE);
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,9 +84,7 @@ public class GroupFragment extends ListFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.equals(defaultText)) {
-                    btnAccept.setVisibility(View.VISIBLE);
-                } else btnAccept.setVisibility(View.INVISIBLE);
+                btnAccept.setEnabled(true);
             }
 
             @Override
@@ -109,8 +110,23 @@ public class GroupFragment extends ListFragment {
         });
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
+/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage("Загрузка...");
+            progressDialog.show();
+        }*/
 
         @Override
         protected void onPostExecute(Response response) {
@@ -121,6 +137,7 @@ public class GroupFragment extends ListFragment {
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
+                //progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -160,9 +177,10 @@ public class GroupFragment extends ListFragment {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                progressDialog.dismiss();
-            } else
+            } else {
                 Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
         }
 
         Response response;

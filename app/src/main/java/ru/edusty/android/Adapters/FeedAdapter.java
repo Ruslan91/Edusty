@@ -81,7 +81,7 @@ public class FeedAdapter extends BaseAdapter {
             Date time = calendar.getTime();
             dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             if (dateFormat.format(date).equals(dateFormat.format(time))) {
-                dateFormat = new SimpleDateFormat("cегодня, HH:mm");
+                dateFormat = new SimpleDateFormat("сегодня, HH:mm");
                 dateFormat.setTimeZone(timeZone);
                 viewHolder.date.setText(dateFormat.format(date));
             } else {
@@ -90,7 +90,7 @@ public class FeedAdapter extends BaseAdapter {
                     dateFormat = new SimpleDateFormat("вчера, HH:mm");
                     dateFormat.setTimeZone(timeZone);
                     viewHolder.date.setText(dateFormat.format(date));
-                } else{
+                } else {
                     dateFormat = new SimpleDateFormat("EEE, dd MMMM yyyy, HH:mm");
                     dateFormat.setTimeZone(timeZone);
                     viewHolder.date.setText(dateFormat.format(date));

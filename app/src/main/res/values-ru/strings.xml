@@ -31,5 +31,8 @@
     <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
     <string name="what_your_group">В какой группе Вы учитесь?</string>
     <string name="about_program">О программе</string>
+    <string name="send">Отправить</string>
+    <string name="add">Добавить</string>
+    <string name="error">Произошла ошибка. Попробуйте снова</string>
 
 </resources>
