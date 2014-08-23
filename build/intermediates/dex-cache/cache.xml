@@ -2,67 +2,67 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\classes-a45fbb82ad47e5e3d4b75d51980d8f5949e6452f.jar"
-        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.89\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="d71573c9c5ea98a8db47ad6ff993a63d492b3bfa"/>
-    <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\classes-8059187fae16dd82199a378ba7b5d256cfdacdc0.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-8059187fae16dd82199a378ba7b5d256cfdacdc0.jar"
         jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\internal_impl-20.0.0-d280e712616e2fd922e7fbe8c7594425b2aa8776.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\classes-a45fbb82ad47e5e3d4b75d51980d8f5949e6452f.jar"
+        jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.89\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d71573c9c5ea98a8db47ad6ff993a63d492b3bfa"/>
+    <item
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-d280e712616e2fd922e7fbe8c7594425b2aa8776.jar"
         jar="C:\Workspace\Edusty\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\protobuf-java-2.5.0-e9f5bfd3bfb32ffccb847763fca8d62a4c0332df.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\protobuf-java-2.5.0-e9f5bfd3bfb32ffccb847763fca8d62a4c0332df.jar"
         jar="C:\Workspace\Edusty\app\libs\protobuf-java-2.5.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="a10732c76bfacdbd633a7eb0f7968b1059a65dfa"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\gson-2.2.4-javadoc-d1e7135bd8a9638d352541c340f348f451419ae9.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-javadoc-d1e7135bd8a9638d352541c340f348f451419ae9.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-javadoc.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="be47c2ee6e9ab0668874e4c6c4933c0637f473d8"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\yandex-mobmetrica-lib-android-1.2-wlibs-7f7c21075194de448759e7f432084b16891132e8.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\yandex-mobmetrica-lib-android-1.2-wlibs-7f7c21075194de448759e7f432084b16891132e8.jar"
         jar="C:\Workspace\Edusty\app\libs\yandex-mobmetrica-lib-android-1.2-wlibs.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="af647af335dad685da48dd6af2df0dae2a39d1c7"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\library-2.4.0-0c5ddb80a15c4a957b82d6dd8118ce5ee6324baa.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\library-2.4.0-0c5ddb80a15c4a957b82d6dd8118ce5ee6324baa.jar"
         jar="C:\Users\Руслан\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\gson-2.2.4-af84de0c2815dced110282bc1197196d4d75b51b.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-af84de0c2815dced110282bc1197196d4d75b51b.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\gson-2.2.4-sources-d088dfaa6b977ba727afc34112ced1c9036fb7cc.jar"
         jar="C:\Workspace\Edusty\app\libs\gson-2.2.4-sources.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="10ab84ba225b583b10713f57c04270c918ef162b"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\library-2.6.0-dfb2f944eca0afd8d304f0c93239b37df547e31c.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\library-2.6.0-dfb2f944eca0afd8d304f0c93239b37df547e31c.jar"
         jar="C:\Users\Руслан\.gradle\caches\modules-2\files-2.1\com.nhaarman.listviewanimations\library\2.6.0\59351ccb0a1631d30358f6a92749a072f2df7602\library-2.6.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="59351ccb0a1631d30358f6a92749a072f2df7602"/>
     <item
-        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\release\support-annotations-20.0.0-9492e58ecfebe8b85a3d88f148f9958daa8d6cb9.jar"
+        dex="C:\Workspace\Edusty\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-9492e58ecfebe8b85a3d88f148f9958daa8d6cb9.jar"
         jar="C:\Users\Руслан\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"

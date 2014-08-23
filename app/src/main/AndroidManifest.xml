@@ -82,7 +82,6 @@
             android:enabled="true" />
 
 
-        <!-- Опциональное поле. Может быть установлено программно. -->
         <meta-data
             android:name="metrica:api:key"
             android:value="27628" />

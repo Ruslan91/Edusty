@@ -84,7 +84,7 @@ public class GcmIntentService extends IntentService {
                 .setContentInfo(badge)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setAutoCancel(true)
-                //.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        //.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentIntent(PendingIntent.getActivity(this, 0,
                         new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

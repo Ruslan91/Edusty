@@ -1,6 +1,5 @@
 package ru.edusty.android.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -50,7 +49,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private String token;
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private Feed[] feed;
+    private Feed[] feed = new Feed[2];
     private ArrayList<Feed> feeds;
     private FeedAdapter feedAdapter;
     private boolean executed = false;
@@ -222,7 +221,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 } else if (feeds == null && feed.length == 0) setListAdapter(null);
                 feedAdapter.notifyDataSetChanged();
                 executed = false;
-                //progressDialog.dismiss();
+                //progressDialog.dismiss();*/
             } catch (Exception e) {
                 e.printStackTrace();
             }

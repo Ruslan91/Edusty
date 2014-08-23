@@ -65,7 +65,6 @@ public class GroupAdapter extends BaseAdapter {
             viewHolder.name.setText(user.getFirstName() + " " + user.getLastName());
             if (viewHolder.image != null) {
                 imageLoader.DisplayImage(user.getPictureUrl(), viewHolder.image);
-                //new ImageDownloaderTask(viewHolder.image).execute(user.getPictureUrl());
             }
 
         } catch (Exception e) {

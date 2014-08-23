@@ -49,6 +49,7 @@ public class GroupFragment extends ListFragment {
     private Button btnAccept;
     private UUID token;
     private String defaultText;
+    private String changedText;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -64,7 +65,6 @@ public class GroupFragment extends ListFragment {
         btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
         btnAccept.setVisibility(View.INVISIBLE);
-        btnAccept.setEnabled(false);
         new GetGroup().execute(token);
         return view;
     }
@@ -74,8 +74,8 @@ public class GroupFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView tv = new TextView(getActivity());
         etTitle.setVisibility(View.VISIBLE);
-        defaultText = etTitle.getText().toString();
         btnAccept.setVisibility(View.VISIBLE);
+        btnAccept.setEnabled(false);
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,7 +84,12 @@ public class GroupFragment extends ListFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnAccept.setEnabled(true);
+                changedText = s.toString();
+                if (changedText != null) {
+                    if (defaultText != null && !defaultText.equals(changedText)) {
+                        btnAccept.setEnabled(true);
+                    } else btnAccept.setEnabled(false);
+                }
             }
 
             @Override
@@ -95,7 +100,9 @@ public class GroupFragment extends ListFragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+                if (!changedText.equals(defaultText) && !changedText.equals(""))
+                    new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+                else Toast.makeText(getActivity(), "Измените название", Toast.LENGTH_SHORT).show();
             }
         });
         tv.setText("Участники");
@@ -133,6 +140,7 @@ public class GroupFragment extends ListFragment {
             try {
                 Group group = (Group) response.getItem();
                 etTitle.setText(group.getTitle());
+                defaultText = group.getTitle();
                 users = group.getUsers();
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
@@ -178,7 +186,7 @@ public class GroupFragment extends ListFragment {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
             } else {
-                Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();
         }
