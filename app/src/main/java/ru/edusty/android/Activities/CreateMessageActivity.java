@@ -93,7 +93,7 @@ public class CreateMessageActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
         }
 
@@ -137,7 +137,7 @@ public class CreateMessageActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
         }
 

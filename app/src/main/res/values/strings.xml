@@ -35,5 +35,6 @@
     <string name="send">Отправить</string>
     <string name="add">Добавить</string>
     <string name="error">Произошла ошибка. Попробуйте снова</string>
+    <string name="loading">Загрузка...</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -70,6 +71,16 @@ public class CreateGroupActivity extends Activity {
 
     //Создание группы
     public class PostGroup extends AsyncTask<CreateGroup, Void, Response> {
+
+        ProgressDialog progressDialog = new ProgressDialog(CreateGroupActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }
+
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
@@ -85,6 +96,7 @@ public class CreateGroupActivity extends Activity {
             } else {
                 Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
             }
+            progressDialog.dismiss();
         }
 
         Response response;

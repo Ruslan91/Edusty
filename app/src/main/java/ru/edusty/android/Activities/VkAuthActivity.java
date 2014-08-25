@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,7 +21,6 @@ public class VkAuthActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_web);
         vkWeb = (WebView) findViewById(R.id.vkWeb);
-        vkWeb.getSettings().setJavaScriptEnabled(true);
         vkWeb.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -35,8 +36,6 @@ public class VkAuthActivity extends Activity {
                         editor.putInt("newUser", newUser);
                         editor.putString("userID", userID);
                         editor.putString("token", token).apply();
-                        WebSettings ws = vkWeb.getSettings();
-                        ws.setSaveFormData(true);
                         if (newUser == 1) {
                             startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
                             finish();

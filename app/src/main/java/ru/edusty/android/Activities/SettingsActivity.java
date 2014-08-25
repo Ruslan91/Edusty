@@ -105,14 +105,13 @@ public class SettingsActivity extends PreferenceActivity {
                 edit.remove("token");
                 edit.remove("newUser");
                 edit.apply();
-                CookieSyncManager.createInstance(getApplicationContext());
-                CookieManager cookieManager = CookieManager.getInstance();
-                cookieManager.removeAllCookie();
-                cookieManager.setAcceptCookie(false);
                 Intent intent = new Intent(getApplicationContext(), AuthorizationActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                CookieSyncManager.createInstance(SettingsActivity.this);
+                CookieManager cookieManager = CookieManager.getInstance();
+                cookieManager.removeAllCookie();
                 finish();
                 Counter.sharedInstance().reportEvent("Выход из учетной записи");
                 return true;
