@@ -3,6 +3,8 @@ package ru.edusty.android.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -47,6 +49,7 @@ public class GroupFragment extends ListFragment {
     private Button btnAccept;
     private UUID token;
     private String defaultText;
+    private String changedText;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -71,8 +74,8 @@ public class GroupFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         TextView tv = new TextView(getActivity());
         etTitle.setVisibility(View.VISIBLE);
-        defaultText = etTitle.getText().toString();
-        //btnAccept.setVisibility(View.VISIBLE);
+        btnAccept.setVisibility(View.VISIBLE);
+        btnAccept.setEnabled(false);
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -81,9 +84,12 @@ public class GroupFragment extends ListFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.equals(defaultText)) {
-                    btnAccept.setVisibility(View.VISIBLE);
-                } else btnAccept.setVisibility(View.INVISIBLE);
+                changedText = s.toString();
+                if (changedText != null) {
+                    if (defaultText != null && !defaultText.equals(changedText)) {
+                        btnAccept.setEnabled(true);
+                    } else btnAccept.setEnabled(false);
+                }
             }
 
             @Override
@@ -94,7 +100,9 @@ public class GroupFragment extends ListFragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+                if (!changedText.equals(defaultText) && !changedText.equals(""))
+                    new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+                else Toast.makeText(getActivity(), "Измените название", Toast.LENGTH_SHORT).show();
             }
         });
         tv.setText("Участники");
@@ -109,18 +117,35 @@ public class GroupFragment extends ListFragment {
         });
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
+/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage("Загрузка...");
+            progressDialog.show();
+        }*/
 
         @Override
         protected void onPostExecute(Response response) {
             try {
                 Group group = (Group) response.getItem();
                 etTitle.setText(group.getTitle());
+                defaultText = group.getTitle();
                 users = group.getUsers();
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
+                //progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -160,9 +185,10 @@ public class GroupFragment extends ListFragment {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                progressDialog.dismiss();
-            } else
-                Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
         }
 
         Response response;

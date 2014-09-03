@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="serviceUrl">http://edusty.azurewebsites.net/api/</string>
-
-    <string name="title_activity_vk_auth">Authorization</string>
-    <string name="title_activity_search_university">Search</string>
-    <string name="title_activity_create_group">Creating group</string>
-    <string name="title_activity_profile">Profile</string>
-    <string name="title_activity_main">Edusty</string>
+    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V1/</string>
 
     <string name="app_name">Edusty</string>
-    <string name="action_settings">Settings</string>
-    <string name="vk">VK</string>
-    <string name="title_section1">News feed</string>
-    <string name="title_section2">My Group</string>
-    <string name="title_section3">Test</string>
+
+    <string name="title_activity_vk_auth">Авторизация</string>
+    <string name="title_activity_main">Edusty</string>
+    <string name="title_activity_search_university">Поиск</string>
+    <string name="title_activity_create_group">Создание группы</string>
+    <string name="title_activity_profile">Профиль</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="vk">ВК</string>
+    <string name="title_section1">Лента новостей</string>
+    <string name="title_section2">Моя группа</string>
+    <string name="title_section3">Профиль</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="create">Create</string>
-    <string name="ok">OK</string>
-    <string name="new_message">New note</string>
-    <string name="general">General</string>
-    <string name="profile">Profile</string>
-    <string name="write_developer">Contact us</string>
-    <string name="quit">Quit</string>
-    <string name="login_with">Login with:</string>
-    <string name="complete">Done</string>
-    <string name="next">Next</string>
-    <string name="version">Version</string>
+    <string name="create">Создать</string>
+    <string name="ok">ОК</string>
+    <string name="new_message">Новая запись</string>
+    <string name="general">Основные</string>
+    <string name="profile">Профиль</string>
+    <string name="write_developer">Написать разработчикам</string>
+    <string name="quit">Выйти</string>
+    <string name="login_with">Войти через:</string>
+    <string name="complete">Готово</string>
+    <string name="next">Далее</string>
+    <string name="version">Версия</string>
     <string name="what_your_university">В каком ВУЗе Вы учитесь?</string>
     <string name="what_your_group">В какой группе Вы учитесь?</string>
-    <string name="about_program">About</string>
+    <string name="about_program">О программе</string>
+    <string name="send">Отправить</string>
+    <string name="add">Добавить</string>
+    <string name="error">Произошла ошибка. Попробуйте снова</string>
+    <string name="loading">Загрузка...</string>
 
 </resources>

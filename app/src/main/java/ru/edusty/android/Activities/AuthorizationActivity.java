@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.UUID;
-
 import ru.edusty.android.R;
 
 
@@ -17,9 +15,6 @@ public class AuthorizationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            if (getIntent().getBooleanExtra("exit", false)) {
-                finish();
-            }
             SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
             if (!sharedPreferences.getString("token", "").equals("")) {
                 //UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));

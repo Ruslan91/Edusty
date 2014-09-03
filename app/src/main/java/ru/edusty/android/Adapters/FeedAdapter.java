@@ -73,6 +73,7 @@ public class FeedAdapter extends BaseAdapter {
         try {
             Feed feed = feeds.get(position);
             viewHolder.name.setText(feed.getUser().getFirstName() + " " + feed.getUser().getLastName());
+            viewHolder.message.setText(feed.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date date = dateFormat.parse(feed.getMessageDate());
@@ -81,22 +82,21 @@ public class FeedAdapter extends BaseAdapter {
             Date time = calendar.getTime();
             dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             if (dateFormat.format(date).equals(dateFormat.format(time))) {
-                dateFormat = new SimpleDateFormat("cегодня, HH:mm");
+                dateFormat = new SimpleDateFormat("сегодня в HH:mm");
                 dateFormat.setTimeZone(timeZone);
                 viewHolder.date.setText(dateFormat.format(date));
             } else {
                 dateFormat = new SimpleDateFormat("dd");
                 if (Integer.parseInt(dateFormat.format(date)) + 1 == Integer.parseInt(dateFormat.format(time))) {
-                    dateFormat = new SimpleDateFormat("вчера, HH:mm");
+                    dateFormat = new SimpleDateFormat("вчера в HH:mm");
                     dateFormat.setTimeZone(timeZone);
                     viewHolder.date.setText(dateFormat.format(date));
-                } else{
-                    dateFormat = new SimpleDateFormat("EEE, dd MMMM yyyy, HH:mm");
+                } else {
+                    dateFormat = new SimpleDateFormat("dd MMMM yyyy в HH:mm");
                     dateFormat.setTimeZone(timeZone);
                     viewHolder.date.setText(dateFormat.format(date));
                 }
             }
-            viewHolder.message.setText(feed.getMessage());
             if (viewHolder.image != null) {
                 imageLoader.DisplayImage(feed.getUser().getPictureUrl(), viewHolder.image);
             }

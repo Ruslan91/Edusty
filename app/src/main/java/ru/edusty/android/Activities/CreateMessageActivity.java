@@ -1,6 +1,7 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,12 +34,14 @@ public class CreateMessageActivity extends Activity {
     EditText etMessage;
     String message;
     String messageID;
+    private UUID token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_message);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
         etMessage = (EditText) findViewById(R.id.etMessage);
 
         if (getIntent().getStringExtra("message") != null) {
@@ -57,24 +60,27 @@ public class CreateMessageActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_send:
-                UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
-                if (!etMessage.getText().toString().equals("")) {
-                    if (message == null) {
-                        new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
-                        return true;
+        try {
+            switch (item.getItemId()) {
+                case R.id.action_send:
+                    if (!etMessage.getText().toString().equals("")) {
+                        if (message == null) {
+                            new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
+                            return true;
+                        } else {
+                            new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID)));
+                            return true;
+                        }
                     } else {
-                        new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID)));
+                        Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
                         return true;
                     }
-                } else {
-                    Toast.makeText(this, "Введите текст сообщения!", Toast.LENGTH_SHORT).show();
+                case android.R.id.home:
+                    finish();
                     return true;
-                }
-            case android.R.id.home:
-                finish();
-                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -82,9 +88,13 @@ public class CreateMessageActivity extends Activity {
     //Отправка сообщения в ленту
     public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
 
+        ProgressDialog progressDialog = new ProgressDialog(CreateMessageActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
         }
 
         @Override
@@ -92,7 +102,9 @@ public class CreateMessageActivity extends Activity {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            }
+            } else
+                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
 
         @Override
@@ -120,9 +132,13 @@ public class CreateMessageActivity extends Activity {
     //Редактирование сообщения ленты
     public class PutGroupMessage extends AsyncTask<PutMessage, Void, Response> {
 
+        ProgressDialog progressDialog = new ProgressDialog(CreateMessageActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
         }
 
         @Override
@@ -130,7 +146,9 @@ public class CreateMessageActivity extends Activity {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            }
+            } else
+                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
 
         @Override

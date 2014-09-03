@@ -2,6 +2,8 @@ package ru.edusty.android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,7 +49,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private String token;
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private Feed[] feed;
+    private Feed[] feed = new Feed[2];
     private ArrayList<Feed> feeds;
     private FeedAdapter feedAdapter;
     private boolean executed = false;
@@ -73,7 +75,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         setRetainInstance(true);
         token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
         userID = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("userID", "");
-        //new GetFeed().execute(offset);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorScheme(R.color.green, R.color.yellow, R.color.red, R.color.blue);
@@ -105,6 +106,13 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private void refresh(int offset) {
         new GetFeed().execute(offset);
         executed = true;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -186,10 +194,14 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     //Получение ленты сообщений
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
 
+/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-        }
+            progressDialog.setMessage("Загрузка...");
+            progressDialog.show();
+        }*/
 
         @Override
         protected void onPostExecute(Response response) {
@@ -209,6 +221,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 } else if (feeds == null && feed.length == 0) setListAdapter(null);
                 feedAdapter.notifyDataSetChanged();
                 executed = false;
+                //progressDialog.dismiss();*/
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -236,7 +249,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     }
 
-    //Получение ленты сообщений
+    //Удаление сообщения
     public class DeleteMessage extends AsyncTask<UUID, Void, Response> {
 
         @Override
@@ -266,8 +279,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
-                /*Type fooType = new TypeToken<Response<Feed[]>>() {
-                }.getType();*/
                 response = gson.fromJson(reader, Response.class);
             } catch (Exception e) {
                 e.printStackTrace();

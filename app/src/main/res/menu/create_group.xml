@@ -3,7 +3,7 @@
     tools:context="ru.edusty.android.Activities.CreateGroupActivity">
     <item
         android:id="@+id/action_accept"
-        android:title="@string/ok"
+        android:title="@string/add"
         android:icon="@drawable/ic_action_accept"
         android:orderInCategory="100"
         android:showAsAction="never" />

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dd000000"
+    android:background="@color/light_grey"
     android:orientation="vertical"
     tools:context="ru.edusty.android.Activities.NavigationDrawerFragment">
 
@@ -27,9 +27,9 @@
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/primary_text_dark"
+            android:textColor="@android:color/primary_text_light"
             android:textStyle="bold"
-            android:padding="4dp"/>
+            android:padding="4dp" />
 
         <TextView
             android:id="@+id/tvUniversity_Group"
@@ -38,15 +38,15 @@
             android:layout_below="@+id/tvName"
             android:layout_toEndOf="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
-            android:textColor="@android:color/secondary_text_dark"
-            android:padding="4dp"/>
+            android:textColor="@android:color/secondary_text_light"
+            android:padding="4dp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/white"
-        android:padding="4dp"/>
+        android:background="@android:color/darker_gray"
+        android:padding="4dp" />
 
     <ListView
         android:id="@+id/listView"
@@ -54,23 +54,26 @@
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
         android:listSelector="@drawable/selected_item"
-        android:padding="4dp" />
+        android:padding="4dp"
+        android:paddingStart="12dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/white"
-        android:padding="4dp"/>
+        android:background="@android:color/darker_gray"
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_settings"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:clickable="true"
         android:onClick="onClickItemSettings"
-        android:padding="4dp"/>
+        android:padding="4dp"
+        android:paddingStart="12dp"
+        android:layout_gravity="center_vertical" />
 
 </LinearLayout>

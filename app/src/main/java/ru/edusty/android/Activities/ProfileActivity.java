@@ -1,7 +1,11 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,6 +60,12 @@ public class ProfileActivity extends Activity {
         new GetProfile().execute();
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 
     public void onClickBtnVkProfile(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -65,7 +75,6 @@ public class ProfileActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
@@ -81,10 +90,13 @@ public class ProfileActivity extends Activity {
 
     //Получение профиля пользователя
     public class GetProfile extends AsyncTask<UUID, Void, Response> {
+        ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
         }
 
         @Override
@@ -98,6 +110,7 @@ public class ProfileActivity extends Activity {
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
                 }
+                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }

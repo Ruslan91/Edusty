@@ -107,9 +107,9 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, AuthorizationActivity.class);
+/*        Intent intent = new Intent(this, AuthorizationActivity.class);
         intent.putExtra("exit", true);
-        startActivity(intent);
+        startActivity(intent);*/
         finish();
     }
 
