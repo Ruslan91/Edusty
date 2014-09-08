@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.UUID;
+
 import ru.edusty.android.R;
 
 
@@ -15,11 +17,11 @@ public class AuthorizationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
             if (!sharedPreferences.getString("token", "").equals("")) {
-                //UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
-                //int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
-/*                if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
+/*                UUID token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+                int newUser = getSharedPreferences("AppData", MODE_PRIVATE).getInt("newUser", 1);
+                if (token.compareTo(new UUID(0, 0)) != 0 && newUser == 0) {
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 } else if (newUser == 1) {

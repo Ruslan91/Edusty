@@ -54,7 +54,7 @@ public class ProfileActivity extends Activity {
         imageLoader = new ImageLoader(this);
         tvName = (TextView) findViewById(R.id.tvName);
         tvUniversityGroup = (TextView) findViewById(R.id.tvUniversity_Group);
-        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (getIntent().getStringExtra("userID") != null)
             userID = getIntent().getStringExtra("userID");
         new GetProfile().execute();

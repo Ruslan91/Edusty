@@ -54,7 +54,7 @@ public class SearchGroupActivity extends Activity {
             btnNext = (Button) findViewById(R.id.btnQuit);
             btnNext.setVisibility(View.INVISIBLE);
             btnNext.setText(getString(R.string.complete));
-            token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+            token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
             universityID = UUID.fromString(getIntent().getExtras().getString("universityID"));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
@@ -142,7 +142,7 @@ public class SearchGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("newUser", 0).apply();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

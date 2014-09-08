@@ -76,11 +76,13 @@ public class SearchUniversityActivity extends Activity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         btnNext.setVisibility(View.VISIBLE);
                     }
                 });
-            } else listView.setAdapter(null);
+            } else {
+                listView.setAdapter(null);
+                btnNext.setVisibility(View.INVISIBLE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

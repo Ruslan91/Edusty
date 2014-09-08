@@ -126,9 +126,9 @@
 
         <provider
             android:name="ru.edusty.android.MetricaContentProvider"
-            android:authorities="ROOT_PACKAGE_PATH.MetricaContentProvider"
+            android:authorities="ru.edusty.android.MetricaContentProvider"
             android:exported="true"
-            android:enabled="true" />
+            android:enabled="true"/>
 
     </application>
 
