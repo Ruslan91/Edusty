@@ -31,7 +31,7 @@ public class VkAuthActivity extends Activity {
                         String token = splits[1].substring(0, splits[1].indexOf("&"));
                         int newUser = Integer.parseInt(splits[2].substring(0, splits[2].indexOf("&")));
                         String userID = splits[3];
-                        SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("newUser", newUser);
                         editor.putString("userID", userID);

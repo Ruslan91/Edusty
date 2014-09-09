@@ -73,8 +73,8 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_feed, container, false);
         setRetainInstance(true);
-        token = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", "");
-        userID = getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("userID", "");
+        token = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", "");
+        userID = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("userID", "");
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorScheme(R.color.green, R.color.yellow, R.color.red, R.color.blue);

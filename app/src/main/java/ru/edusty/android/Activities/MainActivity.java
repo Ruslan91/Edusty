@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity
         //etTitle = (EditText) findViewById(R.id.etTitle);
         context = getApplicationContext();
         Counter.initialize(getApplicationContext());
-        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);

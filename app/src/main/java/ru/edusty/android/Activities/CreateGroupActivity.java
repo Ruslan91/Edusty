@@ -41,7 +41,7 @@ public class CreateGroupActivity extends Activity {
         setContentView(R.layout.activity_create_group);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Counter.initialize(getApplicationContext());
-        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
         String university = getIntent().getStringExtra("university");
         TextView tvTitle = (TextView) findViewById(R.id.tvName);
@@ -85,7 +85,7 @@ public class CreateGroupActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
-                SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("newUser", 0).apply();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -107,7 +107,7 @@ public class CreateGroupActivity extends Activity {
                 CreateGroup group = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "Group");
-                StringEntity stringEntity = new StringEntity(new Gson().toJson(group));
+                StringEntity stringEntity = new StringEntity(new Gson().toJson(group), HTTP.UTF_8);
                 stringEntity.setContentType("application/json");
                 request.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(request);

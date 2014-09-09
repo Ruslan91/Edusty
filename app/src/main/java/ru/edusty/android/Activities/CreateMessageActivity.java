@@ -41,7 +41,7 @@ public class CreateMessageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_message);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        token = UUID.fromString(getSharedPreferences("AppData", MODE_PRIVATE).getString("token", ""));
+        token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         etMessage = (EditText) findViewById(R.id.etMessage);
 
         if (getIntent().getStringExtra("message") != null) {

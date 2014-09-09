@@ -5,6 +5,5 @@
         android:id="@+id/action_accept"
         android:title="@string/add"
         android:icon="@drawable/ic_action_accept"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:showAsAction="always" />
 </menu>

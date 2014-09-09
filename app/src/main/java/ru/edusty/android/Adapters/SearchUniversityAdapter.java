@@ -58,7 +58,6 @@ public class SearchUniversityAdapter extends BaseAdapter {
             v.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) v.getTag();
-
         }
         viewHolder.Title.setText(results[position].getTitle());
         return v;

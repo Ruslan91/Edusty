@@ -124,7 +124,7 @@ public class NavigationDrawerFragment extends Fragment {
         imageLoader = new ImageLoader(getActivity());
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvUniversityGroup = (TextView) view.findViewById(R.id.tvUniversity_Group);
-        token = UUID.fromString(getActivity().getSharedPreferences("AppData", Context.MODE_PRIVATE).getString("token", ""));
+        token = UUID.fromString(getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", ""));
         mDrawerListView = (ListView) view.findViewById(R.id.listView);
         new GetProfile().execute();
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

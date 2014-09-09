@@ -100,7 +100,7 @@ public class SettingsActivity extends PreferenceActivity {
         quit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences sharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.remove("token");
                 edit.remove("newUser");
@@ -184,7 +184,6 @@ public class SettingsActivity extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
-            Counter.initialize(getActivity());
         }
     }
 
