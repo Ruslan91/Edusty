@@ -53,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:listSelector="@drawable/selected_item"
         android:padding="4dp" />
 
     <View
@@ -62,15 +61,13 @@
         android:background="@android:color/darker_gray"
         android:padding="4dp" />
 
-    <TextView
+    <Button
         android:id="@+id/tvSettings"
-        android:background="@drawable/selected_item"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/action_settings"
         android:textColor="@android:color/black"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:clickable="true"
         android:onClick="onClickItemSettings"
         android:padding="4dp"
         android:layout_gravity="center_vertical"

@@ -86,16 +86,17 @@ public class SearchGroupActivity extends Activity {
             if (responseItem != null) {
                 this.invalidateOptionsMenu();
                 listView.setAdapter(searchGroupAdapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        btnNext.setVisibility(View.VISIBLE);
+                    }
+                });
             } else {
                 this.invalidateOptionsMenu();
                 listView.setAdapter(null);
+                btnNext.setVisibility(View.INVISIBLE);
             }
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    btnNext.setVisibility(View.VISIBLE);
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
         }

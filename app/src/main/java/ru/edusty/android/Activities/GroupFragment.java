@@ -106,7 +106,8 @@ public class GroupFragment extends ListFragment {
             }
         });
         tv.setText("Участники");
-        getListView().addHeaderView(tv);
+        getListView().addHeaderView(tv, null, false);
+
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -185,6 +186,7 @@ public class GroupFragment extends ListFragment {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
+                onResume();
             } else {
                 Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
             }
