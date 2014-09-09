@@ -19,7 +19,7 @@
         android:allowBackup="true"
         android:icon="@drawable/launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme">
+        android:theme="@style/_EdustyTheme">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -39,8 +39,7 @@
             android:label="@string/app_name" />
         <activity
             android:name=".Activities.VkAuthActivity"
-            android:label="@string/title_activity_vk_auth"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+            android:label="@string/title_activity_vk_auth"/>
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main" />
@@ -58,7 +57,8 @@
             android:label="@string/new_message" />
         <activity
             android:name=".Activities.SettingsActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings"
+            android:theme="@style/CustomActionBarTheme"/>
         <activity
             android:name=".Activities.ProfileActivity"
             android:label="@string/title_activity_profile" />

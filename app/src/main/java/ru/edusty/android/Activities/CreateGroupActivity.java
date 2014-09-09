@@ -60,7 +60,9 @@ public class CreateGroupActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_accept:
+                if (!etTitle.getText().toString().equals(""))
                 new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
+                else Toast.makeText(CreateGroupActivity.this, getString(R.string.enter_group_name), Toast.LENGTH_SHORT).show();
                 return true;
             case android.R.id.home:
                 finish();

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -43,9 +44,15 @@ public class SplashScreenActivity extends Activity {
                 @Override
                 public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(SplashScreenActivity.this, AuthorizationActivity.class);
-                    SplashScreenActivity.this.startActivity(mainIntent);
-                    SplashScreenActivity.this.finish();
+                    SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
+                    if (sharedPreferences.getString("token", "").equals("")) {
+                        Intent mainIntent = new Intent(SplashScreenActivity.this, AuthorizationActivity.class);
+                        SplashScreenActivity.this.startActivity(mainIntent);
+                        SplashScreenActivity.this.finish();
+                    } else {
+                        startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
+                        SplashScreenActivity.this.finish();
+                    }
                 }
             }, SPLASH_DISPLAY_LENGTH);
         }

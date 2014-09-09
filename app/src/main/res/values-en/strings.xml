@@ -35,5 +35,9 @@
     <string name="add">Add</string>
     <string name="error">Error. Please try again</string>
     <string name="loading">Loading…</string>
+    <string name="enter_group_name">Enter group name</string>
+    <string name="enter_message_text">Enter message</string>
+    <string name="save">Save</string>
+    <string name="group_name">Group name</string>
 
 </resources>

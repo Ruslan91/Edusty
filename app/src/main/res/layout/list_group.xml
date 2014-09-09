@@ -29,7 +29,6 @@
         android:choiceMode="singleChoice"
         android:padding="4dp"
         android:headerDividersEnabled="true"
-        android:listSelector="@drawable/selected_item"
         android:clickable="true"
         android:layout_below="@+id/btnAccept"
         android:layout_alignParentLeft="true"
@@ -38,10 +37,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
+        android:text="@string/save"
         android:id="@+id/btnAccept"
         android:onClick="onClickBtnAccept"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_alignTop="@+id/etTitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -50,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Название группы"
+        android:text="@string/group_name"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
