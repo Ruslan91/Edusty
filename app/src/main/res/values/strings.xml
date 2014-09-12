@@ -35,7 +35,7 @@
     <string name="send">Отправить</string>
     <string name="add">Добавить</string>
     <string name="error">Произошла ошибка. Попробуйте снова</string>
-    <string name="loading">Загрузка...</string>
+    <string name="loading">Загрузка…</string>
     <string name="app_data">EdustyData</string>
     <string name="enter_group_name">Введите название группы</string>
     <string name="enter_message_text">Введите текст сообщения</string>

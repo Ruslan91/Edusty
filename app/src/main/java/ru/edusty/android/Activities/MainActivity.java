@@ -43,43 +43,28 @@ import ru.edusty.android.R;
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
 
     static final String TAG = "GCMDemo";
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+
     private CharSequence mTitle;
     private GoogleCloudMessaging gcm;
-    private String regid;
-    SharedPreferences prefs;
     Context context;
 
     String SENDER_ID = "821944378740";
     private UUID token;
-    private EditText etTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //etTitle = (EditText) findViewById(R.id.etTitle);
         context = getApplicationContext();
-        Counter.initialize(getApplicationContext());
+        Counter.initialize(context);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
-            regid = getRegistrationId(context);
-            if (regid.isEmpty()) {
-                new GetRegistrationID().execute();
-            }
+            new GetRegistrationID().execute();
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -107,9 +92,6 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-/*        Intent intent = new Intent(this, AuthorizationActivity.class);
-        intent.putExtra("exit", true);
-        startActivity(intent);*/
         finish();
     }
 
@@ -128,33 +110,6 @@ public class MainActivity extends FragmentActivity
         return true;
     }
 
-    private String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getGCMPreferences(context);
-        String registrationId;
-        registrationId = prefs.getString(PROPERTY_REG_ID, "");
-        if (registrationId.isEmpty()) {
-            Log.i(TAG, "Registration not found.");
-            return "";
-        }
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing regID is not guaranteed to work with the new
-        // app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = getAppVersion(context);
-        if (registeredVersion != currentVersion) {
-            Log.i(TAG, "App version changed.");
-            return "";
-        }
-        return registrationId;
-    }
-
-    private SharedPreferences getGCMPreferences(Context context) {
-        // This sample app persists the registration ID in shared preferences, but
-        // how you store the regID in your app is up to you.
-        return getSharedPreferences(MainActivity.class.getSimpleName(),
-                Context.MODE_PRIVATE);
-    }
-
     public void onClickItemSettings(View view) {
         startActivity(new Intent(this, SettingsActivity.class));
     }
@@ -168,12 +123,9 @@ public class MainActivity extends FragmentActivity
                 if (gcm == null) {
                     gcm = GoogleCloudMessaging.getInstance(context);
                 }
-                regid = gcm.register(SENDER_ID);
+                String regid = gcm.register(SENDER_ID);
                 msg = "Device registered, registration ID=" + regid;
-
                 sendRegistrationIdToBackend(regid);
-
-                storeRegistrationId(context, regid);
             } catch (IOException ex) {
                 msg = "Error :" + ex.getMessage();
             }
@@ -200,7 +152,7 @@ public class MainActivity extends FragmentActivity
                 Push push = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "Push");
-                StringEntity stringEntity = new StringEntity(new Gson().toJson(push));
+                StringEntity stringEntity = new StringEntity(new Gson().toJson(push), HTTP.UTF_8);
                 stringEntity.setContentType("application/json");
                 request.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(request);
@@ -211,37 +163,6 @@ public class MainActivity extends FragmentActivity
                 e.printStackTrace();
             }
             return response;
-        }
-    }
-
-    /**
-     * Stores the registration ID and app versionCode in the application's
-     * {@code SharedPreferences}.
-     *
-     * @param context application's context.
-     * @param regId   registration ID
-     */
-    private void storeRegistrationId(Context context, String regId) {
-        final SharedPreferences prefs = getGCMPreferences(context);
-        int appVersion = getAppVersion(context);
-        Log.i(TAG, "Saving regId on app version " + appVersion);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.apply();
-    }
-
-    /**
-     * @return Application's version code from the {@code PackageManager}.
-     */
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            // should never happen
-            throw new RuntimeException("Could not get package name: " + e);
         }
     }
 
@@ -276,7 +197,7 @@ public class MainActivity extends FragmentActivity
         actionBar.setTitle(mTitle);
     }
 
-/*    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             getMenuInflater().inflate(R.menu.main, menu);
@@ -285,13 +206,4 @@ public class MainActivity extends FragmentActivity
         }
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

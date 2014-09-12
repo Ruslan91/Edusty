@@ -1,8 +1,10 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.CookieManager;
@@ -20,11 +22,19 @@ public class VkAuthActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_web);
+        final ProgressDialog progressDialog = ProgressDialog.show(VkAuthActivity.this, "", getString(R.string.loading), true);
         vkWeb = (WebView) findViewById(R.id.vkWeb);
         vkWeb.setWebViewClient(new WebViewClient() {
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                progressDialog.show();
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
                 try {
+                    progressDialog.dismiss();
                     boolean isToken = url.contains("tokenID=");
                     if (isToken) {
                         String[] splits = url.split("=");
