@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.edusty.android">
+    package="ru.edusty.android" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -14,12 +14,12 @@
     <permission
         android:name="ru.edusty.android.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <application
 
+    <application
         android:allowBackup="true"
         android:icon="@drawable/launcher"
         android:label="@string/app_name"
-        android:theme="@style/_EdustyTheme">
+        android:theme="@style/_EdustyTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -27,7 +27,7 @@
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,7 @@
             android:label="@string/app_name" />
         <activity
             android:name=".Activities.VkAuthActivity"
-            android:label="@string/title_activity_vk_auth"/>
+            android:label="@string/title_activity_vk_auth" />
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main" />
@@ -58,7 +58,7 @@
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/action_settings"
-            android:theme="@style/CustomActionBarTheme"/>
+            android:theme="@style/CustomActionBarTheme" />
         <activity
             android:name=".Activities.ProfileActivity"
             android:label="@string/title_activity_profile" />
@@ -69,7 +69,7 @@
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -81,21 +81,23 @@
             android:name=".GcmIntentService"
             android:enabled="true" />
 
-
         <meta-data
             android:name="metrica:api:key"
             android:value="27628" />
 
         <service
             android:name="com.yandex.metrica.MetricaService"
-            android:exported="true"
             android:enabled="true"
-            android:process=":Metrica">
+            android:exported="true"
+            android:process=":Metrica" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="com.yandex.metrica.IMetricaService" />
+
                 <data android:scheme="metrica" />
             </intent-filter>
+
             <meta-data
                 android:name="metrica:api:level"
                 android:value="4" />
@@ -103,8 +105,8 @@
 
         <receiver
             android:name="com.yandex.metrica.MetricaEventHandler"
-            android:exported="true"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.yandex.metrica.intent.action.SYNC" />
             </intent-filter>
@@ -115,21 +117,24 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.yandex.metrica.CampaignReceiver"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
 
         <provider
-            android:name="ru.edusty.android.MetricaContentProvider"
+            android:name=".MetricaContentProvider"
             android:authorities="ru.edusty.android.MetricaContentProvider"
-            android:exported="true"
-            android:enabled="true"/>
+            android:enabled="true"
+            android:exported="true" />
 
+        <activity
+            android:name=".Activities.MessageActivity"
+            android:label="@string/title_activity_message" >
+        </activity>
     </application>
 
 </manifest>

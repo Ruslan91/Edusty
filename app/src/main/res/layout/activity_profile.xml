@@ -44,14 +44,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Профиль Вконтакте"
+        android:background="@drawable/edustytheme_btn_default_holo_light"
+        android:drawableStart="@drawable/ic_vk"
         android:id="@+id/btnVkProfile"
-        android:background="@drawable/btn_background"
-        android:gravity="left|center_vertical"
-        android:drawableLeft="@drawable/ic_vk"
+        android:gravity="start|center_vertical"
         android:onClick="onClickBtnVkProfile"
-        android:paddingRight="8dp"
-        android:paddingLeft="0dp"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:padding="4dp"
+        android:textStyle="bold" />
 
 </LinearLayout>

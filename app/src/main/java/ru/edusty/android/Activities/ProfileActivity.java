@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class ProfileActivity extends Activity {
     private User user;
     private UUID token;
     private String userID;
+    private Button btnVkProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class ProfileActivity extends Activity {
         imageLoader = new ImageLoader(this);
         tvName = (TextView) findViewById(R.id.tvName);
         tvUniversityGroup = (TextView) findViewById(R.id.tvUniversity_Group);
+        btnVkProfile = (Button) findViewById(R.id.btnVkProfile);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (getIntent().getStringExtra("userID") != null)
             userID = getIntent().getStringExtra("userID");
@@ -109,6 +112,8 @@ public class ProfileActivity extends Activity {
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
+                    if (!user.getVkontakteID().equals(0)) btnVkProfile.setVisibility(View.VISIBLE);
+
                 }
                 progressDialog.dismiss();
             } catch (Exception e) {

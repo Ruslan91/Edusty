@@ -30,7 +30,6 @@ public class VkAuthActivity extends Activity {
                 super.onPageStarted(view, url, favicon);
                 progressDialog.show();
             }
-
             @Override
             public void onPageFinished(WebView view, String url) {
                 try {

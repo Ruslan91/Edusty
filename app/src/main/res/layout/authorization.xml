@@ -14,16 +14,15 @@
         android:layout_height="wrap_content"
         android:text="Вконтакте"
         android:id="@+id/btnVk"
-        android:background="@drawable/btn_background"
         android:gravity="left|center_vertical"
         android:drawableLeft="@drawable/ic_vk"
         android:onClick="onClickBtnVk"
-        android:paddingRight="8dp"
-        android:paddingLeft="0dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/edustytheme_btn_default_holo_light"
+        android:padding="4dp" />
 
 
     <TextView

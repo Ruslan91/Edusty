@@ -3,6 +3,7 @@ package ru.edusty.android.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -11,6 +12,9 @@ import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -118,6 +122,21 @@ public class GroupFragment extends ListFragment {
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_leave:
+                new LeaveGroup().execute(token);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -127,14 +146,6 @@ public class GroupFragment extends ListFragment {
 
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
-/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
-            progressDialog.show();
-        }*/
 
         @Override
         protected void onPostExecute(Response response) {
@@ -146,7 +157,6 @@ public class GroupFragment extends ListFragment {
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
-                //progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -208,6 +218,56 @@ public class GroupFragment extends ListFragment {
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
                 response = new Gson().fromJson(reader, Response.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+    }
+
+    //Выйти из группы
+    public class LeaveGroup extends AsyncTask<UUID, Void, Response> {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            try {
+                if (response.getItem().equals(true)) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.remove("newUser");
+                    edit.apply();
+                    Intent intent = new Intent(getActivity(), SearchUniversityActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Response doInBackground(UUID... params) {
+            Response response = null;
+            try {
+                String query = params[0].toString();
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.serviceUrl) + "GroupLeave?tokenID=" + query);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                InputStreamReader inputStreamReader = new InputStreamReader(httpResponse.getEntity().getContent(), HTTP.UTF_8);
+                response = new Gson().fromJson(inputStreamReader, Response.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }

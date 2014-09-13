@@ -40,5 +40,6 @@
     <string name="enter_message_text">Enter message</string>
     <string name="save">Save</string>
     <string name="group_name">Group name</string>
+    <string name="leave">Leave</string>
 
 </resources>
