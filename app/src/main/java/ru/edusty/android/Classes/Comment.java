@@ -7,7 +7,6 @@ import java.util.UUID;
  */
 public class Comment {
     UUID ID;
-    UUID MessageID;
     String Text;
     User User;
     String CommentDate;
@@ -26,14 +25,6 @@ public class Comment {
 
     public void setID(UUID ID) {
         this.ID = ID;
-    }
-
-    public UUID getMessageID() {
-        return MessageID;
-    }
-
-    public void setMessageID(UUID messageID) {
-        MessageID = messageID;
     }
 
     public String getText() {

@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvName"
+        android:focusable="false"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/image"
         android:layout_toEndOf="@+id/image"

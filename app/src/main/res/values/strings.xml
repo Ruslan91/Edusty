@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V1/</string>
+    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V2/</string>
     <string name="app_name">Edusty</string>
     <string name="title_activity_vk_auth">Авторизация</string>
     <string name="title_activity_main">Edusty</string>
@@ -9,6 +9,7 @@
     <string name="title_activity_create_group">Создание группы</string>
     <string name="title_activity_profile">Профиль</string>
     <string name="action_settings">Настройки</string>
+    <string name="title_activity_message">Запись</string>
     <string name="vk">ВК</string>
     <string name="title_section1">Лента новостей</string>
     <string name="title_section2">Моя группа</string>
@@ -39,8 +40,7 @@
     <string name="enter_message_text">Введите текст сообщения</string>
     <string name="save">Сохранить</string>
     <string name="group_name">Название группы</string>
-    <string name="title_activity_message">MessageActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="leave">Выйти</string>
+    <string name="add_comment">Добавить комментарий</string>
 
 </resources>

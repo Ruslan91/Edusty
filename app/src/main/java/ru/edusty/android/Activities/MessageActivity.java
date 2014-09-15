@@ -1,11 +1,22 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,14 +24,19 @@ import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAni
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.CommentAdapter;
@@ -28,52 +44,140 @@ import ru.edusty.android.Classes.Comment;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Message;
 import ru.edusty.android.Classes.Response;
+import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
-public class MessageActivity extends Activity {
+public class MessageActivity extends Activity implements ActionMode.Callback{
 
     private UUID token;
     private String messageID;
     private ListView listComments;
+    private ImageView image;
+    private TextView tvName;
+    private TextView tvDate;
+    private TextView tvMessage;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Comment[] comments;
+    private Message message;
+    private UUID commentID;
+    private UUID userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
+        userID = UUID.fromString(getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("userID", ""));
         messageID = getIntent().getStringExtra("messageID");
         listComments = (ListView) findViewById(R.id.listComments);
+        listComments.setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (comments[position].getUser().getUserID().equals(userID)) {
+                    commentID = comments[position].getID();
+                    startActionMode(MessageActivity.this);
+                }
+                return true;
+            }
+        });
+/*        TextView textView = new TextView(this);
+        textView.setText("Комментарии");
+        listComments.addHeaderView(textView, null, false);*/
+
+        tvName = (TextView) findViewById(R.id.tvName);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("userID", message.getUser().getUserID().toString());
+                startActivity(intent);
+            }
+        });
+        tvDate = (TextView) findViewById(R.id.tvDate);
+        tvMessage = (TextView) findViewById(R.id.tvMessage);
+        image = (ImageView) findViewById(R.id.image);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                mSwipeRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+        mSwipeRefreshLayout.setColorScheme(R.color.green, R.color.yellow, R.color.red, R.color.blue);
+        new GetComments().execute();
+        new GetMessage().execute();
 
     }
 
-    //Получение записи
-    public class GetMessage extends AsyncTask<Integer, Void, Response> {
+    private void refresh() {
+        new GetComments().execute();
+    }
 
-/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+    //Получение записи
+    public class GetMessage extends AsyncTask<UUID, Void, Response> {
+
+        ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setMessage("Загрузка...");
             progressDialog.show();
-        }*/
+        }
 
         @Override
         protected void onPostExecute(Response response) {
             try {
-
+                if (response.getItem() != null) {
+                    message = (Message) response.getItem();
+                    tvName.setText(message.getUser().getFirstName() + " " + message.getUser().getLastName());
+                    tvMessage.setText(message.getMessage());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    Date date = dateFormat.parse(message.getMessageDate());
+                    TimeZone timeZone = TimeZone.getTimeZone("Europe/Moscow");
+                    Calendar calendar = Calendar.getInstance();
+                    Date time = calendar.getTime();
+                    dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    if (dateFormat.format(date).equals(dateFormat.format(time))) {
+                        dateFormat = new SimpleDateFormat("сегодня в HH:mm");
+                        dateFormat.setTimeZone(timeZone);
+                        tvDate.setText(dateFormat.format(date));
+                    } else {
+                        dateFormat = new SimpleDateFormat("dd");
+                        if (Integer.parseInt(dateFormat.format(date)) + 1 == Integer.parseInt(dateFormat.format(time))) {
+                            dateFormat = new SimpleDateFormat("вчера в HH:mm");
+                            dateFormat.setTimeZone(timeZone);
+                            tvDate.setText(dateFormat.format(date));
+                        } else {
+                            dateFormat = new SimpleDateFormat("dd MMMM yyyy в HH:mm");
+                            dateFormat.setTimeZone(timeZone);
+                            tvDate.setText(dateFormat.format(date));
+                        }
+                    }
+                        new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
+                }
+                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         @Override
-        protected Response doInBackground(Integer... params) {
+        protected Response doInBackground(UUID... params) {
             Response response = null;
             try {
                 HttpClient httpclient = new DefaultHttpClient();
                 Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "Message?tokenID=" + token + "&messageID=" + messageID);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&messageID=" + messageID);
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
@@ -89,18 +193,21 @@ public class MessageActivity extends Activity {
     }
 
     //Получение комментариев
-    public class GetComment extends AsyncTask<Integer, Void, Response> {
+    public class GetComments extends AsyncTask<Integer, Void, Response> {
+
+        private CommentAdapter commentAdapter;
 
         @Override
         protected void onPostExecute(Response response) {
             try {
-                Comment[] comments = (Comment[]) response.getItem();
+                comments = (Comment[]) response.getItem();
                 if (comments.length != 0) {
-                    CommentAdapter commentAdapter = new CommentAdapter(MessageActivity.this, new ArrayList<Comment>(Arrays.asList(comments)));
+                    commentAdapter = new CommentAdapter(MessageActivity.this, new ArrayList<Comment>(Arrays.asList(comments)));
                     SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(commentAdapter);
                     swingBottomInAnimationAdapter.setAbsListView(listComments);
                     listComments.setAdapter(swingBottomInAnimationAdapter);
                 } else listComments.setAdapter(null);
+                commentAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -112,7 +219,7 @@ public class MessageActivity extends Activity {
             try {
                 HttpClient httpclient = new DefaultHttpClient();
                 Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "Comment?tokenID=" + token + "&messageID=" + messageID);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "Comments?tokenID=" + token + "&messageID=" + messageID);
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
@@ -126,22 +233,96 @@ public class MessageActivity extends Activity {
         }
 
     }
+
+    public class DeleteComment extends AsyncTask<UUID, Void, Response> {
+        ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
+            if (response.getItem().equals(true)) {
+                refresh();
+            } else Toast.makeText(MessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected Response doInBackground(UUID... params) {
+            Response response = null;
+            try {
+                HttpClient httpclient = new DefaultHttpClient();
+                Gson gson = new Gson();
+                HttpDelete request = new HttpDelete(getString(R.string.serviceUrl) + "Comment?tokenID=" + token + "&commentID=" + commentID);
+                HttpResponse httpResponse = httpclient.execute(request);
+                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
+                        .getContent(), HTTP.UTF_8);
+                response = gson.fromJson(reader, Response.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.message, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_add:
+                Intent intent = new Intent(MessageActivity.this, CreateCommentActivity.class);
+                intent.putExtra("messageID", messageID);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.getMenuInflater().inflate(R.menu.action_mode_comments_list, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                new DeleteComment().execute();
+                mode.finish();
+                return true;
+/*            case R.id.action_edit:
+                Intent intent = new Intent(getActivity(), CreateMessageActivity.class);
+                intent.putExtra("message", message);
+                intent.putExtra("messageID", messageID.toString());
+                startActivity(intent);
+                mode.finish();
+                return true;*/
+        }
+        return false;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+
     }
 }

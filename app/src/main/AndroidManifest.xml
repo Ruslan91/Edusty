@@ -65,6 +65,14 @@
         <activity
             android:name=".Activities.AboutActivity"
             android:label="@string/about_program" />
+        <activity
+            android:name=".Activities.MessageActivity"
+            android:label="@string/title_activity_message" >
+        </activity>
+        <activity
+            android:name=".Activities.CreateCommentActivity"
+            android:label="@string/add_comment"
+            android:theme="@style/_EdustyTheme"/>
 
         <receiver
             android:name=".GcmBroadcastReceiver"
@@ -131,10 +139,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".Activities.MessageActivity"
-            android:label="@string/title_activity_message" >
-        </activity>
     </application>
 
 </manifest>

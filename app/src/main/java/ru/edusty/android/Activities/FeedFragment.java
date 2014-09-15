@@ -95,6 +95,14 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 return true;
             }
         });
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtra("messageID", feed[position].getMessageID().toString());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -182,6 +190,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 intent.putExtra("messageID", messageID.toString());
                 startActivity(intent);
                 mode.finish();
+                return true;
         }
         return false;
     }
@@ -234,7 +243,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 offset = params[0];
                 HttpClient httpclient = new DefaultHttpClient();
                 Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&offset=" + offset);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessages?tokenID=" + token + "&offset=" + offset);
                 HttpResponse httpResponse = httpclient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);

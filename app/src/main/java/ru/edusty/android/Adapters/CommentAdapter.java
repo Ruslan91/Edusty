@@ -1,6 +1,7 @@
 package ru.edusty.android.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import ru.edusty.android.Activities.ProfileActivity;
 import ru.edusty.android.Classes.Comment;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.ImageLoader;
@@ -27,6 +29,8 @@ public class CommentAdapter extends BaseAdapter{
     private ArrayList<Comment> comments;
     private final LayoutInflater lInflater;
     private final ImageLoader imageLoader;
+    private Comment comment;
+    private Context context;
 
     static class ViewHolder {
         TextView name;
@@ -37,6 +41,7 @@ public class CommentAdapter extends BaseAdapter{
 
     public CommentAdapter(Context context, ArrayList<Comment> comments) {
         this.comments = comments;
+        this.context = context;
         this.lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader(context);
     }
@@ -74,8 +79,17 @@ public class CommentAdapter extends BaseAdapter{
                 viewHolder = (ViewHolder) v.getTag();
             }
             try {
-                Comment comment = comments.get(position);
+                comment = comments.get(position);
                 viewHolder.name.setText(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+                viewHolder.name.setTag((Integer) position);
+                viewHolder.name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        intent.putExtra("userID", comments.get((Integer) viewHolder.name.getTag()).getUser().getUserID().toString());
+                        context.startActivity(intent);
+                    }
+                });
                 viewHolder.message.setText(comment.getText());
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

@@ -1,6 +1,7 @@
 package ru.edusty.android.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import ru.edusty.android.Activities.ProfileActivity;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
@@ -25,6 +27,8 @@ public class FeedAdapter extends BaseAdapter {
     private ArrayList<Feed> feeds;
     private final LayoutInflater lInflater;
     private final ImageLoader imageLoader;
+    private Feed feed;
+    private Context context;
 
     static class ViewHolder {
         TextView name;
@@ -35,6 +39,7 @@ public class FeedAdapter extends BaseAdapter {
 
     public FeedAdapter(Context context, ArrayList<Feed> feeds) {
         this.feeds = feeds;
+        this.context = context;
         this.lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader(context);
     }
@@ -71,8 +76,17 @@ public class FeedAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
         try {
-            Feed feed = feeds.get(position);
+            feed = feeds.get(position);
             viewHolder.name.setText(feed.getUser().getFirstName() + " " + feed.getUser().getLastName());
+            viewHolder.name.setTag((Integer) position);
+            viewHolder.name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("userID", feeds.get((Integer)viewHolder.name.getTag()).getUser().getUserID().toString());
+                    context.startActivity(intent);
+                }
+            });
             viewHolder.message.setText(feed.getMessage());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
