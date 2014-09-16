@@ -67,7 +67,7 @@ public class CommentAdapter extends BaseAdapter{
             final ViewHolder viewHolder;
             View v = convertView;
             if (v == null) {
-                v = lInflater.inflate(R.layout.feed_list_item, null);
+                v = lInflater.inflate(R.layout.comment_list_item, null);
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) v.findViewById(R.id.tvName);
                 viewHolder.date = (TextView) v.findViewById(R.id.tvDate);

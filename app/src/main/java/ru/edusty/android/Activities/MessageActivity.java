@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,9 +27,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -41,13 +45,12 @@ import java.util.UUID;
 
 import ru.edusty.android.Adapters.CommentAdapter;
 import ru.edusty.android.Classes.Comment;
-import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Message;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
-public class MessageActivity extends Activity implements ActionMode.Callback{
+public class MessageActivity extends Activity implements ActionMode.Callback {
 
     private UUID token;
     private String messageID;
@@ -81,9 +84,6 @@ public class MessageActivity extends Activity implements ActionMode.Callback{
                 return true;
             }
         });
-/*        TextView textView = new TextView(this);
-        textView.setText("Комментарии");
-        listComments.addHeaderView(textView, null, false);*/
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvName.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +115,12 @@ public class MessageActivity extends Activity implements ActionMode.Callback{
         new GetComments().execute();
         new GetMessage().execute();
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onResume();
+        refresh();
     }
 
     private void refresh() {
@@ -163,7 +169,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback{
                             tvDate.setText(dateFormat.format(date));
                         }
                     }
-                        new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
+                    new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
                 }
                 progressDialog.dismiss();
             } catch (Exception e) {
@@ -249,7 +255,8 @@ public class MessageActivity extends Activity implements ActionMode.Callback{
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 refresh();
-            } else Toast.makeText(MessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(MessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 

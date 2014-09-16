@@ -2,8 +2,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_add_picture"
+        android:title="Добавить изображение"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_new_picture" />
+    <item
         android:id="@+id/action_send"
         android:title="@string/send"
         android:icon="@drawable/ic_action_send_now"
         android:showAsAction="always" />
+
 </menu>
