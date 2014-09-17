@@ -1,5 +1,6 @@
 package ru.edusty.android.Classes;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -11,6 +12,15 @@ public class Feed {
     String MessageDate;
     UUID SenderID;
     User User;
+    List<UUID> Files;
+
+    public List<UUID> getFiles() {
+        return Files;
+    }
+
+    public void setFiles(List<UUID> files) {
+        Files = files;
+    }
 
     public UUID getMessageID() {
         return MessageID;

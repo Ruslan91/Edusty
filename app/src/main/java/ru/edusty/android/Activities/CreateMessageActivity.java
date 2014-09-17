@@ -95,7 +95,7 @@ public class CreateMessageActivity extends Activity {
                 case R.id.action_send:
                     if (!etMessage.getText().toString().equals("")) {
                         if (message == null) {
-                            new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString()));
+                            new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString(), files));
                             return true;
                         } else {
                             new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID)));
@@ -264,7 +264,7 @@ public class CreateMessageActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
-                files.add((UUID) response.getItem());
+                files.add(UUID.fromString((String) response.getItem()));
             }
             pdLoading.dismiss();
         }
@@ -274,7 +274,7 @@ public class CreateMessageActivity extends Activity {
             file = bitmaps[0];
             try {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "File?TokenID=" + token);
+                HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "File?tokenID=" + token);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 file.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();

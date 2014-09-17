@@ -62,7 +62,7 @@ public class VkAuthActivity extends Activity {
             }
         });
         vkWeb.loadUrl(
-                "https://oauth.vk.com/authorize?client_id=4470041&display=touch&redirect_uri=http://edusty.azurewebsites.net/api/V2/VkontakteAuth&response_type=code");
+                "https://oauth.vk.com/authorize?client_id=4470041&display=touch&redirect_uri=" + getString(R.string.serviceUrl) + "VkontakteAuth&response_type=code");
     }
 
     @Override

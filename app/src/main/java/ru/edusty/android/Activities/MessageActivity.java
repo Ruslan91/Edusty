@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -167,6 +170,15 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                             dateFormat = new SimpleDateFormat("dd MMMM yyyy в HH:mm");
                             dateFormat.setTimeZone(timeZone);
                             tvDate.setText(dateFormat.format(date));
+                        }
+                    }
+                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llayout);
+                    if (message.getFiles() != null) {
+                        for (int i = 0; i < message.getFiles().size(); i++) {
+                            ImageView imageView = new ImageView(MessageActivity.this);
+                            new ImageLoader(getApplicationContext())
+                                    .DisplayImage(getString(R.string.serviceUrl) + "File?tokenID=" + token + "&fileID=" + message.getFiles().get(i), imageView);
+                            linearLayout.addView(imageView);
                         }
                     }
                     new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
