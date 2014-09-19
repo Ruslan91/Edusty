@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -108,7 +110,9 @@ public class ProfileActivity extends Activity {
                 if (response.getStatus().equals("ок")) {
                     user = (User) response.getItem();
                     if (!user.getPictureUrl().equals("")) {
-                        new ImageDownloaderTask(image).execute(user.getPictureUrl());
+                        image.setLayoutParams(new LinearLayout.LayoutParams(320, 320));
+                        new ImageLoader(getApplicationContext()).DisplayImage(user.getPictureUrl(),image);
+                        //new ImageDownloaderTask(image).execute(user.getPictureUrl());
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());

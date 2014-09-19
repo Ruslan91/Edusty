@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,11 +13,12 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,12 +31,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -50,6 +49,7 @@ import ru.edusty.android.Adapters.CommentAdapter;
 import ru.edusty.android.Classes.Comment;
 import ru.edusty.android.Classes.Message;
 import ru.edusty.android.Classes.Response;
+import ru.edusty.android.FileCache;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
@@ -119,7 +119,27 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         new GetMessage().execute();
 
     }
+/*    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
 
+        int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            if (listItem instanceof ViewGroup) {
+                listItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }*/
     @Override
     protected void onRestart() {
         super.onResume();
@@ -172,16 +192,34 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                             tvDate.setText(dateFormat.format(date));
                         }
                     }
+                    new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
+
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.llayout);
                     if (message.getFiles() != null) {
                         for (int i = 0; i < message.getFiles().size(); i++) {
-                            ImageView imageView = new ImageView(MessageActivity.this);
+                            final ImageView imageView = new ImageView(MessageActivity.this);
+                            imageView.setTag(i);
+                            imageView.setPadding(4, 4, 4, 4);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            imageView.setLayoutParams(new LinearLayout.LayoutParams(150,150));
                             new ImageLoader(getApplicationContext())
                                     .DisplayImage(getString(R.string.serviceUrl) + "File?tokenID=" + token + "&fileID=" + message.getFiles().get(i), imageView);
                             linearLayout.addView(imageView);
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    File file = new FileCache(getApplicationContext())
+                                            .getFile(getString(R.string.serviceUrl)
+                                                    + "File?tokenID=" + token
+                                                    + "&fileID=" + message.getFiles().get((Integer) imageView.getTag()));
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_VIEW);
+                                    intent.setDataAndType(Uri.fromFile(file), "image/*");
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     }
-                    new ImageLoader(getApplicationContext()).DisplayImage(message.getUser().getPictureUrl(), image);
                 }
                 progressDialog.dismiss();
             } catch (Exception e) {

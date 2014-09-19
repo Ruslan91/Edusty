@@ -1,23 +1,23 @@
 package ru.edusty.android.Adapters;
 
-/**
- * Created by Руслан on 16.09.2014.
- */
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.List;
 
+import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
-public class ImageAdapter extends BaseAdapter {
+/**
+ * Created by Руслан on 19.09.2014.
+ */
+public class MessageImageLoaderAdapter extends BaseAdapter {
 
     private final List<Bitmap> bitmaps;
     private Context mContext;
@@ -25,7 +25,7 @@ public class ImageAdapter extends BaseAdapter {
     // Keep all Images in array
 
     // Constructor
-    public ImageAdapter(Context c, List<Bitmap> bitmaps) {
+    public MessageImageLoaderAdapter(Context c, List<Bitmap> bitmaps) {
         this.bitmaps = bitmaps;
         mContext = c;
     }
@@ -49,11 +49,18 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-        imageView.setImageBitmap(bitmaps.get(position));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(120, 110));
+        imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
+/*        new ImageLoader(mContext)
+                .DisplayImage(mContext.getString(R.string.serviceUrl) + "File?tokenID=" + token + "&fileID=" + message.getFiles().get(i), imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "ImageClick: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });*/
         return imageView;
     }
 }
