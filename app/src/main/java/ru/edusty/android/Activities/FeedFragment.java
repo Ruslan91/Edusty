@@ -132,7 +132,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_new_message:
-                startActivity(new Intent(getActivity(), CreateMessageActivity.class));
+                startActivity(new Intent(getActivity(), SendMessageActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -185,7 +185,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 mode.finish();
                 return true;
             case R.id.action_edit:
-                Intent intent = new Intent(getActivity(), CreateMessageActivity.class);
+                Intent intent = new Intent(getActivity(), SendMessageActivity.class);
                 intent.putExtra("message", message);
                 intent.putExtra("messageID", messageID.toString());
                 startActivity(intent);

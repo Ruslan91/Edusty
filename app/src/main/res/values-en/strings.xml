@@ -42,5 +42,6 @@
     <string name="group_name">Group name</string>
     <string name="leave">Leave</string>
     <string name="add_comment">Добавить комментарий</string>
+    <string name="delete">Удалить</string>
 
 </resources>

@@ -208,14 +208,20 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    File file = new FileCache(getApplicationContext())
+                                    Intent intent = new Intent(getApplicationContext(), ImageActivity.class);
+                                    intent.putExtra("fileURL", getString(R.string.serviceUrl)
+                                            + "File?tokenID=" + token
+                                            + "&fileID=" + message.getFiles().get((Integer) imageView.getTag()));
+                                    startActivity(intent);
+
+/*                                    File file = new FileCache(getApplicationContext())
                                             .getFile(getString(R.string.serviceUrl)
                                                     + "File?tokenID=" + token
                                                     + "&fileID=" + message.getFiles().get((Integer) imageView.getTag()));
                                     Intent intent = new Intent();
                                     intent.setAction(Intent.ACTION_VIEW);
-                                    intent.setDataAndType(Uri.fromFile(file), "image/*");
-                                    startActivity(intent);
+                                    intent.setDataAndType(Uri.fromFile(file), "image*//*");
+                                    startActivity(intent);*/
                                 }
                             });
                         }

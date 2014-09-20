@@ -54,7 +54,7 @@
             android:name=".Activities.CreateGroupActivity"
             android:label="@string/title_activity_create_group" />
         <activity
-            android:name=".Activities.CreateMessageActivity"
+            android:name=".Activities.SendMessageActivity"
             android:label="@string/new_message" />
         <activity
             android:name=".Activities.SettingsActivity"
@@ -74,6 +74,8 @@
             android:name=".Activities.CreateCommentActivity"
             android:label="@string/add_comment"
             android:theme="@style/_EdustyTheme"/>
+        <activity android:name=".Activities.ImageActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
 
         <receiver
             android:name=".GcmBroadcastReceiver"

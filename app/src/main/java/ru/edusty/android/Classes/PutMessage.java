@@ -1,5 +1,6 @@
 package ru.edusty.android.Classes;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -9,10 +10,12 @@ public class PutMessage {
     UUID TokenID;
     String Message;
     UUID MessageID;
+    List<UUID> Files;
 
-    public PutMessage(UUID tokenID, String message, UUID messageID) {
+    public PutMessage(UUID tokenID, String message, UUID messageID, List<UUID> files) {
         TokenID = tokenID;
         Message = message;
         MessageID = messageID;
+        Files = files;
     }
 }
