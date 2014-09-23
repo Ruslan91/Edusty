@@ -1,11 +1,12 @@
 package ru.edusty.android.Classes;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Created by Руслан on 22.07.2014.
  */
-public class User {
+public class User implements Serializable{
     UUID UserID;
     Integer VkontakteID;
     String FirstName;

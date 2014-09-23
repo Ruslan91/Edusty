@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +31,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +49,7 @@ import java.util.UUID;
 import ru.edusty.android.Adapters.FeedAdapter;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Response;
+import ru.edusty.android.FileCache;
 import ru.edusty.android.R;
 import ru.edusty.android.SwipeRefreshListFragment;
 
@@ -57,10 +69,12 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private UUID messageID;
     private String userID;
     private String message;
+    private FileCache fileCache;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        fileCache = new FileCache(getActivity());
     }
 
     @Override
@@ -84,31 +98,56 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getListView().setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (feed[position].getSenderID().toString().equals(userID)) {
-                    messageID = feed[position].getMessageID();
-                    message = feed[position].getMessage();
-                    getListView().startActionMode(FeedFragment.this);
+        if (isOnline()) {
+            refresh(0);
+            getListView().setOnScrollListener(this);
+            getListView().setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (feeds.get(position).getUser().getUserID().toString().equals(userID)) {
+                        messageID = feeds.get(position).getMessageID();
+                        message = feeds.get(position).getMessage();
+                        getListView().startActionMode(FeedFragment.this);
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                intent.putExtra("messageID", feed[position].getMessageID().toString());
-                startActivity(intent);
-            }
-        });
+            });
+            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getActivity(), MessageActivity.class);
+                    intent.putExtra("messageID", feeds.get(position).getMessageID().toString());
+                    startActivity(intent);
+                }
+            });
+        } else {
+            if (readFile() != null) {
+                try {
+                    feeds = readFile();
+                    feedAdapter = new FeedAdapter(getActivity(), feeds);
+                    swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(feedAdapter);
+                    swingBottomInAnimationAdapter.setAbsListView(getListView());
+                    setListAdapter(swingBottomInAnimationAdapter);
+                    executed = false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else setListAdapter(null);
+            Toast.makeText(getActivity(), "Соединение с интернетом отсуствует.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refresh(0);
+        //refresh(0);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        writeFile();
+
     }
 
     private void refresh(int offset) {
@@ -123,6 +162,37 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    public boolean writeFile() {
+        try {
+            FileOutputStream fos = getActivity().openFileOutput("feeds", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(feeds);
+            oos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<Feed> readFile() {
+        try {
+            FileInputStream fis = getActivity().openFileInput("feeds");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            feeds = (ArrayList<Feed>) ois.readObject();
+            ois.close();
+            return feeds;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.feed_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -153,7 +223,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-
     }
 
     @Override
@@ -167,8 +236,8 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        if (isOnline())
         mode.getMenuInflater().inflate(R.menu.action_mode_feed_list, menu);
-
         return true;
     }
 
@@ -255,7 +324,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             }
             return response;
         }
-
     }
 
     //Удаление сообщения

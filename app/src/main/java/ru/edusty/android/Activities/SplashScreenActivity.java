@@ -1,9 +1,7 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -20,7 +18,7 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         int SPLASH_DISPLAY_LENGTH = 2000;
-        if (!isOnline()) {
+/*        if (!isOnline()) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setCancelable(false);
             alertDialog.setMessage("Интернет соединение отсутсвует!"); // сообщение
@@ -39,23 +37,22 @@ public class SplashScreenActivity extends Activity {
             });
             AlertDialog dialog = alertDialog.create();
             dialog.show();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        } else {*/
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                    SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
-                    if (sharedPreferences.getString("token", "").equals("")) {
-                        Intent mainIntent = new Intent(SplashScreenActivity.this, AuthorizationActivity.class);
-                        SplashScreenActivity.this.startActivity(mainIntent);
-                        SplashScreenActivity.this.finish();
-                    } else {
-                        startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
-                        SplashScreenActivity.this.finish();
-                    }
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
+                if (sharedPreferences.getString("token", "").equals("")) {
+                    Intent mainIntent = new Intent(SplashScreenActivity.this, AuthorizationActivity.class);
+                    SplashScreenActivity.this.startActivity(mainIntent);
+                    SplashScreenActivity.this.finish();
+                } else {
+                    startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
+                    SplashScreenActivity.this.finish();
                 }
-            }, SPLASH_DISPLAY_LENGTH);
-        }
+            }
+        }, SPLASH_DISPLAY_LENGTH);
     }
 
     public boolean isOnline() {

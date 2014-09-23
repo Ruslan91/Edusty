@@ -76,50 +76,53 @@ public class GroupFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tv = new TextView(getActivity());
-        etTitle.setVisibility(View.VISIBLE);
-        btnAccept.setVisibility(View.VISIBLE);
-        btnAccept.setEnabled(false);
-        etTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        if (isOnline()) {
+            TextView tv = new TextView(getActivity());
+            etTitle.setVisibility(View.VISIBLE);
+            btnAccept.setVisibility(View.VISIBLE);
+            btnAccept.setEnabled(false);
+            etTitle.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                changedText = s.toString();
-                if (changedText != null) {
-                    if (defaultText != null && !defaultText.equals(changedText)) {
-                        btnAccept.setEnabled(true);
-                    } else btnAccept.setEnabled(false);
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    changedText = s.toString();
+                    if (changedText != null) {
+                        if (defaultText != null && !defaultText.equals(changedText)) {
+                            btnAccept.setEnabled(true);
+                        } else btnAccept.setEnabled(false);
+                    }
+                }
 
-            }
-        });
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!changedText.equals(defaultText) && !changedText.equals(""))
-                    new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
-                else Toast.makeText(getActivity(), "Измените название", Toast.LENGTH_SHORT).show();
-            }
-        });
-        tv.setText("Участники");
-        getListView().addHeaderView(tv, null, false);
+                @Override
+                public void afterTextChanged(Editable s) {
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra("userID", users[position - 1].getUserID().toString());
-                startActivity(intent);
-            }
-        });
+                }
+            });
+            btnAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!changedText.equals(defaultText) && !changedText.equals(""))
+                        new PostGroup().execute(new ru.edusty.android.Classes.PostGroup(token, etTitle.getText().toString()));
+                    else
+                        Toast.makeText(getActivity(), "Измените название", Toast.LENGTH_SHORT).show();
+                }
+            });
+            tv.setText("Участники");
+            getListView().addHeaderView(tv, null, false);
+
+            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                    intent.putExtra("userID", users[position - 1].getUserID().toString());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

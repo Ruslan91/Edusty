@@ -1,16 +1,16 @@
 package ru.edusty.android.Classes;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by Руслан on 04.08.2014.
  */
-public class Feed {
+public class Feed implements Serializable{
     UUID MessageID;
     String Message;
     String MessageDate;
-    UUID SenderID;
     User User;
     List<UUID> Files;
 
@@ -44,14 +44,6 @@ public class Feed {
 
     public void setMessageDate(String messageDate) {
         MessageDate = messageDate;
-    }
-
-    public UUID getSenderID() {
-        return SenderID;
-    }
-
-    public void setSenderID(UUID senderID) {
-        SenderID = senderID;
     }
 
     public User getUser() {
