@@ -48,6 +48,7 @@ public class ProfileActivity extends Activity {
     private UUID token;
     private String userID;
     private Button btnVkProfile;
+    private Button btnFacebookProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class ProfileActivity extends Activity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvUniversityGroup = (TextView) findViewById(R.id.tvUniversity_Group);
         btnVkProfile = (Button) findViewById(R.id.btnVkProfile);
+        btnFacebookProfile = (Button) findViewById(R.id.btnFacebookProfile);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (getIntent().getStringExtra("userID") != null)
             userID = getIntent().getStringExtra("userID");
@@ -75,6 +77,11 @@ public class ProfileActivity extends Activity {
     public void onClickBtnVkProfile(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://vk.com/id" + user.getVkontakteID()));
+        startActivity(intent);
+    }
+    public void onClickBtnFacebookProfile(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://facebook.com/" + user.getFacebookID()));
         startActivity(intent);
     }
 
@@ -117,7 +124,7 @@ public class ProfileActivity extends Activity {
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
                     if (!user.getVkontakteID().equals(0)) btnVkProfile.setVisibility(View.VISIBLE);
-
+                    if (!user.getFacebookID().equals("")) btnFacebookProfile.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
             } catch (Exception e) {

@@ -9,11 +9,20 @@ import java.util.UUID;
 public class User implements Serializable{
     UUID UserID;
     Integer VkontakteID;
+    String FacebookID;
     String FirstName;
     String LastName;
     String PictureUrl;
     String UniversityTitle;
     String GroupTitle;
+
+    public String getFacebookID() {
+        return FacebookID;
+    }
+
+    public void setFacebookID(String facebookID) {
+        FacebookID = facebookID;
+    }
 
     public UUID getUserID() {
         return UserID;

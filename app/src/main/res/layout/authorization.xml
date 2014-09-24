@@ -14,15 +14,30 @@
         android:layout_height="wrap_content"
         android:text="Вконтакте"
         android:id="@+id/btnVk"
-        android:gravity="left|center_vertical"
-        android:drawableLeft="@drawable/ic_vk"
+        android:gravity="start|center_vertical"
+        android:drawableStart="@drawable/ic_vk"
         android:onClick="onClickBtnVk"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textSize="20sp"
         android:textStyle="bold"
         android:background="@drawable/edustytheme_btn_default_holo_light"
-        android:padding="4dp" />
+        android:layout_margin="4dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Facebook"
+        android:id="@+id/btnFacebook"
+        android:gravity="start|center_vertical"
+        android:drawableStart="@drawable/ic_facebook"
+        android:onClick="onClickBtnFacebook"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@drawable/edustytheme_btn_default_holo_light"
+        android:layout_below="@+id/btnVk"
+        android:layout_alignLeft="@+id/btnVk"
+        android:layout_alignStart="@+id/btnVk" />
 
 
     <TextView

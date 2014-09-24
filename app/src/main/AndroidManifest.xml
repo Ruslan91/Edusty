@@ -43,6 +43,9 @@
             android:name=".Activities.VkAuthActivity"
             android:label="@string/title_activity_vk_auth" />
         <activity
+            android:name=".Activities.FacebookAuthActivity"
+            android:label="@string/title_activity_vk_auth" />
+        <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main" />
         <activity

@@ -48,7 +48,11 @@ public class SplashScreenActivity extends Activity {
                     SplashScreenActivity.this.startActivity(mainIntent);
                     SplashScreenActivity.this.finish();
                 } else {
-                    startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
+                    if (sharedPreferences.getString("profile", "").equals("vkontakte")) {
+                        startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
+                    } else if (sharedPreferences.getString("profile", "").equals("facebook")) {
+                        startActivity(new Intent(SplashScreenActivity.this, FacebookAuthActivity.class));
+                    }
                     SplashScreenActivity.this.finish();
                 }
             }
