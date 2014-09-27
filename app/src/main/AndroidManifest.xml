@@ -46,6 +46,12 @@
             android:name=".Activities.FacebookAuthActivity"
             android:label="@string/title_activity_vk_auth" />
         <activity
+            android:name=".Activities.OdnoklassnikiActivity"
+            android:label="@string/title_activity_vk_auth" />
+        <activity
+            android:name=".Activities.GooglePlusActivity"
+            android:label="@string/title_activity_vk_auth" />
+        <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main" />
         <activity

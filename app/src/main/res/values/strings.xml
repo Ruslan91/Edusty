@@ -24,7 +24,7 @@
     <string name="profile">Профиль</string>
     <string name="write_developer">Написать разработчикам</string>
     <string name="quit">Выйти</string>
-    <string name="login_with">Войти через:</string>
+    <string name="login_with">Войти через</string>
     <string name="complete">Готово</string>
     <string name="next">Далее</string>
     <string name="version">Версия</string>
@@ -43,5 +43,11 @@
     <string name="leave">Выйти</string>
     <string name="add_comment">Добавить комментарий</string>
     <string name="delete">Удалить</string>
+    <string name="facebook">Facebook</string>
+    <string name="odnoklassniki">Одноклассники</string>
+    <string name="google">Google</string>
+    <string name="vkontakte">Вконтакте</string>
+    <string name="attachments">Вложений: </string>
+    <string name="comments">Комментариев: </string>
 
 </resources>

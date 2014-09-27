@@ -55,7 +55,7 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -49,6 +49,8 @@ public class ProfileActivity extends Activity {
     private String userID;
     private Button btnVkProfile;
     private Button btnFacebookProfile;
+    private Button btnOdnoklassnikiProfile;
+    private Button btnGooglePlusProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public class ProfileActivity extends Activity {
         tvUniversityGroup = (TextView) findViewById(R.id.tvUniversity_Group);
         btnVkProfile = (Button) findViewById(R.id.btnVkProfile);
         btnFacebookProfile = (Button) findViewById(R.id.btnFacebookProfile);
+        btnOdnoklassnikiProfile = (Button) findViewById(R.id.btnOdnoklassnikiProfile);
+        btnGooglePlusProfile = (Button) findViewById(R.id.btnGooglePlusProfile);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (getIntent().getStringExtra("userID") != null)
             userID = getIntent().getStringExtra("userID");
@@ -82,6 +86,16 @@ public class ProfileActivity extends Activity {
     public void onClickBtnFacebookProfile(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://facebook.com/" + user.getFacebookID()));
+        startActivity(intent);
+    }
+    public void onClickBtnOdnoklassnikiProfile(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://ok.ru/profile/" + user.getFacebookID()));
+        startActivity(intent);
+    }
+    public void onClickBtnGooglePlusProfile(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://plus.google.com/" + user.getGoogleID()));
         startActivity(intent);
     }
 
@@ -124,7 +138,9 @@ public class ProfileActivity extends Activity {
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
                     if (!user.getVkontakteID().equals(0)) btnVkProfile.setVisibility(View.VISIBLE);
-                    if (!user.getFacebookID().equals("")) btnFacebookProfile.setVisibility(View.VISIBLE);
+                    if (user.getFacebookID() != null) btnFacebookProfile.setVisibility(View.VISIBLE);
+                    if (user.getOdnoklassnikiID() != null) btnOdnoklassnikiProfile.setVisibility(View.VISIBLE);
+                    if (user.getGoogleID() != null) btnGooglePlusProfile.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
             } catch (Exception e) {

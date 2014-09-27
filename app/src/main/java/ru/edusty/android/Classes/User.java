@@ -10,11 +10,29 @@ public class User implements Serializable{
     UUID UserID;
     Integer VkontakteID;
     String FacebookID;
+    String OdnoklassnikiID;
+    String GoogleID;
     String FirstName;
     String LastName;
     String PictureUrl;
     String UniversityTitle;
     String GroupTitle;
+
+    public String getGoogleID() {
+        return GoogleID;
+    }
+
+    public void setGoogleID(String googleID) {
+        GoogleID = googleID;
+    }
+
+    public String getOdnoklassnikiID() {
+        return OdnoklassnikiID;
+    }
+
+    public void setOdnoklassnikiID(String odnoklassnikiID) {
+        OdnoklassnikiID = odnoklassnikiID;
+    }
 
     public String getFacebookID() {
         return FacebookID;

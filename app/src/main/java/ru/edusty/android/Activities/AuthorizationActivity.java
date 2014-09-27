@@ -31,4 +31,13 @@ public class AuthorizationActivity extends Activity {
         Intent intent = new Intent(this, FacebookAuthActivity.class);
         startActivity(intent);
     }
+
+    public void onClickBtnOdnoklassniki(View view) {
+        Intent intent = new Intent(this, OdnoklassnikiActivity.class);
+        startActivity(intent);
+    }
+    public void onClickBtnGooglePlus(View view) {
+        Intent intent = new Intent(this, GooglePlusActivity.class);
+        startActivity(intent);
+    }
 }

@@ -35,6 +35,8 @@ public class FeedAdapter extends BaseAdapter {
         TextView date;
         TextView message;
         ImageView image;
+        TextView attachments;
+        TextView comments;
     }
 
     public FeedAdapter(Context context, ArrayList<Feed> feeds) {
@@ -70,6 +72,8 @@ public class FeedAdapter extends BaseAdapter {
             viewHolder.date = (TextView) v.findViewById(R.id.tvDate);
             viewHolder.message = (TextView) v.findViewById(R.id.tvMessage);
             viewHolder.image = (ImageView) v.findViewById(R.id.image);
+            viewHolder.attachments = (TextView) v.findViewById(R.id.tvAttachments);
+            viewHolder.comments = (TextView) v.findViewById(R.id.tvComments);
 
             v.setTag(viewHolder);
         } else {
@@ -83,11 +87,16 @@ public class FeedAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.putExtra("userID", feeds.get((Integer)viewHolder.name.getTag()).getUser().getUserID().toString());
+                    intent.putExtra("userID", feeds.get((Integer) viewHolder.name.getTag()).getUser().getUserID().toString());
                     context.startActivity(intent);
                 }
             });
             viewHolder.message.setText(feed.getMessage());
+            if (feed.getFiles().size() != 0) {
+                viewHolder.attachments.setVisibility(View.VISIBLE);
+                viewHolder.attachments.setText(context.getString(R.string.attachments) + feed.getFiles().size());
+            }
+            viewHolder.comments.setText(context.getString(R.string.comments) + feed.getCommentsCount());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date date = dateFormat.parse(feed.getMessageDate());

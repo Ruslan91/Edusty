@@ -69,6 +69,32 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone" />
+        <Button
+            android:id="@+id/btnOdnoklassnikiProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edustytheme_btn_default_holo_light"
+            android:drawableStart="@drawable/ic_ok"
+            android:gravity="start|center_vertical"
+            android:onClick="onClickBtnOdnoklassnikiProfile"
+            android:padding="4dp"
+            android:text="Профиль Одноклассники"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/btnGooglePlusProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edustytheme_btn_default_holo_light"
+            android:drawableStart="@drawable/ic_googleplus"
+            android:gravity="start|center_vertical"
+            android:onClick="onClickBtnGooglePlusProfile"
+            android:padding="4dp"
+            android:text="Профиль Google"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>

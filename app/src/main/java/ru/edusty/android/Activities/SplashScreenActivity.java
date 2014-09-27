@@ -52,6 +52,10 @@ public class SplashScreenActivity extends Activity {
                         startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("facebook")) {
                         startActivity(new Intent(SplashScreenActivity.this, FacebookAuthActivity.class));
+                    } else if (sharedPreferences.getString("profile", "").equals("odnoklassniki")) {
+                        startActivity(new Intent(SplashScreenActivity.this, OdnoklassnikiActivity.class));
+                    } else if (sharedPreferences.getString("profile", "").equals("google+")) {
+                        startActivity(new Intent(SplashScreenActivity.this, GooglePlusActivity.class));
                     }
                     SplashScreenActivity.this.finish();
                 }
