@@ -90,8 +90,7 @@ public class CreateCommentActivity extends Activity {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            } else
-                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(CreateCommentActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 

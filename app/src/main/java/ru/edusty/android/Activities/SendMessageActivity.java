@@ -212,8 +212,7 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            } else
-                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 
@@ -256,8 +255,7 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            } else
-                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 
@@ -302,18 +300,32 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
                 files.add(UUID.fromString((String) response.getItem()));
                 gridView.setAdapter(new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files));
-            }
+            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             pdLoading.dismiss();
         }
 
         protected Response doInBackground(Bitmap... bitmaps) {
             Response response = null;
             file = bitmaps[0];
+            float width = file.getWidth();
+            int newWidth;
+            float height = file.getHeight();
+            int newHeight;
+            float ratio = 1920/width;
+            if (ratio < 1) {
+                newWidth = (int) (width * ratio);
+                newHeight = (int) (height * ratio);
+            } else {
+                newWidth = (int) width;
+                newHeight = (int) height;
+            }
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(file, newWidth,
+                    newHeight, false);
             try {
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "File?tokenID=" + token);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                file.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 request.setEntity(new ByteArrayEntity(byteArray));
                 HttpResponse httpResponse = httpclient.execute(request);

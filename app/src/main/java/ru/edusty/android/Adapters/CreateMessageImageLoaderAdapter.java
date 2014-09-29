@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -54,11 +55,11 @@ public class CreateMessageImageLoaderAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
+        imageView.setVisibility(View.GONE);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
         new ImageLoader(mContext).DisplayImage(mContext.getString(R.string.serviceUrl)
                 + "File?tokenID=" + token + "&fileID=" + files.get(position), imageView);
-        //imageView.setImageBitmap(bitmaps.get(position));
         return imageView;
     }
 }

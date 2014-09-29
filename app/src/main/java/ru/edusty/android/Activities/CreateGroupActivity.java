@@ -95,9 +95,7 @@ public class CreateGroupActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
-            }
+            } else Toast.makeText(CreateGroupActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 

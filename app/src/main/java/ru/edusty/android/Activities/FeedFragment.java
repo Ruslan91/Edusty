@@ -339,7 +339,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             try {
                 if (response.getItem().equals(true)) {
                     refresh(0);
-                }
+                } else Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
