@@ -201,6 +201,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.feed_menu, menu);
+        if (!isOnline()) menu.getItem(0).setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

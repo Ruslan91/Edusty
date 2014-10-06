@@ -131,6 +131,7 @@ public class GroupFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.group_menu, menu);
+        if (!isOnline()) menu.getItem(0).setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
