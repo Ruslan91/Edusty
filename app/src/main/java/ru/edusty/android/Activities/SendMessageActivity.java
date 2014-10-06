@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,14 +12,10 @@ import android.provider.MediaStore;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -49,7 +44,6 @@ import ru.edusty.android.Classes.Message;
 import ru.edusty.android.Classes.PostMessage;
 import ru.edusty.android.Classes.PutMessage;
 import ru.edusty.android.Classes.Response;
-import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 
 /**
@@ -58,12 +52,8 @@ import ru.edusty.android.R;
 public class SendMessageActivity extends Activity implements ActionMode.Callback {
     private static final int GALLERY_REQUEST = 1;
     EditText etMessage;
-    String message;
     String messageID;
     private UUID token;
-    private SurfaceView surfaceView;
-    private Camera camera;
-    private SurfaceHolder surfaceHolder;
     private List<UUID> files;
     private List<Bitmap> bitmaps;
     private Integer imageNum;
@@ -98,7 +88,7 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
                 gridView.startActionMode(SendMessageActivity.this);
                 return true;
             }
-            });
+        });
     }
 
     @Override
@@ -212,7 +202,8 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 
@@ -255,7 +246,8 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 finish();
-            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 
@@ -300,7 +292,8 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
                 files.add(UUID.fromString((String) response.getItem()));
                 gridView.setAdapter(new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files));
-            } else Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             pdLoading.dismiss();
         }
 
@@ -311,7 +304,7 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             int newWidth;
             float height = file.getHeight();
             int newHeight;
-            float ratio = 1920/width;
+            float ratio = 1920 / width;
             if (ratio < 1) {
                 newWidth = (int) (width * ratio);
                 newHeight = (int) (height * ratio);

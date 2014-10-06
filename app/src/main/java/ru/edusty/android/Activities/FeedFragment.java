@@ -99,7 +99,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (isOnline()) {
-            refresh(0);
+            //refresh(0);
             getListView().setOnScrollListener(this);
             getListView().setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
                 @Override
@@ -138,6 +138,12 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        refresh(0);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         //refresh(0);
@@ -149,7 +155,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         writeFile();
 
     }
-
     private void refresh(int offset) {
         new GetFeed().execute(offset);
         executed = true;
@@ -193,6 +198,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         }
         return null;
     }
+
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.feed_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -216,6 +222,23 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             @Override
             public void run() {
                 refresh(0);
+                /*if (isOnline()) {
+                    refresh(0);
+                } else {
+                    if (readFile() != null) {
+                        try {
+                            feeds = readFile();
+                            feedAdapter = new FeedAdapter(getActivity(), feeds);
+                            swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(feedAdapter);
+                            swingBottomInAnimationAdapter.setAbsListView(getListView());
+                            setListAdapter(swingBottomInAnimationAdapter);
+                            executed = false;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else setListAdapter(null);
+                    Toast.makeText(getActivity(), "Соединение с интернетом отсуствует.", Toast.LENGTH_SHORT).show();
+                }*/
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 3000);

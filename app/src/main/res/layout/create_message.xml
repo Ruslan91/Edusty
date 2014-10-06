@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/etMessage"
         android:inputType="textMultiLine"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="4dp"
+        android:lines="6" />
 
     <GridView
         android:id="@+id/grid"

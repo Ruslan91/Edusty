@@ -2,6 +2,8 @@ package ru.edusty.android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,6 +19,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import ru.edusty.android.Activities.ProfileActivity;
+import ru.edusty.android.Cache;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
@@ -82,20 +86,27 @@ public class FeedAdapter extends BaseAdapter {
         try {
             feed = feeds.get(position);
             viewHolder.name.setText(feed.getUser().getFirstName() + " " + feed.getUser().getLastName());
-            viewHolder.name.setTag((Integer) position);
-            viewHolder.name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.putExtra("userID", feeds.get((Integer) viewHolder.name.getTag()).getUser().getUserID().toString());
-                    context.startActivity(intent);
-                }
-            });
+            viewHolder.name.setTag(position);
+            if (isOnline()) {
+                viewHolder.name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        intent.putExtra("userID", feeds.get((Integer) viewHolder.name.getTag()).getUser().getUserID().toString());
+                        context.startActivity(intent);
+                    }
+                });
+            }
             viewHolder.message.setText(feed.getMessage());
             if (feed.getFiles().size() != 0) {
+                /*for (int i = 0; i < feed.getFiles().size(); i++) {
+                    new Cache(context).putFile(context.getString(R.string.serviceUrl)
+                            + "File?tokenID=" + context.getSharedPreferences(context.getString(R.string.app_data),Context.MODE_PRIVATE).getString("token","")
+                            + "&fileID=" + feed.getFiles().get(i));
+                }*/
                 viewHolder.attachments.setVisibility(View.VISIBLE);
                 viewHolder.attachments.setText(context.getString(R.string.attachments) + feed.getFiles().size());
-            }
+            } else viewHolder.attachments.setVisibility(View.GONE);
             viewHolder.comments.setText(context.getString(R.string.comments) + feed.getCommentsCount());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -127,5 +138,11 @@ public class FeedAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         return v;
+    }
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

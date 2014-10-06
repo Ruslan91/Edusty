@@ -55,9 +55,8 @@ public class CreateMessageImageLoaderAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-        imageView.setVisibility(View.GONE);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setLayoutParams(new GridView.LayoutParams(150, 150));
         new ImageLoader(mContext).DisplayImage(mContext.getString(R.string.serviceUrl)
                 + "File?tokenID=" + token + "&fileID=" + files.get(position), imageView);
         return imageView;
