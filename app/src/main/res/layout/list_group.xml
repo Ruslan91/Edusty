@@ -49,9 +49,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/group_name"
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvNameTitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:padding="4dp" />
+        android:padding="4dp"
+        android:visibility="invisible"/>
 </RelativeLayout>

@@ -54,6 +54,7 @@ public class GroupFragment extends ListFragment {
     private UUID token;
     private String defaultText;
     private String changedText;
+    private TextView tvNameTitle;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -66,6 +67,7 @@ public class GroupFragment extends ListFragment {
         setRetainInstance(true);
         token = UUID.fromString(getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", ""));
         etTitle = (EditText) view.findViewById(R.id.etTitle);
+        tvNameTitle = (TextView) view.findViewById(R.id.tvNameTitle);
         btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
         btnAccept.setVisibility(View.INVISIBLE);
@@ -80,6 +82,7 @@ public class GroupFragment extends ListFragment {
             TextView tv = new TextView(getActivity());
             etTitle.setVisibility(View.VISIBLE);
             btnAccept.setVisibility(View.VISIBLE);
+            tvNameTitle.setVisibility(View.VISIBLE);
             btnAccept.setEnabled(false);
             etTitle.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -122,7 +125,7 @@ public class GroupFragment extends ListFragment {
                     startActivity(intent);
                 }
             });
-        }
+        } else Toast.makeText(getActivity(), "Соединение с интернетом отсутствует.", Toast.LENGTH_SHORT).show();
     }
 
     @Override

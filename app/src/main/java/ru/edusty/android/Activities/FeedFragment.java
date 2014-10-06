@@ -133,7 +133,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                     e.printStackTrace();
                 }
             } else setListAdapter(null);
-            Toast.makeText(getActivity(), "Соединение с интернетом отсуствует.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Соединение с интернетом отсутствует.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -222,23 +222,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             @Override
             public void run() {
                 refresh(0);
-                /*if (isOnline()) {
-                    refresh(0);
-                } else {
-                    if (readFile() != null) {
-                        try {
-                            feeds = readFile();
-                            feedAdapter = new FeedAdapter(getActivity(), feeds);
-                            swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(feedAdapter);
-                            swingBottomInAnimationAdapter.setAbsListView(getListView());
-                            setListAdapter(swingBottomInAnimationAdapter);
-                            executed = false;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else setListAdapter(null);
-                    Toast.makeText(getActivity(), "Соединение с интернетом отсуствует.", Toast.LENGTH_SHORT).show();
-                }*/
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 3000);
