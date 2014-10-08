@@ -105,6 +105,8 @@ public class SettingsActivity extends PreferenceActivity {
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.remove("token");
                 edit.remove("newUser");
+                edit.remove("userID");
+                edit.remove("profile");
                 edit.apply();
                 Intent intent = new Intent(getApplicationContext(), AuthorizationActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

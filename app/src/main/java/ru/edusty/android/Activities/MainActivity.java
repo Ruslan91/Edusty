@@ -60,7 +60,6 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
-        Counter.initialize(context);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);

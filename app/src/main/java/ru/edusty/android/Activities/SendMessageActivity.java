@@ -85,7 +85,8 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 imageNum = position;
-                gridView.startActionMode(SendMessageActivity.this);
+                if (getIntent().getStringExtra("messageID") != null)
+                    gridView.startActionMode(SendMessageActivity.this);
                 return true;
             }
         });

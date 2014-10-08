@@ -7,7 +7,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,8 +30,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -40,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +57,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private String token;
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private Feed[] feed = new Feed[2];
     private ArrayList<Feed> feeds;
     private FeedAdapter feedAdapter;
     private boolean executed = false;
@@ -70,6 +65,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private String userID;
     private String message;
     private FileCache fileCache;
+    private Feed[] feed;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -152,9 +148,10 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public void onStop() {
         super.onStop();
-        writeFile();
-
+        if (isOnline())
+            writeFile(feeds);
     }
+
     private void refresh(int offset) {
         new GetFeed().execute(offset);
         executed = true;
@@ -167,19 +164,18 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public boolean writeFile() {
+    public boolean writeFile(ArrayList<Feed> feeds) {
         try {
             FileOutputStream fos = getActivity().openFileOutput("feeds", Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(feeds);
             oos.close();
-            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
     public ArrayList<Feed> readFile() {
@@ -188,7 +184,6 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             ObjectInputStream ois = new ObjectInputStream(fis);
             feeds = (ArrayList<Feed>) ois.readObject();
             ois.close();
-            return feeds;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -196,7 +191,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return feeds;
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -244,7 +239,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         if (isOnline())
-        mode.getMenuInflater().inflate(R.menu.action_mode_feed_list, menu);
+            mode.getMenuInflater().inflate(R.menu.action_mode_feed_list, menu);
         return true;
     }
 
@@ -346,7 +341,8 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             try {
                 if (response.getItem().equals(true)) {
                     refresh(0);
-                } else Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getActivity(), response.getStatus(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }

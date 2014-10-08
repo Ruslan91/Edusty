@@ -9,14 +9,20 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.yandex.metrica.Counter;
+
 import ru.edusty.android.R;
 
 public class SplashScreenActivity extends Activity {
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        context = getApplicationContext();
+        Counter.initialize(context);
         int SPLASH_DISPLAY_LENGTH = 2000;
 /*        if (!isOnline()) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -56,6 +62,8 @@ public class SplashScreenActivity extends Activity {
                         startActivity(new Intent(SplashScreenActivity.this, OdnoklassnikiActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("google+")) {
                         startActivity(new Intent(SplashScreenActivity.this, GooglePlusActivity.class));
+                    } else if (sharedPreferences.getString("profile", "").equals("")) {
+                        startActivity(new Intent(SplashScreenActivity.this, AuthorizationActivity.class));
                     }
                     SplashScreenActivity.this.finish();
                 }

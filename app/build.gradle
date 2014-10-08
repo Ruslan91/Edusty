@@ -7,8 +7,8 @@ android {
         applicationId 'ru.edusty.android'
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 5
-        versionName '1.1.0.0'
+        versionCode 6
+        versionName '1.1.0.1'
     }
     buildTypes {
         release {
