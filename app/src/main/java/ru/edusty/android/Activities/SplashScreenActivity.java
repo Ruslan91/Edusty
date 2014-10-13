@@ -62,6 +62,8 @@ public class SplashScreenActivity extends Activity {
                         startActivity(new Intent(SplashScreenActivity.this, OdnoklassnikiActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("google+")) {
                         startActivity(new Intent(SplashScreenActivity.this, GooglePlusActivity.class));
+                    } else if (sharedPreferences.getString("profile", "").equals("edusty") ) {
+                        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("")) {
                         startActivity(new Intent(SplashScreenActivity.this, AuthorizationActivity.class));
                     }

@@ -43,6 +43,7 @@ public class SearchGroupAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         TextView Title;
+        TextView MembersCount;
         UUID ID;
     }
 
@@ -54,6 +55,7 @@ public class SearchGroupAdapter extends BaseAdapter {
             v = lInflater.inflate(R.layout.search_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.Title = (TextView) v.findViewById(R.id.tvTitle);
+            viewHolder.MembersCount = (TextView) v.findViewById(R.id.tvMembersCount);
 
             v.setTag(viewHolder);
         } else {
@@ -61,6 +63,7 @@ public class SearchGroupAdapter extends BaseAdapter {
 
         }
         viewHolder.Title.setText(results[position].getTitle());
+        viewHolder.MembersCount.setText("Участников: " + results[position].getMembersCount().toString());
         return v;
     }
 }

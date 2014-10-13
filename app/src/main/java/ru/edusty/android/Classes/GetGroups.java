@@ -8,6 +8,15 @@ import java.util.UUID;
 public class GetGroups {
     UUID ID;
     String Title;
+    Integer MembersCount;
+
+    public Integer getMembersCount() {
+        return MembersCount;
+    }
+
+    public void setMembersCount(Integer membersCount) {
+        MembersCount = membersCount;
+    }
 
     public UUID getID() {
         return ID;

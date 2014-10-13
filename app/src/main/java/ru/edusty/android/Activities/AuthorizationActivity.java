@@ -40,4 +40,8 @@ public class AuthorizationActivity extends Activity {
         Intent intent = new Intent(this, GooglePlusActivity.class);
         startActivity(intent);
     }
+
+    public void onClickBtnEdustyPlus(View view) {
+        startActivity(new Intent(this, EdustyAuthActivty.class));
+    }
 }

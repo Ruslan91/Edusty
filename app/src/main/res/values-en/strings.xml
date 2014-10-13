@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V2/</string>
-
+    <string name="serviceUrl">http://192.168.1.33/api/V2/</string>
+    <!-->http://192.168.1.33/api/V2/-->
+    <!--http://edusty.azurewebsites.net/api/V2/-->
     <string name="title_activity_vk_auth">Authorization</string>
     <string name="title_activity_search_university">Search</string>
     <string name="title_activity_create_group">Add group</string>
@@ -49,5 +50,11 @@
     <string name="vkontakte">Вконтакте</string>
     <string name="attachments">Вложений: </string>
     <string name="comments">Комментариев: </string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="signin">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
 
 </resources>

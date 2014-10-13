@@ -121,24 +121,24 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
     }
 /*    public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
+        if (listAdapter == null)
             return;
-        }
 
-        int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            if (listItem instanceof ViewGroup) {
-                listItem.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+        listView.requestLayout();
     }*/
     @Override
     protected void onRestart() {
@@ -150,7 +150,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         new GetComments().execute();
     }
 
-    //Получение записи
+//Получение записи
     public class GetMessage extends AsyncTask<UUID, Void, Response> {
 
         ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
@@ -254,7 +254,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
 
     }
 
-    //Получение комментариев
+//Получение комментариев
     public class GetComments extends AsyncTask<Integer, Void, Response> {
 
         private CommentAdapter commentAdapter;
@@ -270,6 +270,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                     listComments.setAdapter(swingBottomInAnimationAdapter);
                 } else listComments.setAdapter(null);
                 commentAdapter.notifyDataSetChanged();
+                //setListViewHeightBasedOnChildren(listComments);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -295,7 +296,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         }
 
     }
-
+//Удаление комментария
     public class DeleteComment extends AsyncTask<UUID, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
 

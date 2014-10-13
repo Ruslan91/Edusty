@@ -249,7 +249,7 @@ public class GroupFragment extends ListFragment {
                 if (response.getItem().equals(true)) {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.remove("newUser");
+                    edit.putInt("newUser", 1);
                     edit.apply();
                     Intent intent = new Intent(getActivity(), SearchUniversityActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

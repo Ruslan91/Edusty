@@ -82,9 +82,10 @@
         <activity
             android:name=".Activities.CreateCommentActivity"
             android:label="@string/add_comment"
-            android:theme="@style/_EdustyTheme"/>
-        <activity android:name=".Activities.ImageActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+            android:theme="@style/_EdustyTheme" />
+        <activity
+            android:name=".Activities.ImageActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
         <receiver
             android:name=".GcmBroadcastReceiver"
@@ -151,6 +152,14 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name=".Activities.EdustyAuthActivty"
+            android:label="@string/title_activity_edusty_auth_activty" >
+        </activity>
+        <activity
+            android:name=".Activities.EdustyRegisterActivity"
+            android:label="@string/title_activity_edusty_auth_activty" >
+        </activity>
     </application>
 
 </manifest>
