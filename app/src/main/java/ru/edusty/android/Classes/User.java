@@ -17,6 +17,15 @@ public class User implements Serializable{
     String PictureUrl;
     String UniversityTitle;
     String GroupTitle;
+    String EMail;
+
+    public String getEMail() {
+        return EMail;
+    }
+
+    public void setEMail(String EMail) {
+        this.EMail = EMail;
+    }
 
     public String getGoogleID() {
         return GoogleID;

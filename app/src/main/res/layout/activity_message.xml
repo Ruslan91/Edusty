@@ -1,16 +1,12 @@
-<ScrollView
+<!--<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ru.edusty.android.Activities.MessageActivity"
-    >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical">-->
 
-    <RelativeLayout
+<!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
@@ -75,15 +71,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </HorizontalScrollView>
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.edusty.android.Activities.MessageActivity"
         android:id="@+id/refresh"
         android:background="@color/light_grey">
 
         <ListView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -97,6 +97,3 @@
             android:dividerHeight="4dp"
             android:clickable="true" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-</LinearLayout>
-</ScrollView>

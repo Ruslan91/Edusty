@@ -59,7 +59,7 @@ public class CreateMessageImageLoaderAdapter extends BaseAdapter {
         imageView.setLayoutParams(new GridView.LayoutParams(150, 150));
         if (files.size() != 0)
         new ImageLoader(mContext).DisplayImage(mContext.getString(R.string.serviceUrl)
-                + "File?tokenID=" + token + "&fileID=" + files.get(position), imageView);
+                + "File?fileID=" + files.get(position), imageView);
         return imageView;
     }
 }

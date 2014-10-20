@@ -9,10 +9,12 @@ public class Push {
     UUID TokenID;
     String PushCode;
     int ClientOS;
+    String DeviceID;
 
-    public Push(UUID tokenID, String pushCode, int clientOS) {
+    public Push(UUID tokenID, String pushCode, int clientOS, String deviceID) {
         TokenID = tokenID;
         PushCode = pushCode;
         ClientOS = clientOS;
+        DeviceID = deviceID;
     }
 }

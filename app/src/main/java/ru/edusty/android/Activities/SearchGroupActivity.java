@@ -52,7 +52,8 @@ public class SearchGroupActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
             btnNext = (Button) findViewById(R.id.btnQuit);
-            btnNext.setVisibility(View.INVISIBLE);
+//            btnNext.setVisibility(View.INVISIBLE);
+            btnNext.setClickable(false);
             btnNext.setText(getString(R.string.complete));
             token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
             universityID = UUID.fromString(getIntent().getExtras().getString("universityID"));
@@ -89,13 +90,15 @@ public class SearchGroupActivity extends Activity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        btnNext.setVisibility(View.VISIBLE);
+//                        btnNext.setVisibility(View.VISIBLE);
+                        btnNext.setClickable(true);
                     }
                 });
             } else {
                 this.invalidateOptionsMenu();
                 listView.setAdapter(null);
-                btnNext.setVisibility(View.INVISIBLE);
+//                btnNext.setVisibility(View.INVISIBLE);
+                btnNext.setClickable(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,7 +113,7 @@ public class SearchGroupActivity extends Activity {
             e.printStackTrace();
         }
     }
-
+//Получение списка групп
     public class GetGroups extends AsyncTask<String, Void, Response> {
 
         @Override
@@ -137,7 +140,7 @@ public class SearchGroupActivity extends Activity {
             return response;
         }
     }
-
+//Добавление информации о группе пользователю
     public class PostUserInfo extends AsyncTask<PostUser, Void, Response> {
         @Override
         protected void onPostExecute(Response response) {

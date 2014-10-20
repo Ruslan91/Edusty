@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.edusty.android.Activities.MessageActivity"
+    android:background="@android:color/white"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:id="@+id/image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="Image"
+        android:layout_margin="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvName"
+        android:onClick="onClickUserName"
+        android:focusable="false"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_margin="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate"
+        style="@android:style/TextAppearance.Small.Inverse"
+        android:layout_below="@+id/tvName"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image"
+        android:layout_margin="4dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMessage"
+        android:layout_below="@+id/image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_margin="4dp" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMessage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#aa000000"
+        android:id="@+id/horizontalScrollView">
+
+        <LinearLayout
+            android:id="@+id/llayout"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </HorizontalScrollView>
+</RelativeLayout>

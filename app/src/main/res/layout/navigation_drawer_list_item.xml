@@ -5,4 +5,5 @@
     android:textColor="@android:color/primary_text_light"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:layout_margin="4dp"/>

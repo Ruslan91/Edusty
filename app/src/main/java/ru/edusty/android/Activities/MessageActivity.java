@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.ActionMode;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.ll;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
@@ -67,28 +70,32 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
     private Message message;
     private UUID commentID;
     private UUID userID;
+    private RelativeLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        ll = (RelativeLayout)layoutInflater.inflate(R.layout.message_list_header, null, false );
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         userID = UUID.fromString(getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("userID", ""));
         messageID = getIntent().getStringExtra("messageID");
         listComments = (ListView) findViewById(R.id.listComments);
+        listComments.addHeaderView(ll);
         listComments.setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (comments[position].getUser().getUserID().equals(userID)) {
-                    commentID = comments[position].getID();
+                if (comments[position-1].getUser().getUserID().equals(userID)) {
+                    commentID = comments[position-1].getID();
                     startActionMode(MessageActivity.this);
                 }
                 return true;
             }
         });
 
-        tvName = (TextView) findViewById(R.id.tvName);
+        tvName = (TextView) ll.findViewById(R.id.tvName);
         tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +104,9 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                 startActivity(intent);
             }
         });
-        tvDate = (TextView) findViewById(R.id.tvDate);
-        tvMessage = (TextView) findViewById(R.id.tvMessage);
-        image = (ImageView) findViewById(R.id.image);
+        tvDate = (TextView) ll.findViewById(R.id.tvDate);
+        tvMessage = (TextView) ll.findViewById(R.id.tvMessage);
+        image = (ImageView) ll.findViewById(R.id.image);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -119,27 +126,6 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         new GetMessage().execute();
 
     }
-/*    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-    }*/
     @Override
     protected void onRestart() {
         super.onResume();
@@ -203,15 +189,14 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                             imageView.setLayoutParams(new LinearLayout.LayoutParams(150,150));
                             new ImageLoader(getApplicationContext())
-                                    .DisplayImage(getString(R.string.serviceUrl) + "File?tokenID=" + token + "&fileID=" + message.getFiles().get(i), imageView);
+                                    .DisplayImage(getString(R.string.serviceUrl) + "File?fileID=" + message.getFiles().get(i), imageView);
                             linearLayout.addView(imageView);
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(getApplicationContext(), ImageActivity.class);
                                     intent.putExtra("fileURL", getString(R.string.serviceUrl)
-                                            + "File?tokenID=" + token
-                                            + "&fileID=" + message.getFiles().get((Integer) imageView.getTag()));
+                                            + "File?fileID=" + message.getFiles().get((Integer) imageView.getTag()));
                                     startActivity(intent);
 
 /*                                    File file = new FileCache(getApplicationContext())
@@ -220,7 +205,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                                                     + "&fileID=" + message.getFiles().get((Integer) imageView.getTag()));
                                     Intent intent = new Intent();
                                     intent.setAction(Intent.ACTION_VIEW);
-                                    intent.setDataAndType(Uri.fromFile(file), "image*//*");
+                                    intent.setDataAndType(Uri.fromFile(file), "image*//**//*");
                                     startActivity(intent);*/
                                 }
                             });

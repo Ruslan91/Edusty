@@ -1,2 +1,15 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.edusty.android.Activities.ProfileActivity"></menu>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="ru.edusty.android.Activities.ProfileActivity">
+    <item android:id="@id/action_edit"
+        android:title="@string/edit"
+        android:showAsAction="always"
+        android:visible="false"
+        android:icon="@drawable/ic_action_edit"/>
+
+    <item android:id="@id/action_accept"
+        android:title="@string/edit"
+        android:showAsAction="always"
+        android:visible="false"
+        android:icon="@drawable/ic_action_accept"/>
+    </menu>

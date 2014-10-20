@@ -87,6 +87,7 @@ public class NavigationDrawerFragment extends Fragment {
     private UUID token;
     private UUID userID = null;
     private boolean isDrawerLocked = false;
+    private TextView tvEmail;
 
     public NavigationDrawerFragment() {
     }
@@ -124,6 +125,7 @@ public class NavigationDrawerFragment extends Fragment {
         imageLoader = new ImageLoader(getActivity());
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvUniversityGroup = (TextView) view.findViewById(R.id.tvUniversity_Group);
+        tvEmail = (TextView) view.findViewById(R.id.tvEmail);
         token = UUID.fromString(getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", ""));
         mDrawerListView = (ListView) view.findViewById(R.id.listView);
         new GetProfile().execute();
@@ -160,11 +162,13 @@ public class NavigationDrawerFragment extends Fragment {
             try {
                 if (response.getStatus().equals("ок")) {
                     User user = (User) response.getItem();
-                    if (!user.getPictureUrl().equals("")) {
-                        imageLoader.DisplayImage(user.getPictureUrl(), image);
+                    if (user.getPictureUrl() != null) {
+                        if (!user.getPictureUrl().equals(""))
+                            imageLoader.DisplayImage(user.getPictureUrl(), image);
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
+                    if (user.getEMail() != null) tvEmail.setText(user.getEMail());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

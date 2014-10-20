@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serviceUrl">http://192.168.1.33/api/V2/</string>
+    <string name="serviceUrl">http://192.168.1.33/api/V3/</string>
     <!-->http://192.168.1.33/api/V2/-->
     <!--http://edusty.azurewebsites.net/api/V2/-->
     <string name="title_activity_vk_auth">Authorization</string>
@@ -56,5 +56,7 @@
     <string name="register">Зарегистрироваться</string>
     <string name="firstname">Имя</string>
     <string name="lastname">Фамилия</string>
+    <string name="email">EMail</string>
+    <string name="edit">Редактировать</string>
 
 </resources>

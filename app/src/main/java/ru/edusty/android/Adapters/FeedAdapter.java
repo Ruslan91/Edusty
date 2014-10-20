@@ -99,11 +99,6 @@ public class FeedAdapter extends BaseAdapter {
             }
             viewHolder.message.setText(feed.getMessage());
             if (feed.getFiles().size() != 0) {
-                /*for (int i = 0; i < feed.getFiles().size(); i++) {
-                    new Cache(context).putFile(context.getString(R.string.serviceUrl)
-                            + "File?tokenID=" + context.getSharedPreferences(context.getString(R.string.app_data),Context.MODE_PRIVATE).getString("token","")
-                            + "&fileID=" + feed.getFiles().get(i));
-                }*/
                 viewHolder.attachments.setVisibility(View.VISIBLE);
                 viewHolder.attachments.setText(context.getString(R.string.attachments) + feed.getFiles().size());
             } else viewHolder.attachments.setVisibility(View.GONE);

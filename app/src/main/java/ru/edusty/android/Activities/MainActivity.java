@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -140,7 +141,8 @@ public class MainActivity extends FragmentActivity
     }
 
     private void sendRegistrationIdToBackend(String registrationID) {
-        new SendRegIdToServer().execute(new Push(token, registrationID, 0));
+        String deviceID = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        new SendRegIdToServer().execute(new Push(token, registrationID, 0, deviceID));
     }
 
     public class SendRegIdToServer extends AsyncTask<Push, Void, Response> {

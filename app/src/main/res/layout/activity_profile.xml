@@ -36,11 +36,41 @@
             android:padding="4dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etFirstName"
+            android:hint="@string/firstname"
+            android:layout_margin="4dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etLastName"
+            android:hint="@string/lastname"
+            android:layout_margin="4dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/etEmail"
+            android:hint="@string/email"
+            android:layout_margin="4dp"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/tvUniversity_Group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="4dp" />
+            android:layout_margin="4dp" />
 
         <Button
             android:id="@+id/btnVkProfile"
@@ -50,7 +80,7 @@
             android:drawableStart="@drawable/ic_vk"
             android:gravity="start|center_vertical"
             android:onClick="onClickBtnVkProfile"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Профиль Вконтакте"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -64,7 +94,7 @@
             android:drawableStart="@drawable/ic_facebook"
             android:gravity="start|center_vertical"
             android:onClick="onClickBtnFacebookProfile"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Профиль Facebook"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -77,7 +107,7 @@
             android:drawableStart="@drawable/ic_ok"
             android:gravity="start|center_vertical"
             android:onClick="onClickBtnOdnoklassnikiProfile"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Профиль Одноклассники"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -90,11 +120,10 @@
             android:drawableStart="@drawable/ic_googleplus"
             android:gravity="start|center_vertical"
             android:onClick="onClickBtnGooglePlusProfile"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Профиль Google"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone" />
-
     </LinearLayout>
 </ScrollView>

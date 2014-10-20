@@ -40,7 +40,8 @@ public class SearchUniversityActivity extends Activity {
         setContentView(R.layout.activity_search);
         try {
             btnNext = (Button) findViewById(R.id.btnQuit);
-            btnNext.setVisibility(View.INVISIBLE);
+//            btnNext.setVisibility(View.INVISIBLE);
+            btnNext.setClickable(false);
             btnNext.setText(getString(R.string.next));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
@@ -76,12 +77,14 @@ public class SearchUniversityActivity extends Activity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        btnNext.setVisibility(View.VISIBLE);
+//                        btnNext.setVisibility(View.VISIBLE);
+                        btnNext.setClickable(true);
                     }
                 });
             } else {
                 listView.setAdapter(null);
-                btnNext.setVisibility(View.INVISIBLE);
+//                btnNext.setVisibility(View.INVISIBLE);
+                btnNext.setClickable(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
