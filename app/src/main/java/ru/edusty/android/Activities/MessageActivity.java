@@ -71,6 +71,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
     private UUID commentID;
     private UUID userID;
     private RelativeLayout ll;
+    private TextView tvCommentsCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         tvDate = (TextView) ll.findViewById(R.id.tvDate);
         tvMessage = (TextView) ll.findViewById(R.id.tvMessage);
         image = (ImageView) ll.findViewById(R.id.image);
+        //tvCommentsCount = (TextView) ll.findViewById(R.id.tvComments);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -155,6 +157,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
                     message = (Message) response.getItem();
                     tvName.setText(message.getUser().getFirstName() + " " + message.getUser().getLastName());
                     tvMessage.setText(message.getMessage());
+                    //tvCommentsCount.setText(message.getCommentsCount());
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
                     dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                     Date date = dateFormat.parse(message.getMessageDate());

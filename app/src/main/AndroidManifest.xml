@@ -158,7 +158,15 @@
         </activity>
         <activity
             android:name=".Activities.EdustyRegisterActivity"
-            android:label="@string/title_activity_edusty_auth_activty" >
+            android:label="@string/title_activity_edusty_regiser_activty" >
+        </activity>
+        <activity
+            android:name=".Activities.ForgotPasswordActivity"
+            android:label="@string/title_activity_edusty_forgot_password_activty" >
+        </activity>
+        <activity
+            android:name=".Activities.ChangePasswordActivity"
+            android:label="@string/title_activity_edusty_change_password_activty" >
         </activity>
     </application>
 

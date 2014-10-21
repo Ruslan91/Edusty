@@ -212,6 +212,10 @@ public class ProfileActivity extends Activity {
         }
     }
 
+    public void onClickBtnChangePassword(View view) {
+        startActivity(new Intent(this, ChangePasswordActivity.class));
+    }
+
     //Получение профиля пользователя
     public class GetProfile extends AsyncTask<UUID, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);

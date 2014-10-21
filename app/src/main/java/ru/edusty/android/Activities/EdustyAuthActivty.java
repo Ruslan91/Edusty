@@ -40,6 +40,7 @@ public class EdustyAuthActivty extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edusty_auth);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         etLogin = (EditText) findViewById(R.id.etLogin);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
@@ -48,12 +49,32 @@ public class EdustyAuthActivty extends Activity {
     public void onClickBtnSignIn(View view) {
         if (!etLogin.getText().toString().equals("") && !etPassword.getText().toString().equals(""))
             new EdustyAuth().execute(new EdustyAuthUser(etLogin.getText().toString(), etPassword.getText().toString()));
-        else Toast.makeText(this, "Поля Логин и Пароль не могут быть пустыми", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "Логин и Пароль не могут быть пустыми", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickBtnRegister(View view) {
         startActivity(new Intent(this, EdustyRegisterActivity.class));
     }
+
+    public void onClickTvForgotPassword(View view) {
+        startActivity(new Intent(this, ForgotPasswordActivity.class));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 //Авторизация через Edusty
     public class EdustyAuth extends AsyncTask<EdustyAuthUser, Void, Response> {
 

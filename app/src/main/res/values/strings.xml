@@ -39,7 +39,7 @@
     <string name="loading">Загрузка…</string>
     <string name="app_data">EdustyData</string>
     <string name="enter_group_name">Введите название группы</string>
-    <string name="enter_message_text">Введите текст сообщения</string>
+    <string name="enter_message_text">Сообщение…</string>
     <string name="save">Сохранить</string>
     <string name="group_name">Название группы</string>
     <string name="leave">Выйти</string>
@@ -51,7 +51,7 @@
     <string name="vkontakte">Вконтакте</string>
     <string name="attachments">Вложений: </string>
     <string name="comments">Комментариев: </string>
-    <string name="title_activity_edusty_auth_activty">EdustyAuthActivty</string>
+    <string name="title_activity_edusty_auth_activty">Авторизация</string>
     <string name="hello_world">Hello world!</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
@@ -59,7 +59,14 @@
     <string name="register">Зарегистрироваться</string>
     <string name="firstname">Имя</string>
     <string name="lastname">Фамилия</string>
-    <string name="email">EMail</string>
+    <string name="email">E-mail</string>
     <string name="edit">Редактировать</string>
+    <string name="forgot_password"><u>Забыли пароль?</u></string>
+    <string name="restore">Восстановить</string>
+    <string name="title_activity_edusty_regiser_activty">Регистрация</string>
+    <string name="title_activity_edusty_forgot_password_activty">Восстановление пароля</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="accept">Применить</string>
+    <string name="title_activity_edusty_change_password_activty">Смена пароля</string>
 
 </resources>

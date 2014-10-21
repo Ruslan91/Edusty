@@ -13,6 +13,15 @@ public class Message {
     UUID SenderID;
     User User;
     List<UUID> Files;
+    Integer CommentsCount;
+
+    public Integer getCommentsCount() {
+        return CommentsCount;
+    }
+
+    public void setCommentsCount(Integer commentsCount) {
+        CommentsCount = commentsCount;
+    }
 
     public List<UUID> getFiles() {
         return Files;

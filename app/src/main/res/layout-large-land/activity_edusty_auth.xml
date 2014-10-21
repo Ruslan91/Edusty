@@ -44,4 +44,15 @@
         android:onClick="onClickBtnRegister"
         android:layout_gravity="center_horizontal"
         android:layout_margin="4dp" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:text="@string/forgot_password"
+        android:id="@+id/textView"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:onClick="onClickTvForgotPassword"/>
 </LinearLayout>
