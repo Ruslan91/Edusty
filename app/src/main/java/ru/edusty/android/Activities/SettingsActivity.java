@@ -76,19 +76,20 @@ public class SettingsActivity extends PreferenceActivity {
             return;
         }
         addPreferencesFromResource(R.xml.pref_general);
-        //Preference profile = findPreference("profile");
+        Preference profile = findPreference("profile");
         Preference quit = findPreference("quit");
         Preference about = findPreference("about");
         Preference send_email = findPreference("send_email");
 
-/*        profile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        profile.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                Counter.sharedInstance().reportEvent("Просмотр профиля");
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("userID", getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", ""));
+                startActivity(intent);
                 return true;
             }
-        });*/
+        });
 
         about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -193,12 +194,12 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Counter.sharedInstance().onResumeActivity(this);
+        //Counter.sharedInstance().onResumeActivity(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Counter.sharedInstance().onPauseActivity(this);
+        //Counter.sharedInstance().onPauseActivity(this);
     }
 }

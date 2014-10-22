@@ -61,6 +61,7 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
+        Counter.initialize(context);
         if (getSharedPreferences(getString(R.string.app_data),MODE_PRIVATE).getInt("newUser", 1) == 1) startActivity(new Intent(this, SearchUniversityActivity.class));
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         if (checkPlayServices()) {

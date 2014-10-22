@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="ru.edusty.android.Activities.NavigationDrawerFragment">
 
-    <RelativeLayout
+<!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -48,7 +48,7 @@
             android:layout_below="@+id/imageView"
             android:textColor="@android:color/secondary_text_light"
             android:padding="4dp"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <View
         android:layout_width="match_parent"

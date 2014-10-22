@@ -66,6 +66,7 @@ public class ProfileActivity extends Activity {
     private EditText etLastName;
     private EditText etEmail;
     private String pictureUrl;
+    private Button btnChangePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +84,14 @@ public class ProfileActivity extends Activity {
         btnFacebookProfile = (Button) findViewById(R.id.btnFacebookProfile);
         btnOdnoklassnikiProfile = (Button) findViewById(R.id.btnOdnoklassnikiProfile);
         btnGooglePlusProfile = (Button) findViewById(R.id.btnGooglePlusProfile);
+        btnChangePassword = (Button) findViewById(R.id.btnChangePassword);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
-        if (getIntent().getStringExtra("userID") != null)
+        if (getIntent().getStringExtra("userID") != null) {
             userID = getIntent().getStringExtra("userID");
+        }
         new GetProfile().execute();
+        if (getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", "").equals(userID))
+            btnChangePassword.setVisibility(View.VISIBLE);
     }
 
     public boolean isOnline() {

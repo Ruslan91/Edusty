@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -87,6 +88,7 @@ public class NavigationDrawerFragment extends Fragment {
     private UUID userID = null;
     private boolean isDrawerLocked = false;
     private TextView tvEmail;
+    private RelativeLayout ll;
 
     public NavigationDrawerFragment() {
     }
@@ -120,18 +122,21 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        image = (ImageView) view.findViewById(R.id.imageView);
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ll = (RelativeLayout)layoutInflater.inflate(R.layout.fragment_navigation_drawer_header, null, false );
+        image = (ImageView) ll.findViewById(R.id.imageView);
         imageLoader = new ImageLoader(getActivity());
-        tvName = (TextView) view.findViewById(R.id.tvName);
-        tvUniversityGroup = (TextView) view.findViewById(R.id.tvUniversity_Group);
-        tvEmail = (TextView) view.findViewById(R.id.tvEmail);
+        tvName = (TextView) ll.findViewById(R.id.tvName);
+        tvUniversityGroup = (TextView) ll.findViewById(R.id.tvUniversity_Group);
+        tvEmail = (TextView) ll.findViewById(R.id.tvEmail);
         token = UUID.fromString(getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", ""));
         mDrawerListView = (ListView) view.findViewById(R.id.listView);
+        mDrawerListView.addHeaderView(ll, null, false);
         new GetProfile().execute();
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
+                selectItem(position - 1);
             }
         });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(

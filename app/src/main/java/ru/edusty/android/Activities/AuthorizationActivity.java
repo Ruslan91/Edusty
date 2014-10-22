@@ -44,4 +44,8 @@ public class AuthorizationActivity extends Activity {
     public void onClickBtnEdustyPlus(View view) {
         startActivity(new Intent(this, EdustyAuthActivty.class));
     }
+
+    public void onClickTvTermsOfService(View view) {
+        startActivity(new Intent(this, TermsOfServiceActivity.class));
+    }
 }

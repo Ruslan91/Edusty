@@ -24,26 +24,6 @@ public class SplashScreenActivity extends Activity {
         context = getApplicationContext();
         Counter.initialize(context);
         int SPLASH_DISPLAY_LENGTH = 2000;
-/*        if (!isOnline()) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setCancelable(false);
-            alertDialog.setMessage("Интернет соединение отсутсвует!"); // сообщение
-            alertDialog.setPositiveButton("Повторить", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int arg1) {
-                    Intent i = getBaseContext().getPackageManager()
-                            .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                }
-            });
-            alertDialog.setNegativeButton("Выйти из приложения", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int arg1) {
-                    finish();
-                }
-            });
-            AlertDialog dialog = alertDialog.create();
-            dialog.show();
-        } else {*/
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -54,9 +34,10 @@ public class SplashScreenActivity extends Activity {
                     SplashScreenActivity.this.startActivity(mainIntent);
                     SplashScreenActivity.this.finish();
                 } else {
-                    if (sharedPreferences.getString("profile", "").equals("vkontakte")) {
-                        startActivity(new Intent(SplashScreenActivity.this, VkAuthActivity.class));
-                    } else if (sharedPreferences.getString("profile", "").equals("facebook")) {
+                    if (sharedPreferences.getInt("newUser", 1) != 1) {
+                        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                    } else startActivity(new Intent(SplashScreenActivity.this, SearchUniversityActivity.class));
+                    /*else if (sharedPreferences.getString("profile", "").equals("facebook")) {
                         startActivity(new Intent(SplashScreenActivity.this, FacebookAuthActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("odnoklassniki")) {
                         startActivity(new Intent(SplashScreenActivity.this, OdnoklassnikiActivity.class));
@@ -66,7 +47,7 @@ public class SplashScreenActivity extends Activity {
                         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                     } else if (sharedPreferences.getString("profile", "").equals("")) {
                         startActivity(new Intent(SplashScreenActivity.this, AuthorizationActivity.class));
-                    }
+                    }*/
                     SplashScreenActivity.this.finish();
                 }
             }

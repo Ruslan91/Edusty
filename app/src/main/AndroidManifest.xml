@@ -168,6 +168,9 @@
             android:name=".Activities.ChangePasswordActivity"
             android:label="@string/title_activity_edusty_change_password_activty" >
         </activity>
+        <activity
+            android:name=".Activities.TermsOfServiceActivity">
+        </activity>
     </application>
 
 </manifest>
