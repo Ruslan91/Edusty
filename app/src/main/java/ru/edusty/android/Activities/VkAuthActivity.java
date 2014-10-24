@@ -45,16 +45,21 @@ public class VkAuthActivity extends Activity {
                             String[] splits = url.split("=");
                             String token = splits[1].substring(0, splits[1].indexOf("&"));
                             int newUser = Integer.parseInt(splits[2].substring(0, splits[2].indexOf("&")));
-                            String userID = splits[3];
+                            String userID = splits[3].substring(0, splits[3].indexOf("&"));
+                            int haveFriends = Integer.parseInt(splits[4]);
                             SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putInt("newUser", newUser);
                             editor.putString("userID", userID);
                             editor.putString("token", token);
+                            editor.putInt("haveFriends", haveFriends);
                             editor.putString("profile", "vkontakte");
                             editor.apply();
-                            if (newUser == 1) {
+                            if (newUser == 1 && haveFriends == 0) {
                                 startActivity(new Intent(VkAuthActivity.this, SearchUniversityActivity.class));
+                                finish();
+                            } else if (newUser == 1 && haveFriends == 1) {
+                                startActivity(new Intent(VkAuthActivity.this, SuggestedGroupsActivity.class));
                                 finish();
                             } else if (newUser == 0) {
                                 Intent intent = new Intent(VkAuthActivity.this, MainActivity.class);

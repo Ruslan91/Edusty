@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -140,6 +141,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
+                //((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext(),
                 getActionBar().getThemedContext(),
                 R.layout.navigation_drawer_list_item,
                 android.R.id.text1,
@@ -230,7 +232,7 @@ public class NavigationDrawerFragment extends Fragment {
             drawerLayout.setScrimColor(Color.TRANSPARENT);
             isDrawerLocked = true;
         }*/
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = (getActionBar());
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 

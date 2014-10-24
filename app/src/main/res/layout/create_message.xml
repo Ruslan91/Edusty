@@ -27,7 +27,7 @@
         android:inputType="textMultiLine"
         android:layout_marginBottom="4dp"
         android:maxLines="10"
-        android:hint="Новый пароль" />
+        android:hint="@string/enter_message_text" />
 
     <GridView
         android:id="@+id/grid"

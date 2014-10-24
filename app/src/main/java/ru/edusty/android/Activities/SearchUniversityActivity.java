@@ -39,7 +39,7 @@ public class SearchUniversityActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         try {
-            btnNext = (Button) findViewById(R.id.btnQuit);
+            btnNext = (Button) findViewById(R.id.btnNext);
 //            btnNext.setVisibility(View.INVISIBLE);
             btnNext.setClickable(false);
             btnNext.setText(getString(R.string.next));

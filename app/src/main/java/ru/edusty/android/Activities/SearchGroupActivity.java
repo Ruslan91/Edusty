@@ -51,7 +51,7 @@ public class SearchGroupActivity extends Activity {
         setContentView(R.layout.activity_search);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
-            btnNext = (Button) findViewById(R.id.btnQuit);
+            btnNext = (Button) findViewById(R.id.btnNext);
 //            btnNext.setVisibility(View.INVISIBLE);
             btnNext.setClickable(false);
             btnNext.setText(getString(R.string.complete));

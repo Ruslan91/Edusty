@@ -171,6 +171,9 @@
         <activity
             android:name=".Activities.TermsOfServiceActivity">
         </activity>
+        <activity
+            android:name=".Activities.SuggestedGroupsActivity"
+            android:label="@string/title_activity_suggested_groups">
+        </activity>
     </application>
-
 </manifest>

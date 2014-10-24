@@ -25,12 +25,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:choiceMode="singleChoice"
-        android:layout_above="@+id/btnQuit"/>
+        android:layout_above="@+id/btnNext"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnQuit"
+        android:id="@+id/btnNext"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="onClickBtnNext"
