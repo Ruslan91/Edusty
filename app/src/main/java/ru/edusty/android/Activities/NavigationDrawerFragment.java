@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.UUID;
 
+import ru.edusty.android.Adapters.NavigationDrawerAdapter;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.User;
 import ru.edusty.android.ImageLoader;
@@ -140,7 +142,17 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position - 1);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        mDrawerListView.setAdapter(new NavigationDrawerAdapter(
+                        getActionBar().getThemedContext(),
+                        new String[]{
+                                getString(R.string.title_section1),
+                                getString(R.string.title_section2),
+                        },
+                        new int[]{
+                                R.drawable.ic_home_grey600_48dp,
+                                R.drawable.ic_group_work_grey600_48dp,
+                        })
+        );/*new ArrayAdapter<String>(
                 //((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext(),
                 getActionBar().getThemedContext(),
                 R.layout.navigation_drawer_list_item,
@@ -149,7 +161,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                 }
-        ));
+        ));*/
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return view;
     }

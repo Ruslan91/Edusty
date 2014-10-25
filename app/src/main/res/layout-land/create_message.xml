@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etMessage"
+        android:text="@string/enter_message_text"
         android:inputType="textMultiLine"
         android:layout_marginBottom="4dp"
         android:maxLines="6"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serviceUrl">http://192.168.1.33/api/V3/</string>
+    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V3/</string>
     <!-->http://192.168.1.33/api/V2/-->
     <!--http://edusty.azurewebsites.net/api/V2/-->
     <string name="title_activity_vk_auth">Authorization</string>
@@ -50,6 +50,8 @@
     <string name="vkontakte">Вконтакте</string>
     <string name="attachments">Attachments: </string>
     <string name="comments">Comments: </string>
+    <string name="title_activity_edusty_auth_activty">Authorization</string>
+    <string name="hello_world">Hello world!</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="signin">Sign In</string>

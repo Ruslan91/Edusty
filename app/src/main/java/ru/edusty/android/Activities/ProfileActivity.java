@@ -180,6 +180,11 @@ public class ProfileActivity extends Activity {
                 if (user.getEMail() != null) etEmail.setText(user.getEMail());
                 tvName.setVisibility(View.GONE);
                 tvUniversityGroup.setVisibility(View.GONE);
+                btnVkProfile.setVisibility(View.GONE);
+                btnFacebookProfile.setVisibility(View.GONE);
+                btnOdnoklassnikiProfile.setVisibility(View.GONE);
+                btnGooglePlusProfile.setVisibility(View.GONE);
+                btnChangePassword.setVisibility(View.GONE);
                 this.invalidateOptionsMenu();
                 break;
             case R.id.action_accept:
@@ -252,6 +257,8 @@ public class ProfileActivity extends Activity {
                         btnOdnoklassnikiProfile.setVisibility(View.VISIBLE);
                     if (user.getGoogleID() != null)
                         btnGooglePlusProfile.setVisibility(View.VISIBLE);
+
+                    btnChangePassword.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
                 ProfileActivity.this.invalidateOptionsMenu();

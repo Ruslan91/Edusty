@@ -4,4 +4,13 @@
     <style name="CustomActionBarTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+        <!-- Here we setting appcompat’s actionBarStyle -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+
+        <!-- ...and here we setting appcompat’s color theming attrs -->
+        <item name="colorPrimary">@color/background</item>
+
+        <!-- The rest of your attributes -->
+    </style>
 </resources>

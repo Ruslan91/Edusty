@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-
-import java.util.UUID;
 
 import ru.edusty.android.R;
 
@@ -37,6 +34,7 @@ public class AuthorizationActivity extends Activity {
         Intent intent = new Intent(this, OdnoklassnikiActivity.class);
         startActivity(intent);
     }
+
     public void onClickBtnGooglePlus(View view) {
         Intent intent = new Intent(this, GooglePlusActivity.class);
         startActivity(intent);

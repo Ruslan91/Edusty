@@ -47,9 +47,7 @@ public class SuggestedGroupsActivity extends ListActivity {
         setContentView(R.layout.activity_suggested_groups);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnAccept = (Button) findViewById(R.id.btnAccept);
-        new GetSuggestedGroupsTask().execute(
-                "610b2e6a-0dc3-4a29-b645-96e97ab071c7‏"
-        /*getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", "")*/);
+        new GetSuggestedGroupsTask().execute(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
     }
 
     public void onClickBtnSearch(View view) {
