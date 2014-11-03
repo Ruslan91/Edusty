@@ -78,9 +78,14 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:onClick="onClickItemSettings"
         android:layout_gravity="start|center_vertical"
-        android:drawableStart="@drawable/ic_settings_grey600_48dp"
-        android:gravity="start"
+        android:drawableStart="@drawable/ic_action_settings"
+        android:gravity="center_vertical|start"
         android:paddingStart="4dp"
         android:drawablePadding="4dp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:enabled="false" />
 </LinearLayout>

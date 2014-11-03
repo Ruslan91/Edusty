@@ -48,6 +48,7 @@ public class CreateCommentActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.create_message_menu, menu);
+        menu.getItem(0).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

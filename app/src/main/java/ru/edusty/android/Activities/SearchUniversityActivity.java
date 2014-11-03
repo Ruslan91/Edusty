@@ -2,10 +2,14 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -40,8 +44,8 @@ public class SearchUniversityActivity extends Activity {
         setContentView(R.layout.activity_search);
         try {
             btnNext = (Button) findViewById(R.id.btnNext);
-//            btnNext.setVisibility(View.INVISIBLE);
-            btnNext.setClickable(false);
+            btnNext.setVisibility(View.INVISIBLE);
+//            btnNext.setClickable(false);
             btnNext.setText(getString(R.string.next));
             SearchView searchView = (SearchView) findViewById(R.id.searchView);
             searchView.setIconified(false);
@@ -77,14 +81,14 @@ public class SearchUniversityActivity extends Activity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        btnNext.setVisibility(View.VISIBLE);
-                        btnNext.setClickable(true);
+                        btnNext.setVisibility(View.VISIBLE);
+//                        btnNext.setClickable(true);
                     }
                 });
             } else {
                 listView.setAdapter(null);
-//                btnNext.setVisibility(View.INVISIBLE);
-                btnNext.setClickable(false);
+                btnNext.setVisibility(View.INVISIBLE);
+//                btnNext.setClickable(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,5 +130,24 @@ public class SearchUniversityActivity extends Activity {
             }
             return response;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.remove("token");
+            edit.remove("newUser");
+            edit.remove("userID");
+            edit.remove("profile");
+            edit.apply();
+            CookieSyncManager.createInstance(SearchUniversityActivity.this);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

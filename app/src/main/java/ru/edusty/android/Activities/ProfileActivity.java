@@ -90,8 +90,7 @@ public class ProfileActivity extends Activity {
             userID = getIntent().getStringExtra("userID");
         }
         new GetProfile().execute();
-        if (getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", "").equals(userID))
-            btnChangePassword.setVisibility(View.VISIBLE);
+
     }
 
     public boolean isOnline() {
@@ -258,6 +257,7 @@ public class ProfileActivity extends Activity {
                     if (user.getGoogleID() != null)
                         btnGooglePlusProfile.setVisibility(View.VISIBLE);
 
+                    if (getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", "").equals(userID))
                     btnChangePassword.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();

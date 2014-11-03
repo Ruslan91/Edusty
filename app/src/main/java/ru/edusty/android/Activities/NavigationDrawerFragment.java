@@ -149,8 +149,8 @@ public class NavigationDrawerFragment extends Fragment {
                                 getString(R.string.title_section2),
                         },
                         new int[]{
-                                R.drawable.ic_home_grey600_48dp,
-                                R.drawable.ic_group_work_grey600_48dp,
+                                R.drawable.ic_action_home,
+                                R.drawable.ic_social_people,
                         })
         );/*new ArrayAdapter<String>(
                 //((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext(),

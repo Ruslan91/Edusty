@@ -5,7 +5,7 @@
         android:title="@string/edit"
         android:showAsAction="always"
         android:visible="false"
-        android:icon="@drawable/ic_action_edit"/>
+        android:icon="@drawable/ic_action_editor_mode_edit"/>
 
     <item android:id="@id/action_accept"
         android:title="@string/edit"
