@@ -103,40 +103,44 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
         try {
             switch (item.getItemId()) {
                 case R.id.action_send:
-                    if (!etMessage.getText().toString().equals("")) {
-                        if (messageID == null) {
-                            new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString(), files));
-                            return true;
-                        } else {
-                            new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID), files));
-                            return true;
-                        }
+                    if (messageID == null) {
+                        new SendMessageToFeed().execute(new PostMessage(token, etMessage.getText().toString(), files));
+                        return true;
                     } else {
-                        Toast.makeText(this, getString(R.string.enter_message_text), Toast.LENGTH_SHORT).show();
+                        new PutGroupMessage().execute(new PutMessage(token, etMessage.getText().toString(), UUID.fromString(messageID), files));
                         return true;
                     }
-                case R.id.action_add_picture:
-                    try {
-                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                        photoPickerIntent.setType("image/*");
-                        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-                    } catch (ActivityNotFoundException e) {
-                        // Выводим сообщение об ошибке
-                        String errorMessage = "Ваше устройство не поддерживает съемку";
-                        Toast toast = Toast
-                                .makeText(this, errorMessage, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                    return true;
-                case android.R.id.home:
-                    finish();
-                    return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            case R.id.action_add_picture:
+                try {
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+                } catch (ActivityNotFoundException e) {
+                    // Выводим сообщение об ошибке
+                    String errorMessage = "Ваше устройство не поддерживает съемку";
+                    Toast toast = Toast
+                            .makeText(this, errorMessage, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                return true;
+            case android.R.id.home:
+                finish();
+                return true;
         }
-        return super.onOptionsItemSelected(item);
     }
+
+    catch(
+    Exception e
+    )
+
+    {
+        e.printStackTrace();
+    }
+
+    return super.
+
+    onOptionsItemSelected(item);
+}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -186,224 +190,203 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
 
     }
 
-    //Отправка сообщения в ленту
-    public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
+//    Отправка сообщения в ленту
+public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
 
-        ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
+    ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Response response) {
-            super.onPostExecute(response);
-            if (response.getItem().equals(true)) {
-                finish();
-            } else
-                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }
-
-        @Override
-        protected Response doInBackground(PostMessage... messages) {
-            PostMessage postMessage = messages[0];
-            Response response = null;
-            try {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "GroupMessage");
-                StringEntity entity = new StringEntity(new Gson().toJson(postMessage),
-                        HTTP.UTF_8);
-                entity.setContentType("application/json");
-                request.setEntity(entity);
-                HttpResponse httpResponse = httpclient.execute(request);
-                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
-                response = new Gson().fromJson(reader, Response.class);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.show();
     }
 
-    //Редактирование сообщения ленты
-    public class PutGroupMessage extends AsyncTask<PutMessage, Void, Response> {
-
-        ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(Response response) {
-            super.onPostExecute(response);
-            if (response.getItem().equals(true)) {
-                finish();
-            } else
-                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }
-
-        @Override
-        protected Response doInBackground(PutMessage... messages) {
-            PutMessage putMessage = messages[0];
-            Response response = null;
-            try {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPut request = new HttpPut(getString(R.string.serviceUrl) + "GroupMessage");
-                StringEntity entity = new StringEntity(new Gson().toJson(putMessage),
-                        HTTP.UTF_8);
-                entity.setContentType("application/json");
-                request.setEntity(entity);
-                HttpResponse httpResponse = httpclient.execute(request);
-                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
-                response = new Gson().fromJson(reader, Response.class);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
+    @Override
+    protected void onPostExecute(Response response) {
+        super.onPostExecute(response);
+        if (response.getItem().equals(true)) {
+            finish();
+        } else
+            Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
 
-    //Отправка файла
-    public class PostFile extends AsyncTask<Bitmap, Void, Response> {
-        Bitmap file = null;
-        Exception exception;
-        ProgressDialog pdLoading = new ProgressDialog(SendMessageActivity.this);
+    @Override
+    protected Response doInBackground(PostMessage... messages) {
+        PostMessage postMessage = messages[0];
+        Response response = null;
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "GroupMessage");
+            StringEntity entity = new StringEntity(new Gson().toJson(postMessage),
+                    HTTP.UTF_8);
+            entity.setContentType("application/json");
+            request.setEntity(entity);
+            HttpResponse httpResponse = httpclient.execute(request);
+            InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
+            response = new Gson().fromJson(reader, Response.class);
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pdLoading.setMessage(getString(R.string.loading));
-            pdLoading.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return response;
+    }
+}
 
-        @Override
-        protected void onPostExecute(Response response) {
-            super.onPostExecute(response);
-            if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
-                files.add(UUID.fromString((String) response.getItem()));
-                gridView.setAdapter(new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files));
-            } else
-                Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
-            pdLoading.dismiss();
-        }
+//    Редактирование сообщения ленты
+public class PutGroupMessage extends AsyncTask<PutMessage, Void, Response> {
 
-        protected Response doInBackground(Bitmap... bitmaps) {
-            Response response = null;
-            file = bitmaps[0];
-            float width = file.getWidth();
-            int newWidth;
-            float height = file.getHeight();
-            int newHeight;
-            float ratio = 1920 / width;
-            if (ratio < 1) {
-                newWidth = (int) (width * ratio);
-                newHeight = (int) (height * ratio);
-            } else {
-                newWidth = (int) width;
-                newHeight = (int) height;
-            }
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(file, newWidth,
-                    newHeight, false);
-            try {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "File?tokenID=" + token);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                request.setEntity(new ByteArrayEntity(byteArray));
-                HttpResponse httpResponse = httpclient.execute(request);
-                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
-                response = new Gson().fromJson(reader, Response.class);
+    ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
 
-            } catch (Exception e) {
-                this.exception = e;
-            }
-            return response;
-        }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.show();
     }
 
-    //Получение записи
-    public class GetMessage extends AsyncTask<UUID, Void, Response> {
+    @Override
+    protected void onPostExecute(Response response) {
+        super.onPostExecute(response);
+        if (response.getItem().equals(true)) {
+            finish();
+        } else
+            Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
+    }
 
-        ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
+    @Override
+    protected Response doInBackground(PutMessage... messages) {
+        PutMessage putMessage = messages[0];
+        Response response = null;
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPut request = new HttpPut(getString(R.string.serviceUrl) + "GroupMessage");
+            StringEntity entity = new StringEntity(new Gson().toJson(putMessage),
+                    HTTP.UTF_8);
+            entity.setContentType("application/json");
+            request.setEntity(entity);
+            HttpResponse httpResponse = httpclient.execute(request);
+            InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
+            response = new Gson().fromJson(reader, Response.class);
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
-            progressDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return response;
+    }
+}
 
-        @Override
-        protected void onPostExecute(Response response) {
-            try {
-                if (response.getItem() != null) {
-                    Message message = (Message) response.getItem();
-                    etMessage.setText(message.getMessage());
-                    if (message.getFiles() != null) {
-                        files.clear();
-                        files.addAll(message.getFiles());
-                        createMessageImageLoaderAdapter =
-                                new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files);
-                        gridView.setAdapter(createMessageImageLoaderAdapter);
-/*                        files.clear();
-                        files.addAll(message.getFiles());
-                        for (int i = 0; i < message.getFiles().size(); i++) {
-                            final ImageView imageView = new ImageView(SendMessageActivity.this);
-                            imageView.setTag(i);
-                            imageView.setPadding(4, 4, 4, 4);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            imageView.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
-                            new ImageLoader(getApplicationContext())
-                                    .DisplayImage(getString(R.string.serviceUrl) + "File?tokenID=" + token + "&fileID=" + message.getFiles().get(i), imageView);
-                            linearLayout.addView(imageView);
+//    Отправка файла
+public class PostFile extends AsyncTask<Bitmap, Void, Response> {
+    Bitmap file = null;
+    Exception exception;
+    ProgressDialog pdLoading = new ProgressDialog(SendMessageActivity.this);
 
-                            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                                @Override
-                                public boolean onLongClick(View v) {
-                                    imageNum = (Integer) imageView.getTag();
-                                    startActionMode(SendMessageActivity.this);
-                                    return true;
-                                }
-                            });
-                        }*/
-                    }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        pdLoading.setMessage(getString(R.string.loading));
+        pdLoading.show();
+    }
+
+    @Override
+    protected void onPostExecute(Response response) {
+        super.onPostExecute(response);
+        if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
+            files.add(UUID.fromString((String) response.getItem()));
+            gridView.setAdapter(new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files));
+        } else
+            Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+        pdLoading.dismiss();
+    }
+
+    protected Response doInBackground(Bitmap... bitmaps) {
+        Response response = null;
+        file = bitmaps[0];
+        float width = file.getWidth();
+        int newWidth;
+        float height = file.getHeight();
+        int newHeight;
+        float ratio = 1920 / width;
+        if (ratio < 1) {
+            newWidth = (int) (width * ratio);
+            newHeight = (int) (height * ratio);
+        } else {
+            newWidth = (int) width;
+            newHeight = (int) height;
+        }
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(file, newWidth,
+                newHeight, false);
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost request = new HttpPost(getString(R.string.serviceUrl) + "File?tokenID=" + token);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            request.setEntity(new ByteArrayEntity(byteArray));
+            HttpResponse httpResponse = httpclient.execute(request);
+            InputStreamReader reader = new InputStreamReader(httpResponse.getEntity().getContent());
+            response = new Gson().fromJson(reader, Response.class);
+
+        } catch (Exception e) {
+            this.exception = e;
+        }
+        return response;
+    }
+}
+
+//    Получение записи
+public class GetMessage extends AsyncTask<UUID, Void, Response> {
+
+    ProgressDialog progressDialog = new ProgressDialog(SendMessageActivity.this);
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.show();
+    }
+
+    @Override
+    protected void onPostExecute(Response response) {
+        try {
+            if (response.getItem() != null) {
+                Message message = (Message) response.getItem();
+                etMessage.setText(message.getMessage());
+                if (message.getFiles() != null) {
+                    files.clear();
+                    files.addAll(message.getFiles());
+                    createMessageImageLoaderAdapter =
+                            new CreateMessageImageLoaderAdapter(SendMessageActivity.this, token, files);
+                    gridView.setAdapter(createMessageImageLoaderAdapter);
                 }
-                progressDialog.dismiss();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+            progressDialog.dismiss();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        @Override
-        protected Response doInBackground(UUID... params) {
-            Response response = null;
-            try {
-                HttpClient httpclient = new DefaultHttpClient();
-                Gson gson = new Gson();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&messageID=" + messageID);
-                HttpResponse httpResponse = httpclient.execute(request);
-                InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
-                        .getContent(), HTTP.UTF_8);
-                Type fooType = new TypeToken<Response<Message>>() {
-                }.getType();
-                response = gson.fromJson(reader, fooType);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
     }
+
+    @Override
+    protected Response doInBackground(UUID... params) {
+        Response response = null;
+        try {
+            HttpClient httpclient = new DefaultHttpClient();
+            Gson gson = new Gson();
+            HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "GroupMessage?tokenID=" + token + "&messageID=" + messageID);
+            HttpResponse httpResponse = httpclient.execute(request);
+            InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
+                    .getContent(), HTTP.UTF_8);
+            Type fooType = new TypeToken<Response<Message>>() {
+            }.getType();
+            response = gson.fromJson(reader, fooType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+}
 }

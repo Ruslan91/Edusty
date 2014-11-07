@@ -153,6 +153,13 @@ public class GroupFragment extends ListFragment {
 
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
+/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }*/
 
         @Override
         protected void onPostExecute(Response response) {
@@ -164,6 +171,7 @@ public class GroupFragment extends ListFragment {
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
+//                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -188,14 +196,14 @@ public class GroupFragment extends ListFragment {
         }
     }
 
-    //Измененние названия группы
+//    Измененние названия группы
     public class PostGroup extends AsyncTask<ru.edusty.android.Classes.PostGroup, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
         }
 
@@ -232,7 +240,7 @@ public class GroupFragment extends ListFragment {
         }
     }
 
-    //Выйти из группы
+//    Выйти из группы
     public class LeaveGroup extends AsyncTask<UUID, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
 

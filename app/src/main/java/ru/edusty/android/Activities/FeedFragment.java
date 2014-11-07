@@ -1,5 +1,6 @@
 package ru.edusty.android.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -271,15 +272,14 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     }
 
-    //Получение ленты сообщений
+//    Получение ленты сообщений
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
-
 /*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
         }*/
 
@@ -301,7 +301,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 } else if (feeds == null && feed.length == 0) setListAdapter(null);
                 feedAdapter.notifyDataSetChanged();
                 executed = false;
-                //progressDialog.dismiss();*/
+//                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -328,7 +328,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         }
     }
 
-    //Удаление сообщения
+//    Удаление сообщения
     public class DeleteMessage extends AsyncTask<UUID, Void, Response> {
 
         @Override

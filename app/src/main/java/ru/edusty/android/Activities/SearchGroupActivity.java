@@ -1,6 +1,8 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -44,11 +46,13 @@ public class SearchGroupActivity extends Activity {
     private Response response;
     private UUID token;
     private Button btnNext;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        context = getApplicationContext();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
             btnNext = (Button) findViewById(R.id.btnNext);
@@ -113,6 +117,7 @@ public class SearchGroupActivity extends Activity {
             e.printStackTrace();
         }
     }
+
 //Получение списка групп
     public class GetGroups extends AsyncTask<String, Void, Response> {
 
@@ -140,8 +145,19 @@ public class SearchGroupActivity extends Activity {
             return response;
         }
     }
+
 //Добавление информации о группе пользователю
     public class PostUserInfo extends AsyncTask<PostUser, Void, Response> {
+        ProgressDialog progressDialog = new ProgressDialog(SearchGroupActivity.this);
+        Response response;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
+        }
+
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
@@ -149,16 +165,15 @@ public class SearchGroupActivity extends Activity {
                 SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("newUser", 0).apply();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(context, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             } else
-                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, response.getStatus(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
-
-        Response response;
 
         @Override
         protected Response doInBackground(PostUser... params) {

@@ -1,6 +1,7 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -71,8 +72,21 @@ public class SearchUniversityActivity extends Activity {
         }
     }
 
-    public void setData(Response response) {
-        try {
+    public void onClickBtnNext(View view) {
+        int position = listView.getCheckedItemPosition();
+        Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
+        intent.putExtra("universityID", responseItem[position].getID().toString());
+        intent.putExtra("university", responseItem[position].getTitle());
+        startActivity(intent);
+    }
+
+//    Получение списка Университетов
+    public class GetUniversities extends AsyncTask<String, Void, Response> {
+        Response response;
+
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
             responseItem = (University[]) response.getItem();
             SearchUniversityAdapter searchUniversityAdapter = new SearchUniversityAdapter(SearchUniversityActivity.this, responseItem);
             if (responseItem != null) {
@@ -90,27 +104,6 @@ public class SearchUniversityActivity extends Activity {
                 btnNext.setVisibility(View.INVISIBLE);
 //                btnNext.setClickable(false);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void onClickBtnNext(View view) {
-        int position = listView.getCheckedItemPosition();
-        Intent intent = new Intent(SearchUniversityActivity.this, SearchGroupActivity.class);
-        intent.putExtra("universityID", responseItem[position].getID().toString());
-        intent.putExtra("university", responseItem[position].getTitle());
-        startActivity(intent);
-    }
-
-    public class GetUniversities extends AsyncTask<String, Void, Response> {
-
-        Response response;
-
-        @Override
-        protected void onPostExecute(Response response) {
-            super.onPostExecute(response);
-            setData(response);
         }
 
         @Override
