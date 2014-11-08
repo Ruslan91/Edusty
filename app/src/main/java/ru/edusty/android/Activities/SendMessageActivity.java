@@ -200,6 +200,7 @@ public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
         super.onPreExecute();
         progressDialog.setMessage(getString(R.string.loading));
         progressDialog.show();
+        progressDialog.setCancelable(false);
     }
 
     @Override
@@ -244,6 +245,7 @@ public class PutGroupMessage extends AsyncTask<PutMessage, Void, Response> {
         super.onPreExecute();
         progressDialog.setMessage(getString(R.string.loading));
         progressDialog.show();
+        progressDialog.setCancelable(false);
     }
 
     @Override
@@ -289,6 +291,7 @@ public class PostFile extends AsyncTask<Bitmap, Void, Response> {
         super.onPreExecute();
         pdLoading.setMessage(getString(R.string.loading));
         pdLoading.show();
+        pdLoading.setCancelable(false);
     }
 
     @Override

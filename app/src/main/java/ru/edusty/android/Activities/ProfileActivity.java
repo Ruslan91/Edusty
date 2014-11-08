@@ -67,6 +67,7 @@ public class ProfileActivity extends Activity {
     private EditText etEmail;
     private String pictureUrl;
     private Button btnChangePassword;
+    private TextView tvEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class ProfileActivity extends Activity {
         image = (ImageView) findViewById(R.id.image);
         imageLoader = new ImageLoader(this);
         tvName = (TextView) findViewById(R.id.tvName);
+        tvEmail = (TextView) findViewById(R.id.tvEmail);
         etFirstName = (EditText) findViewById(R.id.etFirstName);
         etLastName = (EditText) findViewById(R.id.etLastName);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -175,9 +177,14 @@ public class ProfileActivity extends Activity {
                 etFirstName.setText(user.getFirstName());
                 etLastName.setVisibility(View.VISIBLE);
                 etLastName.setText(user.getLastName());
-                etEmail.setVisibility(View.VISIBLE);
+                if (user.getVkontakteID().equals(0) &&
+                        user.getFacebookID() == null &&
+                        user.getOdnoklassnikiID() == null &&
+                        user.getGoogleID() == null)
+                    etEmail.setVisibility(View.VISIBLE);
                 if (user.getEMail() != null) etEmail.setText(user.getEMail());
                 tvName.setVisibility(View.GONE);
+                tvEmail.setVisibility(View.GONE);
                 tvUniversityGroup.setVisibility(View.GONE);
                 btnVkProfile.setVisibility(View.GONE);
                 btnFacebookProfile.setVisibility(View.GONE);
@@ -188,14 +195,16 @@ public class ProfileActivity extends Activity {
                 break;
             case R.id.action_accept:
                 String picture;
+                String email = null;
                 if (pictureUrl != null) picture = pictureUrl;
                 else picture = user.getPictureUrl();
+                if (!etEmail.getText().toString().equals("")) email = etEmail.getText().toString();
                 new PutUserTask().execute(new PutUser(
                         token,
                         etFirstName.getText().toString(),
                         etLastName.getText().toString(),
                         picture,
-                        etEmail.getText().toString()));
+                        email));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -240,6 +249,12 @@ public class ProfileActivity extends Activity {
         protected void onPostExecute(Response response) {
             try {
                 if (response.getStatus().equals("ок")) {
+                    etFirstName.setVisibility(View.GONE);
+                    etLastName.setVisibility(View.GONE);
+                    etEmail.setVisibility(View.GONE);
+                    tvName.setVisibility(View.VISIBLE);
+                    tvUniversityGroup.setVisibility(View.VISIBLE);
+
                     user = (User) response.getItem();
                     image.setLayoutParams(new LinearLayout.LayoutParams(320, 320));
                     if (user.getPictureUrl() != null) {
@@ -248,6 +263,10 @@ public class ProfileActivity extends Activity {
                         }
                     }
                     tvName.setText(user.getFirstName() + " " + user.getLastName());
+                    if (user.getEMail() != null) {
+                        tvEmail.setText(user.getEMail());
+                        tvEmail.setVisibility(View.VISIBLE);
+                    }
                     tvUniversityGroup.setText(user.getUniversityTitle() + ", " + user.getGroupTitle());
                     if (!user.getVkontakteID().equals(0)) btnVkProfile.setVisibility(View.VISIBLE);
                     if (user.getFacebookID() != null)
@@ -257,8 +276,12 @@ public class ProfileActivity extends Activity {
                     if (user.getGoogleID() != null)
                         btnGooglePlusProfile.setVisibility(View.VISIBLE);
 
-                    if (getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", "").equals(userID))
-                    btnChangePassword.setVisibility(View.VISIBLE);
+                    if (getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("userID", "").equals(userID) &&
+                            user.getVkontakteID().equals(0) &&
+                            user.getFacebookID() == null &&
+                            user.getOdnoklassnikiID() == null &&
+                            user.getGoogleID() == null)
+                        btnChangePassword.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
                 ProfileActivity.this.invalidateOptionsMenu();
@@ -298,6 +321,7 @@ public class ProfileActivity extends Activity {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override
@@ -305,11 +329,6 @@ public class ProfileActivity extends Activity {
             super.onPostExecute(response);
             if (response.getItem().equals(true)) {
                 new GetProfile().execute(UUID.fromString(userID));
-                etFirstName.setVisibility(View.GONE);
-                etLastName.setVisibility(View.GONE);
-                etEmail.setVisibility(View.GONE);
-                tvName.setVisibility(View.VISIBLE);
-                tvUniversityGroup.setVisibility(View.VISIBLE);
             } else
                 Toast.makeText(ProfileActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
@@ -349,6 +368,7 @@ public class ProfileActivity extends Activity {
             super.onPreExecute();
             pdLoading.setMessage(getString(R.string.loading));
             pdLoading.show();
+            pdLoading.setCancelable(false);
         }
 
         @Override

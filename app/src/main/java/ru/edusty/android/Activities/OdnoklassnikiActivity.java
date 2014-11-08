@@ -37,6 +37,7 @@ public class OdnoklassnikiActivity extends Activity {
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
                     progressDialog.show();
+                    progressDialog.setCancelable(false);
                 }
 
                 @Override

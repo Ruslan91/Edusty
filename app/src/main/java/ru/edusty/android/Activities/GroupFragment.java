@@ -205,6 +205,7 @@ public class GroupFragment extends ListFragment {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override

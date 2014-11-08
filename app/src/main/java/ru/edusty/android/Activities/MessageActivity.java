@@ -146,8 +146,9 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.setMessage("Загрузка...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override
@@ -293,6 +294,7 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override

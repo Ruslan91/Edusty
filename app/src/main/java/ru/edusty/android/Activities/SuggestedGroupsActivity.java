@@ -61,7 +61,7 @@ public class SuggestedGroupsActivity extends ListActivity {
                 suggestedGroup
         ));
     }
-
+//Получение списка рекомендуемых групп
     public class GetSuggestedGroupsTask extends AsyncTask<String, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(SuggestedGroupsActivity.this);
         Response response;
@@ -126,6 +126,7 @@ public class SuggestedGroupsActivity extends ListActivity {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override

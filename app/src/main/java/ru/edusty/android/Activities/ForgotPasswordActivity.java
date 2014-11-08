@@ -67,6 +67,7 @@ public class ForgotPasswordActivity extends Activity {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
 
         @Override
