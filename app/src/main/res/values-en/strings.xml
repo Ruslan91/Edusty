@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V3/</string>
+    <string name="serviceUrl">http://192.168.0.33/api/V3/</string>
     <!-->http://192.168.1.33/api/V2/-->
     <!--http://edusty.azurewebsites.net/api/V2/-->
     <string name="title_activity_vk_auth">Authorization</string>
@@ -82,4 +82,9 @@
     <string name="go_to_search">Перейти к поиску</string>
     <string name="old_password">Старый пароль</string>
     <string name="new_password">Новый пароль</string>
+    <string name="title_activity_add_university">Добавление ВУЗа</string>
+    <string name="title">Название</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="add_university_warning">*При предоставлении недостоверной информации администрация сервиса имеет право удалить ВУЗ.</string>
 </resources>

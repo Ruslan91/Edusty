@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.edusty.android.Activities.AddUniversityActivity" >
+    <item android:id="@+id/action_accept"
+        android:title="@string/add"
+        android:icon="@drawable/ic_action_accept"
+        android:showAsAction="always" />
+</menu>

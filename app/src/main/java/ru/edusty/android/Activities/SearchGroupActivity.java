@@ -198,7 +198,7 @@ public class SearchGroupActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_group, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
         return true;
     }
 
@@ -215,10 +215,11 @@ public class SearchGroupActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_create) {
+        if (id == R.id.action_add) {
             Intent intent = new Intent(this, CreateGroupActivity.class);
             intent.putExtra("universityID", universityID.toString());
             intent.putExtra("university", getIntent().getStringExtra("university"));
+            intent.putExtra("new", 0);
             startActivity(intent);
             return true;
         }

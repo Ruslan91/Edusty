@@ -41,12 +41,16 @@ public class CreateGroupActivity extends Activity {
         setContentView(R.layout.activity_create_group);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Counter.initialize(getApplicationContext());
+        TextView tvTitle = (TextView) findViewById(R.id.tvName);
+        etTitle = (EditText) findViewById(R.id.etTitle);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         universityID = UUID.fromString(getIntent().getStringExtra("universityID"));
         String university = getIntent().getStringExtra("university");
-        TextView tvTitle = (TextView) findViewById(R.id.tvName);
-        tvTitle.setText("В \"" + university + "\" нет вашей группы? Введите название группы, которую хотите добавить.");
-        etTitle = (EditText) findViewById(R.id.etTitle);
+        Integer newUniversity = getIntent().getIntExtra("new", 1);
+        if (newUniversity == 0)
+            tvTitle.setText("В \"" + university + "\" нет вашей группы? Введите название группы, которую хотите добавить.");
+        else
+            tvTitle.setText("Введите название группы, которую хотите добавить.");
     }
 
 
@@ -61,8 +65,9 @@ public class CreateGroupActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_accept:
                 if (!etTitle.getText().toString().equals(""))
-                new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
-                else Toast.makeText(CreateGroupActivity.this, getString(R.string.enter_group_name), Toast.LENGTH_SHORT).show();
+                    new PostGroup().execute(new CreateGroup(etTitle.getText().toString(), token, universityID));
+                else
+                    Toast.makeText(CreateGroupActivity.this, getString(R.string.enter_group_name), Toast.LENGTH_SHORT).show();
                 return true;
             case android.R.id.home:
                 finish();
@@ -96,7 +101,8 @@ public class CreateGroupActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
-            } else Toast.makeText(CreateGroupActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(CreateGroupActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
 

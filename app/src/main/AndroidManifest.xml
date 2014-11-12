@@ -52,7 +52,7 @@
             android:label="@string/title_activity_vk_auth" />
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main"/>
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".Activities.SearchUniversityActivity"
             android:label="@string/what_your_university" />
@@ -167,12 +167,16 @@
             android:name=".Activities.ChangePasswordActivity"
             android:label="@string/title_activity_edusty_change_password_activty" >
         </activity>
-        <activity
-            android:name=".Activities.TermsOfServiceActivity">
+        <activity android:name=".Activities.TermsOfServiceActivity" >
         </activity>
         <activity
             android:name=".Activities.SuggestedGroupsActivity"
-            android:label="@string/title_activity_suggested_groups">
+            android:label="@string/title_activity_suggested_groups" >
+        </activity>
+        <activity
+            android:name=".Activities.AddUniversityActivity"
+            android:label="@string/title_activity_add_university" >
         </activity>
     </application>
+
 </manifest>

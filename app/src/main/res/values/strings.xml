@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="serviceUrl">http://edusty.azurewebsites.net/api/V3/</string>
-    <!-->http://192.168.1.33/api/V2/-->
-    <!--http://edusty.azurewebsites.net/api/V2/-->
+    <string name="serviceUrl">http://192.168.0.33/api/V3/</string>
+    <!-- >http://192.168.1.33/api/V2/ -->
+    <!-- http://edusty.azurewebsites.net/api/V2/ -->
     <string name="app_name">Edusty</string>
     <string name="title_activity_vk_auth">Авторизация</string>
     <string name="title_activity_main">Edusty</string>
@@ -69,18 +69,20 @@
     <string name="accept">Применить</string>
     <string name="title_activity_edusty_change_password_activty">Смена пароля</string>
     <string name="terms_of_service">При использовании сервиса Edusty Вы соглашаетесь с <u><blue>Правилами пользования</blue></u>.</string>
-
-
-    <string name="text_terms"><b>Правила пользования сервисом Edusty\n</b>
-        1. Запрещена публикация материалов, запрещённых законодательством РФ.\n
+    <string name="text_terms"><b>Правила пользования сервисом Edusty\n</b>         1. Запрещена публикация материалов, запрещённых законодательством РФ.\n
         2. Запрещено использовать автоматизированные средства генерации контента в сервисе Edusty.\n
         3. Запрещено использовать API сервиса Edusty вне официальных приложений сервиса Edusty без письменного разрешения администрации сервиса Edusty.\n
         4. Администрация сервиса Edusty не гарантирует отсутствие ошибок в работе сервиса Edusty и не несет ответственность за его бесперебойную работу.\n
         5. Администрация сервиса Edusty не несет ответственность за потерю материалов или за причинение любых убытков, которые возникли или могут возникнуть при использовании сервиса Edusty.\n
-        6. Администрация сервиса Edusty не несет ответственность за неисполнение либо ненадлежащее исполнение своих обязательств вследствие сбоев в телекоммуникационных и энергетических сетях, действий вредоносных программ, а также недобросовестных действий третьих лиц, направленных на несанкционированный доступ или выведение из строя сервиса Edusty.
-    </string>
+        6. Администрация сервиса Edusty не несет ответственность за неисполнение либо ненадлежащее исполнение своих обязательств вследствие сбоев в телекоммуникационных и энергетических сетях, действий вредоносных программ, а также недобросовестных действий третьих лиц, направленных на несанкционированный доступ или выведение из строя сервиса Edusty.</string>
     <string name="title_activity_suggested_groups">Выбор группы</string>
     <string name="go_to_search">Перейти к поиску</string>
     <string name="old_password">Старый пароль</string>
     <string name="new_password">Новый пароль</string>
+    <string name="title_activity_add_university">Добавление ВУЗа</string>
+    <string name="title">Название</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="add_university_warning">*При предоставлении недостоверной информации администрация сервиса имеет право удалить ВУЗ.</string>
+
 </resources>

@@ -2,12 +2,15 @@ package ru.edusty.android.Activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -15,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +26,8 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
@@ -29,6 +35,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
 import ru.edusty.android.Adapters.SearchUniversityAdapter;
+import ru.edusty.android.Classes.PostUser;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.Classes.University;
 import ru.edusty.android.R;
@@ -38,11 +45,13 @@ public class SearchUniversityActivity extends Activity {
     private ListView listView;
     private University[] responseItem;
     private Button btnNext;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        context = getApplicationContext();
         try {
             btnNext = (Button) findViewById(R.id.btnNext);
             btnNext.setVisibility(View.INVISIBLE);
@@ -80,7 +89,7 @@ public class SearchUniversityActivity extends Activity {
         startActivity(intent);
     }
 
-//    Получение списка Университетов
+    //    Получение списка Университетов
     public class GetUniversities extends AsyncTask<String, Void, Response> {
         Response response;
 
@@ -90,6 +99,7 @@ public class SearchUniversityActivity extends Activity {
             responseItem = (University[]) response.getItem();
             SearchUniversityAdapter searchUniversityAdapter = new SearchUniversityAdapter(SearchUniversityActivity.this, responseItem);
             if (responseItem != null) {
+                invalidateOptionsMenu();
                 listView.setAdapter(searchUniversityAdapter);
                 searchUniversityAdapter.notifyDataSetChanged();
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,4 +153,36 @@ public class SearchUniversityActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (responseItem != null) {
+            if (responseItem.length != 0) {
+                menu.getItem(0).setVisible(false);
+            } else menu.getItem(0).setVisible(true);
+        } else menu.getItem(0).setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_add:
+                Intent intent = new Intent(this, AddUniversityActivity.class);
+                startActivity(intent);
+                break;
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
