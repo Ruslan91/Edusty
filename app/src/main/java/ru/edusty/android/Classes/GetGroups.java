@@ -1,5 +1,6 @@
 package ru.edusty.android.Classes;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,16 @@ import java.util.UUID;
 public class GetGroups {
     UUID ID;
     String Title;
+    List<String>  Members;
     Integer MembersCount;
+
+    public List<String> getMembers() {
+        return Members;
+    }
+
+    public void setMembers(List<String> members) {
+        Members = members;
+    }
 
     public Integer getMembersCount() {
         return MembersCount;

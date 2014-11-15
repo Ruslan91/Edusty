@@ -84,12 +84,12 @@ public class MessageActivity extends Activity implements ActionMode.Callback {
         userID = UUID.fromString(getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("userID", ""));
         messageID = getIntent().getStringExtra("messageID");
         listComments = (ListView) findViewById(R.id.listComments);
-        listComments.addHeaderView(ll);
+        listComments.addHeaderView(ll, null, false);
         listComments.setOnItemLongClickListener(new AbsListView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (comments[position-1].getUser().getUserID().equals(userID)) {
-                    commentID = comments[position-1].getID();
+                if (id >= 0 && comments[position - 1].getUser().getUserID().equals(userID)) {
+                    commentID = comments[position - 1].getID();
                     startActionMode(MessageActivity.this);
                 }
                 return true;

@@ -52,7 +52,7 @@
             android:label="@string/title_activity_vk_auth" />
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_main"/>
         <activity
             android:name=".Activities.SearchUniversityActivity"
             android:label="@string/what_your_university" />
@@ -64,7 +64,7 @@
             android:label="@string/title_activity_create_group" />
         <activity
             android:name=".Activities.SendMessageActivity"
-            android:label="@string/new_message" />
+            android:label="@string/new_message"/>
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/action_settings"

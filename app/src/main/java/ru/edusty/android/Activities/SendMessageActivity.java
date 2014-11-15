@@ -3,6 +3,7 @@ package ru.edusty.android.Activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -59,11 +60,13 @@ public class SendMessageActivity extends Activity implements ActionMode.Callback
     private Integer imageNum;
     private GridView gridView;
     private CreateMessageImageLoaderAdapter createMessageImageLoaderAdapter;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_message);
+        context = getApplicationContext();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         token = UUID.fromString(getSharedPreferences(getString(R.string.app_data), MODE_PRIVATE).getString("token", ""));
         etMessage = (EditText) findViewById(R.id.etMessage);
@@ -207,6 +210,9 @@ public class SendMessageToFeed extends AsyncTask<PostMessage, Void, Response> {
     protected void onPostExecute(Response response) {
         super.onPostExecute(response);
         if (response.getItem().equals(true)) {
+            Intent intent = new Intent();
+            intent.putExtra("result", 1);
+            setResult(Activity.RESULT_OK, intent);
             finish();
         } else
             Toast.makeText(SendMessageActivity.this, response.getStatus(), Toast.LENGTH_SHORT).show();

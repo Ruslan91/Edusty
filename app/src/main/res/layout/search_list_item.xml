@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvMembersCount"
+        android:id="@+id/tvMembers"
         android:layout_below="@+id/tvTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

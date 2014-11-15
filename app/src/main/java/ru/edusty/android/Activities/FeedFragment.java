@@ -1,5 +1,6 @@
 package ru.edusty.android.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -55,6 +56,8 @@ import ru.edusty.android.SwipeRefreshListFragment;
  */
 public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, ActionMode.Callback {
 
+    private static final int RESULT_OK = 1;
+    private static final int RESULT_CANCELED = 0;
     private String token;
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -82,8 +85,9 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);
         setRetainInstance(true);
+        //refresh(0);
         token = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", "");
         userID = getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("userID", "");
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
@@ -133,17 +137,23 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             Toast.makeText(getActivity(), "Соединение с интернетом отсутствует.", Toast.LENGTH_SHORT).show();
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getActivity();
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            refresh(0);
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
-        refresh(0);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //refresh(0);
+        refresh(0);
     }
 
     @Override
@@ -260,7 +270,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 Intent intent = new Intent(getActivity(), SendMessageActivity.class);
                 intent.putExtra("message", message);
                 intent.putExtra("messageID", messageID.toString());
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 mode.finish();
                 return true;
         }
@@ -272,7 +282,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     }
 
-//    Получение ленты сообщений
+    //    Получение ленты сообщений
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
 /*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
@@ -301,10 +311,10 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                 } else if (feeds == null && feed.length == 0) setListAdapter(null);
                 feedAdapter.notifyDataSetChanged();
                 executed = false;
-//                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+//            progressDialog.dismiss();
         }
 
         @Override
@@ -328,12 +338,16 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
         }
     }
 
-//    Удаление сообщения
+    //    Удаление сообщения
     public class DeleteMessage extends AsyncTask<UUID, Void, Response> {
+
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.show();
         }
 
         @Override
@@ -346,6 +360,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            progressDialog.dismiss();
         }
 
         @Override

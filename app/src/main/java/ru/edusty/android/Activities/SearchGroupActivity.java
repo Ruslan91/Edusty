@@ -32,6 +32,7 @@ import java.lang.reflect.Type;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.SearchGroupAdapter;
+import ru.edusty.android.Classes.GetGroups;
 import ru.edusty.android.Classes.PostUser;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.R;
@@ -42,11 +43,12 @@ import ru.edusty.android.R;
 public class SearchGroupActivity extends Activity {
     private ListView listView;
     private UUID universityID;
-    private ru.edusty.android.Classes.GetGroups[] responseItem;
+    private GetGroups[] responseItem;
     private Response response;
     private UUID token;
     private Button btnNext;
     private Context context;
+    private SearchGroupAdapter searchGroupAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,21 @@ public class SearchGroupActivity extends Activity {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    new GetGroups().execute(newText);
+                    if (!newText.equals("")) {
+                        GetGroups[] searchGroups = new GetGroups[responseItem.length];
+                        for (int i = 0; i < searchGroups.length; i++) {
+                            if (responseItem[i].getTitle().contains(newText)) {
+                                searchGroups[i] = responseItem[i];
+                            }
+                        }
+                        if (searchGroups[0] != null) {
+                            searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, searchGroups);
+                            listView.setAdapter(searchGroupAdapter);
+                        } else listView.setAdapter(null);
+                    } else {
+                        searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
+                        listView.setAdapter(searchGroupAdapter);
+                    }
                     return true;
                 }
             });
@@ -83,30 +99,15 @@ public class SearchGroupActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        new GetGroupsTask().execute();
+    }
+
     public void setData(Response response) {
 
-        try {
-            responseItem = (ru.edusty.android.Classes.GetGroups[]) response.getItem();
-            SearchGroupAdapter searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
-            if (responseItem != null) {
-                this.invalidateOptionsMenu();
-                listView.setAdapter(searchGroupAdapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        btnNext.setVisibility(View.VISIBLE);
-//                        btnNext.setClickable(true);
-                    }
-                });
-            } else {
-                this.invalidateOptionsMenu();
-                listView.setAdapter(null);
-                btnNext.setVisibility(View.INVISIBLE);
-//                btnNext.setClickable(false);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void onClickBtnNext(View view) {
@@ -118,25 +119,41 @@ public class SearchGroupActivity extends Activity {
         }
     }
 
-//Получение списка групп
-    public class GetGroups extends AsyncTask<String, Void, Response> {
+    //Получение списка групп
+    public class GetGroupsTask extends AsyncTask<String, Void, Response> {
 
         @Override
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
-            setData(response);
+            try {
+                responseItem = (GetGroups[]) response.getItem();
+                searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
+                if (responseItem != null) {
+                    listView.setAdapter(searchGroupAdapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            btnNext.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } else {
+                    listView.setAdapter(null);
+                    btnNext.setVisibility(View.INVISIBLE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         protected Response doInBackground(String... params) {
             try {
-                String query = params[0];
                 HttpClient httpClient = new DefaultHttpClient();
-                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "SearchGroup?universityID=" + universityID + "&query=" + query);
+                HttpGet request = new HttpGet(getString(R.string.serviceUrl) + "Groups?universityID=" + universityID + "&tokenID=" + token);
                 HttpResponse httpResponse = httpClient.execute(request);
                 InputStreamReader reader = new InputStreamReader(httpResponse.getEntity()
                         .getContent(), HTTP.UTF_8);
-                Type fooType = new TypeToken<Response<ru.edusty.android.Classes.GetGroups[]>>() {
+                Type fooType = new TypeToken<Response<GetGroups[]>>() {
                 }.getType();
                 response = new Gson().fromJson(reader, fooType);
             } catch (Exception e) {
@@ -146,7 +163,7 @@ public class SearchGroupActivity extends Activity {
         }
     }
 
-//Добавление информации о группе пользователю
+    //Добавление информации о группе пользователю
     public class PostUserInfo extends AsyncTask<PostUser, Void, Response> {
         ProgressDialog progressDialog = new ProgressDialog(SearchGroupActivity.this);
         Response response;
@@ -204,11 +221,6 @@ public class SearchGroupActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (responseItem != null) {
-            if (responseItem.length != 0) {
-                menu.getItem(0).setVisible(false);
-            } else menu.getItem(0).setVisible(true);
-        } else menu.getItem(0).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 

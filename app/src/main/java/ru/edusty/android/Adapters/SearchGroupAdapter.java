@@ -1,6 +1,5 @@
 package ru.edusty.android.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.UUID;
 
 import ru.edusty.android.Classes.GetGroups;
@@ -21,8 +21,8 @@ public class SearchGroupAdapter extends BaseAdapter {
     private final GetGroups[] results;
     private final LayoutInflater lInflater;
 
-    public SearchGroupAdapter(Activity activity, GetGroups[] searchResult) {
-        this.lInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public SearchGroupAdapter(Context context, GetGroups[] searchResult) {
+        this.lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.results = searchResult;
     }
 
@@ -43,7 +43,7 @@ public class SearchGroupAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         TextView Title;
-        TextView MembersCount;
+        TextView Members;
         UUID ID;
     }
 
@@ -55,7 +55,7 @@ public class SearchGroupAdapter extends BaseAdapter {
             v = lInflater.inflate(R.layout.search_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.Title = (TextView) v.findViewById(R.id.tvTitle);
-            viewHolder.MembersCount = (TextView) v.findViewById(R.id.tvMembersCount);
+            viewHolder.Members = (TextView) v.findViewById(R.id.tvMembers);
 
             v.setTag(viewHolder);
         } else {
@@ -63,7 +63,17 @@ public class SearchGroupAdapter extends BaseAdapter {
 
         }
         viewHolder.Title.setText(results[position].getTitle());
-        viewHolder.MembersCount.setText("Участников: " + results[position].getMembersCount().toString());
+        if ((results[position].getMembersCount() - results[position].getMembers().size()) != 0) {
+            String members = "";
+            for (int i = 0; i < results[position].getMembers().size(); i++) {
+                if (i != results[position].getMembers().size() - 1) {
+                    members = members + results[position].getMembers().get(i) + ", ";
+                } else
+                    members = members + results[position].getMembers().get(i) + " и ещё " + (results[position].getMembersCount() - results[position].getMembers().size()) + " участник(ов)";
+            };
+            viewHolder.Members.setText(members);
+        } else viewHolder.Members.setText("В группе нет участников");
+
         return v;
     }
 }

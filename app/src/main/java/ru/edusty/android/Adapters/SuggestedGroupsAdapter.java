@@ -53,7 +53,7 @@ public class SuggestedGroupsAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.GroupTitle = (TextView) v.findViewById(R.id.tvGroupTitle);
             viewHolder.UniversityTitle = (TextView) v.findViewById(R.id.tvUniversityTitle);
-            viewHolder.MembersCount = (TextView) v.findViewById(R.id.tvMembersCount);
+            viewHolder.MembersCount = (TextView) v.findViewById(R.id.tvMembers);
 
             v.setTag(viewHolder);
         } else {

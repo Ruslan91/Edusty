@@ -63,7 +63,7 @@ public class GroupFragment extends ListFragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_group, container, false);
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
         setRetainInstance(true);
         token = UUID.fromString(getActivity().getSharedPreferences(getString(R.string.app_data), Context.MODE_PRIVATE).getString("token", ""));
         etTitle = (EditText) view.findViewById(R.id.etTitle);
@@ -71,7 +71,6 @@ public class GroupFragment extends ListFragment {
         btnAccept = (Button) view.findViewById(R.id.btnAccept);
         etTitle.setVisibility(View.INVISIBLE);
         btnAccept.setVisibility(View.INVISIBLE);
-        new GetGroup().execute(token);
         return view;
     }
 
@@ -79,6 +78,7 @@ public class GroupFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (isOnline()) {
+            new GetGroup().execute(token);
             TextView tv = new TextView(getActivity());
             etTitle.setVisibility(View.VISIBLE);
             btnAccept.setVisibility(View.VISIBLE);
