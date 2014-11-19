@@ -18,22 +18,22 @@ import ru.edusty.android.R;
  * Created by Руслан on 25.07.2014.
  */
 public class SearchGroupAdapter extends BaseAdapter {
-    private final GetGroups[] results;
+    private final List<GetGroups> results;
     private final LayoutInflater lInflater;
 
-    public SearchGroupAdapter(Context context, GetGroups[] searchResult) {
+    public SearchGroupAdapter(Context context, List<GetGroups> searchResult) {
         this.lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.results = searchResult;
     }
 
     @Override
     public int getCount() {
-        return results.length;
+        return results.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return results[position];
+        return results.get(position);
     }
 
     @Override
@@ -62,14 +62,14 @@ public class SearchGroupAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
 
         }
-        viewHolder.Title.setText(results[position].getTitle());
-        if ((results[position].getMembersCount() - results[position].getMembers().size()) != 0) {
+        viewHolder.Title.setText(results.get(position).getTitle());
+        if ((results.get(position).getMembersCount() - results.get(position).getMembers().size()) != 0) {
             String members = "";
-            for (int i = 0; i < results[position].getMembers().size(); i++) {
-                if (i != results[position].getMembers().size() - 1) {
-                    members = members + results[position].getMembers().get(i) + ", ";
+            for (int i = 0; i < results.get(position).getMembers().size(); i++) {
+                if (i != results.get(position).getMembers().size() - 1) {
+                    members = members + results.get(position).getMembers().get(i) + ", ";
                 } else
-                    members = members + results[position].getMembers().get(i) + " и ещё " + (results[position].getMembersCount() - results[position].getMembers().size()) + " участник(ов)";
+                    members = members + results.get(position).getMembers().get(i) + " и ещё " + (results.get(position).getMembersCount() - results.get(position).getMembers().size()) + " участник(ов)";
             };
             viewHolder.Members.setText(members);
         } else viewHolder.Members.setText("В группе нет участников");

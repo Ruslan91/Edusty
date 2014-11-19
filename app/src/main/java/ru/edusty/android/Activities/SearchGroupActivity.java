@@ -29,6 +29,9 @@ import org.apache.http.protocol.HTTP;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import ru.edusty.android.Adapters.SearchGroupAdapter;
@@ -49,6 +52,7 @@ public class SearchGroupActivity extends Activity {
     private Button btnNext;
     private Context context;
     private SearchGroupAdapter searchGroupAdapter;
+    private ArrayList<GetGroups> groupsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +82,18 @@ public class SearchGroupActivity extends Activity {
                 public boolean onQueryTextChange(String newText) {
                     if (!newText.equals("")) {
                         GetGroups[] searchGroups = new GetGroups[responseItem.length];
-                        for (int i = 0; i < searchGroups.length; i++) {
+                        groupsList = new ArrayList<GetGroups>();
+                        for (int i = 0; i < responseItem.length; i++) {
                             if (responseItem[i].getTitle().contains(newText)) {
-                                searchGroups[i] = responseItem[i];
+                                groupsList.add(responseItem[i]);
                             }
                         }
-                        if (searchGroups[0] != null) {
-                            searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, searchGroups);
+                        if (groupsList.size() != 0) {
+                            searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, groupsList);
                             listView.setAdapter(searchGroupAdapter);
                         } else listView.setAdapter(null);
                     } else {
-                        searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
+                        searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, groupsList = new ArrayList<GetGroups>(Arrays.asList(responseItem)));
                         listView.setAdapter(searchGroupAdapter);
                     }
                     return true;
@@ -113,7 +118,7 @@ public class SearchGroupActivity extends Activity {
     public void onClickBtnNext(View view) {
         int position = listView.getCheckedItemPosition();
         try {
-            new PostUserInfo().execute(new PostUser(token, responseItem[position].getID()));
+            new PostUserInfo().execute(new PostUser(token, groupsList.get(position).getID()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,7 +132,8 @@ public class SearchGroupActivity extends Activity {
             super.onPostExecute(response);
             try {
                 responseItem = (GetGroups[]) response.getItem();
-                searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, responseItem);
+                groupsList = new ArrayList<GetGroups>(Arrays.asList(responseItem));
+                searchGroupAdapter = new SearchGroupAdapter(SearchGroupActivity.this, groupsList);
                 if (responseItem != null) {
                     listView.setAdapter(searchGroupAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

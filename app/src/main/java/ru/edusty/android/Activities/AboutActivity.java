@@ -1,11 +1,14 @@
 package ru.edusty.android.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import ru.edusty.android.R;
@@ -41,5 +44,23 @@ public class AboutActivity extends Activity {
                 finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickBtnVK(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://vk.com/edusty"));
+        startActivity(intent);
+    }
+
+    public void onClickBtnFacebook(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.facebook.com/groups/edusty/"));
+        startActivity(intent);
+    }
+
+    public void onClickBtnTwitter(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://twitter.com/EdustyTeam"));
+                startActivity(intent);
     }
 }

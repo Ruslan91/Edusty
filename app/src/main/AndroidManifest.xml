@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.edusty.android" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ru.edusty.android">
+
+    <uses-sdk tools:node="replace" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -20,7 +23,7 @@
         android:allowBackup="true"
         android:icon="@drawable/launcher"
         android:label="@string/app_name"
-        android:theme="@style/EdustyTheme" >
+        android:theme="@style/EdustyTheme">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -28,7 +31,7 @@
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +55,7 @@
             android:label="@string/title_activity_vk_auth" />
         <activity
             android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main"/>
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".Activities.SearchUniversityActivity"
             android:label="@string/what_your_university" />
@@ -64,7 +67,7 @@
             android:label="@string/title_activity_create_group" />
         <activity
             android:name=".Activities.SendMessageActivity"
-            android:label="@string/new_message"/>
+            android:label="@string/new_message" />
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/action_settings"
@@ -77,8 +80,7 @@
             android:label="@string/about_program" />
         <activity
             android:name=".Activities.MessageActivity"
-            android:label="@string/title_activity_message" >
-        </activity>
+            android:label="@string/title_activity_message"></activity>
         <activity
             android:name=".Activities.CreateCommentActivity"
             android:label="@string/add_comment" />
@@ -89,7 +91,7 @@
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -109,7 +111,7 @@
             android:name="com.yandex.metrica.MetricaService"
             android:enabled="true"
             android:exported="true"
-            android:process=":Metrica" >
+            android:process=":Metrica">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -126,7 +128,7 @@
         <receiver
             android:name="com.yandex.metrica.MetricaEventHandler"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.yandex.metrica.intent.action.SYNC" />
             </intent-filter>
@@ -139,7 +141,7 @@
         </receiver>
         <receiver
             android:name="com.yandex.metrica.CampaignReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
@@ -153,30 +155,26 @@
 
         <activity
             android:name=".Activities.EdustyAuthActivty"
-            android:label="@string/title_activity_edusty_auth_activty" >
-        </activity>
+            android:label="@string/title_activity_edusty_auth_activty"/>
         <activity
             android:name=".Activities.EdustyRegisterActivity"
-            android:label="@string/title_activity_edusty_regiser_activty" >
-        </activity>
+            android:label="@string/title_activity_edusty_regiser_activty"/>
         <activity
             android:name=".Activities.ForgotPasswordActivity"
-            android:label="@string/title_activity_edusty_forgot_password_activty" >
-        </activity>
+            android:label="@string/title_activity_edusty_forgot_password_activty"/>
         <activity
             android:name=".Activities.ChangePasswordActivity"
-            android:label="@string/title_activity_edusty_change_password_activty" >
-        </activity>
-        <activity android:name=".Activities.TermsOfServiceActivity" >
-        </activity>
+            android:label="@string/title_activity_edusty_change_password_activty"/>
+        <activity android:name=".Activities.TermsOfServiceActivity"/>
         <activity
             android:name=".Activities.SuggestedGroupsActivity"
-            android:label="@string/title_activity_suggested_groups" >
-        </activity>
+            android:label="@string/title_activity_suggested_groups"/>
         <activity
             android:name=".Activities.AddUniversityActivity"
-            android:label="@string/title_activity_add_university" >
-        </activity>
+            android:label="@string/title_activity_add_university"/>
+        <activity
+            android:name=".Activities.PromoteActivity"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

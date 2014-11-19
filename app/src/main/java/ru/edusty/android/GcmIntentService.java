@@ -13,7 +13,9 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import ru.edusty.android.Activities.AboutActivity;
 import ru.edusty.android.Activities.MainActivity;
+import ru.edusty.android.Activities.PromoteActivity;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -62,7 +64,7 @@ public class GcmIntentService extends IntentService {
                 // This loop represents the service doing some work.
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
-                sendNotification(extras.getString("alert"), extras.getString("badge"));
+                sendNotification(extras.getString("alert"), extras.getString("badge"), extras.getString("type"));
                 Log.i(TAG, "Received: " + extras);
             }
         }
@@ -73,20 +75,34 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg, String badge) {
+    private void sendNotification(String msg, String badge, String type) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_content_email)
-                .setContentTitle(msg.substring(0, msg.indexOf(":")))
-                .setContentText(msg.substring(msg.indexOf(":") + 1))
-                .setTicker(msg)
-                .setContentInfo(badge)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setAutoCancel(true)
-                        //.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-                .setContentIntent(PendingIntent.getActivity(this, 0,
-                        new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
+        NotificationCompat.Builder mBuilder = null;
+        if (type.equals("0")) {
+            Intent intent = new Intent(this, MainActivity.class);
+            mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_stat_content_email)
+                    .setContentTitle(msg.substring(0, msg.indexOf(":")))
+                    .setContentText(msg.substring(msg.indexOf(":") + 1))
+                    .setTicker(msg)
+                    .setContentInfo(badge)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setAutoCancel(true)
+                            //.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                    .setContentIntent(PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_CANCEL_CURRENT));
+        } else if (type.equals("1")) {
+            Intent intent = new Intent(this, PromoteActivity.class);
+            mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_stat_system_push)
+                    .setContentTitle(msg.substring(0, msg.indexOf(":")))
+                    .setContentText(msg.substring(msg.indexOf(":") + 1))
+                    .setTicker(msg)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setAutoCancel(true)
+                    .setContentIntent(PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_CANCEL_CURRENT));
+        }
+        mNotificationManager.cancelAll();
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

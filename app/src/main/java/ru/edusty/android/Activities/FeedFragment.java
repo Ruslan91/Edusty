@@ -50,7 +50,6 @@ import ru.edusty.android.Classes.Response;
 import ru.edusty.android.FileCache;
 import ru.edusty.android.R;
 import ru.edusty.android.SwipeRefreshListFragment;
-
 /**
  * Created by Руслан on 23.07.2014.
  */
@@ -62,7 +61,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<Feed> feeds;
-    private FeedAdapter feedAdapter;
+    private FeedAdapter     feedAdapter;
     private boolean executed = false;
     private SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
     private UUID messageID;
@@ -137,6 +136,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             Toast.makeText(getActivity(), "Соединение с интернетом отсутствует.", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,6 +145,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             refresh(0);
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();

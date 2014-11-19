@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center_horizontal"
+        android:text="Если Вам понравилось приложение, оставьте отзыв в Google Play" />
+
+    <Button
+        android:id="@+id/btnRate"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4dp"
+        android:text="Оставить отзыв"
+        android:onClick="onClickBtnRate"
+        android:background="#508f30dd" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4dp"
+        android:text="Поделиться" />
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="4dp"
+        android:text="Поделиться"
+        android:onClick="onClickBtnShare"
+        android:background="#508f30dd" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_vk"
+            android:onClick="onClickBtnShareVk"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_facebook"
+            android:onClick="onClickBtnShareFacebook"/>
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_ok"
+            android:onClick="onClickBtnShareOK"/>
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_googleplus"
+            android:onClick="onClickBtnShareGooglePlus"/>
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_twitter"
+            android:onClick="onClickBtnShareTwitter"/>
+    </LinearLayout>
+
+</LinearLayout>

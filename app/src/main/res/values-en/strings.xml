@@ -61,12 +61,12 @@
     <string name="email">E-mail</string>
     <string name="edit">Edit</string>
     <string name="forgot_password"><u>Forgot password?</u></string>
-    <string name="restore">Восстановить</string>
-    <string name="title_activity_edusty_regiser_activty">Регистрация</string>
+    <string name="restore">Restore</string>
+    <string name="title_activity_edusty_regiser_activty">Registration</string>
     <string name="title_activity_edusty_forgot_password_activty">Восстановление пароля</string>
-    <string name="change_password">Сменить пароль</string>
-    <string name="accept">Применить</string>
-    <string name="title_activity_edusty_change_password_activty">Смена пароля</string>
+    <string name="change_password">Change password</string>
+    <string name="accept">Accept</string>
+    <string name="title_activity_edusty_change_password_activty">Change password</string>
     <string name="terms_of_service">При использовании сервиса Edusty Вы соглашаетесь с <u><blue>Правилами пользования</blue></u>.</string>
 
 
@@ -79,12 +79,12 @@
         6. Администрация сервиса Edusty не несет ответственность за неисполнение либо ненадлежащее исполнение своих обязательств вследствие сбоев в телекоммуникационных и энергетических сетях, действий вредоносных программ, а также недобросовестных действий третьих лиц, направленных на несанкционированный доступ или выведение из строя сервиса Edusty.
     </string>
     <string name="title_activity_suggested_groups">Выбор группы</string>
-    <string name="go_to_search">Перейти к поиску</string>
-    <string name="old_password">Старый пароль</string>
-    <string name="new_password">Новый пароль</string>
-    <string name="title_activity_add_university">Добавление ВУЗа</string>
-    <string name="title">Название</string>
-    <string name="country">Страна</string>
-    <string name="city">Город</string>
+    <string name="go_to_search">Go to search</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="title_activity_add_university">Add University</string>
+    <string name="title">Title</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
     <string name="add_university_warning">*При предоставлении недостоверной информации администрация сервиса имеет право удалить ВУЗ.</string>
 </resources>

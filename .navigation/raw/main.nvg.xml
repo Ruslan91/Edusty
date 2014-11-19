@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.ProfileActivity">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.MainActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "1000"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.ImageActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "2800"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SearchGroupActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "4640"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.VkAuthActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "15400"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.CreateGroupActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "6400"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.CreateCommentActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "7300"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.GooglePlusActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "600"      
+        y = "15500"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "main">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "1000"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.MessageActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "8200"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.OdnoklassnikiActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "650"      
+        y = "15550"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.EdustyAuthActivty">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "9100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.FacebookAuthActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "700"      
+        y = "15600"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "search">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1760"      
+        y = "4480"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.ForgotPasswordActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "10000"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SendMessageActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "10900"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SearchUniversityActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "11800"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SplashScreenActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "800"      
+        y = "15700"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.ChangePasswordActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "12700"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SettingsActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "13600"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "settings">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "1900"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.AboutActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "1900"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.AddUniversityActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "3700"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.EdustyRegisterActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "5500"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "profile">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.AuthorizationActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "550"      
+        y = "15450"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "message">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "8200"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "add_university">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "3700"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "create_group">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "6400"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.SuggestedGroupsActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "750"      
+        y = "15650"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "ru.edusty.android.Activities.TermsOfServiceActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "480"      
+        y = "14560"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "image_menu">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "2800"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "create_message_menu">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1480"      
+        y = "7300"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>
