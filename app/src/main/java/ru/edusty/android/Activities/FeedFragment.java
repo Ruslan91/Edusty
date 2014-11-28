@@ -61,7 +61,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private int offset = 0;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<Feed> feeds;
-    private FeedAdapter     feedAdapter;
+    private FeedAdapter feedAdapter;
     private boolean executed = false;
     private SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
     private UUID messageID;

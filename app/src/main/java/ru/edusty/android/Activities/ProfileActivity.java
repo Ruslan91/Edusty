@@ -36,6 +36,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -375,7 +376,7 @@ public class ProfileActivity extends Activity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             if (UUID.fromString((String) response.getItem()).compareTo(new UUID(0, 0)) != 0) {
-                pictureUrl = "http://192.168.1.33/api/V3/File?fileID=" + response.getItem().toString();
+                pictureUrl = getString(R.string.serviceUrl) + "File?fileID=" + response.getItem().toString();
                 new ImageLoader(getApplicationContext()).DisplayImage(
                         pictureUrl, image
                 );

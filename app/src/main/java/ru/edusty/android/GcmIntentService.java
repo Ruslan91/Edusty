@@ -78,6 +78,7 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String msg, String badge, String type) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancelAll();
         NotificationCompat.Builder mBuilder = null;
         if (type.equals("0")) {
             Intent intent = new Intent(this, MainActivity.class);
@@ -102,7 +103,6 @@ public class GcmIntentService extends IntentService {
                     .setAutoCancel(true)
                     .setContentIntent(PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_CANCEL_CURRENT));
         }
-        mNotificationManager.cancelAll();
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

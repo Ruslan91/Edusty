@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/textView"
@@ -41,54 +42,54 @@
         android:layout_margin="4dp"
         android:text="Поделиться"
         android:onClick="onClickBtnShare"
-        android:background="#508f30dd" />
+        android:background="#508f30dd"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_vk"
-            android:onClick="onClickBtnShareVk"/>
+            android:onClick="onClickBtnShareVk"
+            android:padding="4dp" />
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_facebook"
-            android:onClick="onClickBtnShareFacebook"/>
+            android:onClick="onClickBtnShareFacebook"
+            android:padding="4dp" />
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_ok"
-            android:onClick="onClickBtnShareOK"/>
+            android:onClick="onClickBtnShareOK"
+            android:padding="4dp" />
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_googleplus"
-            android:onClick="onClickBtnShareGooglePlus"/>
+            android:onClick="onClickBtnShareGooglePlus"
+            android:padding="4dp" />
 
         <ImageButton
             android:id="@+id/imageButton5"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_twitter"
-            android:onClick="onClickBtnShareTwitter"/>
+            android:onClick="onClickBtnShareTwitter"
+            android:padding="4dp" />
     </LinearLayout>
 
 </LinearLayout>

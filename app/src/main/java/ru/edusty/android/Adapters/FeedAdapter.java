@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import ru.edusty.android.Activities.ImageActivity;
 import ru.edusty.android.Activities.ProfileActivity;
-import ru.edusty.android.Cache;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
@@ -41,6 +41,8 @@ public class FeedAdapter extends BaseAdapter {
         ImageView image;
         TextView attachments;
         TextView comments;
+        LinearLayout linearLayout;
+        ImageView imageView;
     }
 
     public FeedAdapter(Context context, ArrayList<Feed> feeds) {
@@ -57,7 +59,7 @@ public class FeedAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return feeds;
+        return feeds.get(position);
     }
 
     @Override
@@ -69,6 +71,7 @@ public class FeedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         View v = convertView;
+        System.out.println("getView " + position + " " + convertView);
         if (v == null) {
             v = lInflater.inflate(R.layout.feed_list_item, null);
             viewHolder = new ViewHolder();
@@ -78,7 +81,8 @@ public class FeedAdapter extends BaseAdapter {
             viewHolder.image = (ImageView) v.findViewById(R.id.image);
             viewHolder.attachments = (TextView) v.findViewById(R.id.tvAttachments);
             viewHolder.comments = (TextView) v.findViewById(R.id.tvComments);
-
+            viewHolder.linearLayout = (LinearLayout) v.findViewById(R.id.llayout);
+            viewHolder.imageView = (ImageView) v.findViewById(R.id.imageView);
             v.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) v.getTag();
@@ -129,11 +133,39 @@ public class FeedAdapter extends BaseAdapter {
             if (viewHolder.image != null) {
                 imageLoader.DisplayImage(feed.getUser().getPictureUrl(), viewHolder.image);
             }
+
+            if (feed.getFiles().size() != 0) {
+                viewHolder.linearLayout.removeAllViews();
+                for (int i = 0; i < feed.getFiles().size(); i++) {
+                    final ImageView imageView;
+                    imageView = new ImageView(context);
+                    imageView.setTag(i);
+                    imageView.setPadding(4, 4, 4, 4);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+                    imageView.setClickable(true);
+                    new ImageLoader(context)
+                            .DisplayImage(context.getString(R.string.serviceUrl) + "File?fileID=" + feed.getFiles().get(i), imageView);
+                    viewHolder.linearLayout.addView(imageView);
+                    viewHolder.linearLayout.setTag(position);
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int image_position = (Integer) imageView.getTag();
+                            Intent intent = new Intent(context, ImageActivity.class);
+                            intent.putExtra("fileURL", context.getString(R.string.serviceUrl)
+                                    + "File?fileID=" + feeds.get((Integer) viewHolder.name.getTag()).getFiles().get(image_position));
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+            } else viewHolder.linearLayout.removeAllViews();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return v;
     }
+
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

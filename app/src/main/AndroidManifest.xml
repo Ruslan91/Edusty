@@ -175,6 +175,19 @@
         <activity
             android:name=".Activities.PromoteActivity"
             android:label="@string/app_name"/>
+        <receiver
+            android:name="Widget"
+            android:icon="@drawable/launcher"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE">
+                </action>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider">
+            </meta-data>
+        </receiver>
     </application>
-
 </manifest>

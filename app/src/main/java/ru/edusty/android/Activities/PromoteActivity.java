@@ -52,16 +52,16 @@ public class PromoteActivity extends Activity {
     }
 
     public void onClickBtnShareOK(View view) {
-/*        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("market://details?id=" + getPackageName()));
-        startActivity(intent);*/
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl=http://edusty.ru"));
+        startActivity(intent);
 
     }
 
     public void onClickBtnShareGooglePlus(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://plus.google.com/share?url=http://edusty.ru&hl=ru"));
-                startActivity(intent);
+        startActivity(intent);
     }
 
     public void onClickBtnShareTwitter(View view) {
