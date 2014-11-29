@@ -38,6 +38,7 @@ public class AddUniversityActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_add_university);
         context = getApplicationContext();
         etTitle = (EditText) findViewById(R.id.etTitle);

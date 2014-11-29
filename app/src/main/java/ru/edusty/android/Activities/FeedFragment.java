@@ -48,6 +48,7 @@ import ru.edusty.android.Adapters.FeedAdapter;
 import ru.edusty.android.Classes.Feed;
 import ru.edusty.android.Classes.Response;
 import ru.edusty.android.FileCache;
+import ru.edusty.android.ImageLoader;
 import ru.edusty.android.R;
 import ru.edusty.android.SwipeRefreshListFragment;
 /**
@@ -62,18 +63,21 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<Feed> feeds;
     private FeedAdapter feedAdapter;
-    private boolean executed = false;
+    private boolean executed = true;
     private SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
     private UUID messageID;
     private String userID;
     private String message;
     private FileCache fileCache;
     private Feed[] feed;
+    private Context context;
+    private int feedSize;
 
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
         fileCache = new FileCache(getActivity());
+        context = getActivity().getApplicationContext();
     }
 
     @Override
@@ -98,6 +102,8 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final ImageLoader imageLoader = new ImageLoader(context);
         if (isOnline()) {
             //refresh(0);
             getListView().setOnScrollListener(this);
@@ -128,6 +134,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
                     swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(feedAdapter);
                     swingBottomInAnimationAdapter.setAbsListView(getListView());
                     setListAdapter(swingBottomInAnimationAdapter);
+                    feedAdapter.notifyDataSetChanged();
                     executed = false;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -242,7 +249,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         int lastItem = firstVisibleItem + visibleItemCount;
-        if (visibleItemCount > 0 && ++firstVisibleItem + visibleItemCount == totalItemCount && lastItem != 0 && !executed) {
+        if (visibleItemCount > 0 && ++firstVisibleItem + visibleItemCount == totalItemCount && lastItem != 0 && !executed && feedSize != 0) {
             new GetFeed().execute(totalItemCount);
             executed = true;
         }
@@ -285,20 +292,21 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
 
     //    Получение ленты сообщений
     public class GetFeed extends AsyncTask<Integer, Void, Response> {
-/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
-        }*/
+        }
 
         @Override
         protected void onPostExecute(Response response) {
             try {
                 if (offset == 0 && feeds != null) feeds = null;
                 feed = (Feed[]) response.getItem();
+                feedSize = feed.length;
                 if (feed.length != 0 && feeds == null) {
                     feeds = new ArrayList<Feed>(Arrays.asList(feed));
                     feedAdapter = new FeedAdapter(getActivity(), feeds);
@@ -315,7 +323,7 @@ public class FeedFragment extends SwipeRefreshListFragment implements SwipeRefre
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            progressDialog.dismiss();
+            progressDialog.dismiss();
         }
 
         @Override

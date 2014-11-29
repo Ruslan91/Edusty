@@ -21,6 +21,8 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import ru.edusty.android.Adapters.FeedAdapter;
+
 public class ImageLoader {
 
     MemoryCache memoryCache = new MemoryCache();
@@ -34,7 +36,7 @@ public class ImageLoader {
         executorService = Executors.newFixedThreadPool(5);
     }
 
-    final int stub_id = R.drawable.ic_launcher;
+    final int stub_id = R.drawable.ic_image_image;
 
     public void DisplayImage(String url, ImageView imageView) {
         imageViews.put(imageView, url);
@@ -185,5 +187,4 @@ public class ImageLoader {
         memoryCache.clear();
         fileCache.clear();
     }
-
 }

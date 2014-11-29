@@ -16,5 +16,7 @@
         android:divider="@color/light_grey"
         android:dividerHeight="8dp"
         android:clickable="true"
-        android:scrollingCache="true"/>
+        android:scrollingCache="false"
+        android:animationCache="false"
+        android:smoothScrollbar="true"/>
 </android.support.v4.widget.SwipeRefreshLayout>

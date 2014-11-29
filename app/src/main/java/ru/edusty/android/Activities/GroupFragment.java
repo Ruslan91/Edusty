@@ -153,13 +153,13 @@ public class GroupFragment extends ListFragment {
 
     //Получение информации о группе
     public class GetGroup extends AsyncTask<UUID, Void, Response> {
-/*        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setMessage(getString(R.string.loading));
             progressDialog.show();
-        }*/
+        }
 
         @Override
         protected void onPostExecute(Response response) {
@@ -171,7 +171,7 @@ public class GroupFragment extends ListFragment {
                 if (users.length != 0) {
                     setListAdapter(new GroupAdapter(getActivity(), users));
                 } else setListAdapter(null);
-//                progressDialog.dismiss();
+                progressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
